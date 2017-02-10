@@ -290,7 +290,7 @@ bar {
 }
 
 bindsym $mod+z exec morc_menu
-bindsym $mod+d exec i3-dmenu-desktop --dmenu='rofi -dmenu -lines 5 -eh 2 -opacity "95" -bw 2'
+bindsym $mod+d exec i3-dmenu-desktop --dmenu='rofi -dmenu -lines 5 -eh 2 -opacity "95" -bw 2 -i'
 bindsym $mod+Shift+d exec rofi -show run -lines 5 -eh 2 -opacity "95" -bw 2
 bindsym $alt+Tab exec rofi -show window -lines 5 -eh 2 -opacity "95" -bw 2
 bindsym $mod+x exec i3lock-fancy
