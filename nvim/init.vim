@@ -32,11 +32,11 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 "airline
 let g:airline_theme='molokai'
-"let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tmuxline#enabled = 0
-let g:airline#extensions#bufferline#overwrite_variables = 1
-let g:airline#extensions#bufferline#enabled = 1
+"let g:airline#extensions#bufferline#overwrite_variables = 1
+"let g:airline#extensions#bufferline#enabled = 1
 
 "deoplete
 let g:deoplete#enable_at_startup = 1
@@ -45,7 +45,6 @@ let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
 "Neomake
 
-autocmd! BufWritePost * wshada!
 autocmd! BufWritePost * Neomake
 "autocmd! BufWritePost *.c Neomake clang
 "autocmd! BufWritePost *.cpp Neomake clang
@@ -89,7 +88,7 @@ let g:monokai_term_italic = 1
 "let g:nord_italic_comments = 1
 "let g:gruvbox_contrast_dark='normal'
 "let g:gruvbox_termcolors=256
-hi Normal guibg=NONE ctermbg=NONE
+"hi Normal guibg=NONE ctermbg=NONE
 
 if has('nvim')
 	nmap <BS> <C-W>h
@@ -101,6 +100,9 @@ function! TrimWhiteSpace()
 endfunction
 
 autocmd BufWritePre     * :call TrimWhiteSpace()
+
+
+autocmd! BufWritePost * wshada!
 
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 map <F8> :TagbarToggle<CR>

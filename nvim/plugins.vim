@@ -18,7 +18,7 @@ Plug 'neomake/neomake'		"Linting code asynchronous
 Plug 'a.vim'	"Switch between .c and .h files
 Plug 'edkolev/tmuxline.vim' "tmux theme integration
 Plug 'juanseabra/tender.vim', {'branch': 'suport_for_SignColumn'} "my fork of tender theme
-Plug 'bling/vim-bufferline'
+"Plug 'bling/vim-bufferline'
 "themes to use when i'm on the mood
 "Plug 'joshdick/onedark.vim
 "Plug 'morhetz/gruvbox'
