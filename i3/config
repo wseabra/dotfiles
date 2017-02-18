@@ -147,11 +147,11 @@ bindsym $mod+Shift+r restart
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
 	bindsym l exec --no-startup-id i3exit lock, mode "default"
-		bindsym e exec --no-startup-id i3exit logout, mode "default"
-		bindsym s exec --no-startup-id i3exit suspend, mode "default"
-		bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-		bindsym r exec --no-startup-id i3exit reboot, mode "default"
-		bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+	bindsym e exec --no-startup-id i3exit logout, mode "default"
+	bindsym s exec --no-startup-id i3exit suspend, mode "default"
+	bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+	bindsym r exec --no-startup-id i3exit reboot, mode "default"
+	bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
 
 # back to normal: Enter or Escape
 		bindsym Return mode "default"
@@ -165,13 +165,13 @@ bindsym $mod+Shift+e mode "$mode_system"
 set $mode_display Ext Screen (v) VGA ON, (h) HDMI ON, (x) VGA OFF, (y) HDMI OFF
 mode "$mode_display" {
 	bindsym v exec --no-startup-id xrandr --output DP1 --auto --right-of eDP1, mode "default"
-		bindsym h exec --no-startup-id xrandr --output HDMI1 --auto --right-of eDP1, mode "default"
-		bindsym x exec --no-startup-id xrandr --output DP1 --auto --off, mode "default"
-		bindsym y exec --no-startup-id xrandr --output HDMI1 --auto --off, mode "default"
+	bindsym h exec --no-startup-id xrandr --output HDMI1 --auto --right-of eDP1, mode "default"
+	bindsym x exec --no-startup-id xrandr --output DP1 --auto --off, mode "default"
+	bindsym y exec --no-startup-id xrandr --output HDMI1 --auto --off, mode "default"
 
 # back to normal: Enter or Escape
-		bindsym Return mode "default"
-		bindsym Escape mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 # Declare here the shortcut to bring the display selection menu
 bindsym $mod+o mode "$mode_display"
@@ -181,8 +181,8 @@ set $scrot_region scrot -s 'screenshot-%Y-%m-%d_%H-%M.png' -e 'mv $f ~/Imagens'
 set $mode_screenshot Screenshot (Enter), Full Screenshot, (S) Select Region
 mode "$mode_screenshot" {
 	bindsym Return exec --no-startup-id $scrot_capture && notify-send "Screenshot saved in your Images folder", mode "default"
-		bindsym --release s exec --no-startup-id $scrot_region && notify-send "Screenshot saved in your Images folder", mode "default"
-		bindsym Escape mode "default"
+	bindsym --release s exec --no-startup-id $scrot_region && notify-send "Screenshot saved in your Images folder", mode "default"
+	bindsym Escape mode "default"
 }
 bindsym Print mode "$mode_screenshot"
 
@@ -195,19 +195,19 @@ mode "resize" {
 # Pressing up will shrink the window’s height.
 # Pressing down will grow the window’s height.
 	bindsym j resize shrink width 1 px or 1 ppt
-		bindsym k resize grow height 1 px or 1 ppt
-		bindsym l resize shrink height 1 px or 1 ppt
-		bindsym ccedilla resize grow width 1 px or 1 ppt
+	bindsym k resize grow height 1 px or 1 ppt
+	bindsym l resize shrink height 1 px or 1 ppt
+	bindsym ccedilla resize grow width 1 px or 1 ppt
 
 # same bindings, but for the arrow keys
-		bindsym Left resize shrink width 1 px or 1 ppt
-		bindsym Down resize grow height 1 px or 1 ppt
-		bindsym Up resize shrink height 1 px or 1 ppt
-		bindsym Right resize grow width 1 px or 1 ppt
+	bindsym Left resize shrink width 1 px or 1 ppt
+	bindsym Down resize grow height 1 px or 1 ppt
+	bindsym Up resize shrink height 1 px or 1 ppt
+	bindsym Right resize grow width 1 px or 1 ppt
 
 # back to normal: Enter or Escape
-		bindsym Return mode "default"
-		bindsym Escape mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -217,30 +217,26 @@ bindsym $mod+r mode "resize"
 
 ##gruvbox theme
 ## class                 border  backgr. text    indicator
-#client.focused          #676d3d #676d3d #ebdbb2 #676d3d
-#client.unfocused        #323232 #323232 #ebdbb2 #323232
-#client.focused_inactive #323232 #333333 #ebdbb2 #323232
-#client.urgent           #383a3b #383a3b #ee0000 #383a3b
+#
+#
+#
+#
 
 #Arc Red theme
 # class                 border  backgr. text    indicator
-client.focused			#CC575D #CC575D #FFFFFF #CC575D
-client.unfocused		#353945 #353945 #FFFFFF #353945
-client.focused_inactive #353945 #353945 #FFFFFF #353945
-client.urgent			#5294E2 #5294E2 #FFFFFF #5294E2
 
 ##pacman theme
 ##class                  border  backgr. text     indicator
-#client.focused          #49E3E8 #49E3E8 #FFFFFF  #49E3E8
-#client.unfocused        #000000 #000000 #FFFFFF  #49E3E8
-#client.focused_inactive #000000 #000000 #FFFFFF  #49E3E8
-#client.urgent           #FA1200 #FA1200 #000000  #FA1200
+#
+#
+#
+#
 
 hide_edge_borders both
 
 #for_window [class="^.*"] border pixel 2
-gaps inner 7
-gaps outer 7
+gaps inner 4
+gaps outer 4
 smart_gaps on
 
 #set $secondary-color #5294E2
@@ -254,38 +250,10 @@ bar {
 		mode dock
 #		position top
 		colors {
-
-##gruvbox theme
-			#background #282828
-				#statusline #ebdbb2
-				#separator  #756d59
-
-##class                              border backgr. text
-				#focused_workspace  #676d3d #676d3d #ebdbb2
-				#active_workspace   #323232 #5f676a #ebdbb2
-				#inactive_workspace #323232 #323232 #888888
-				#urgent_workspace   #333333 #900000 #ffffff
-
-#Arc red theme
-			background #353945
-			statusline #B2BECD
-			separator  #2B2E39
-
-#class                              border  backgr. text
-			focused_workspace		#CC575D #CC575D #FFFFFF
-			active_workspace		#353945 #353945 #FFFFFF
-			inactive_workspace      #353945 #353945 #FFFFFF
-			urgent_workspace		#5294E2 #5294E2 #FFFFFF
-
-
-###pacman theme
-#background #000000
-
-##class                              border backgr. text
-#focused_workspace  #49E3E8 #49E3E8 #000000
-#active_workspace   #000000 #000000 #49E3E8
-#inactive_workspace #000000 #000000 #49E3E8
-#urgent_workspace   #FA1200 #FA1200 #000000
+			statusline #AAAAAA
+			background #333333
+			focused_workspace #282828 #282828 #FFFFFF
+			inactive_workspace #333333 #333333 #AAAAAA
 		}
 }
 
@@ -313,6 +281,12 @@ exec --no-startup-id nm-applet
 exec dropbox start
 exec insync start
 exec geary --hidden
-exec conky -c .conky/SimpleConkyAntergos/conkyrc
+#exec conky -c .conky/SimpleConkyAntergos/conkyrc
 
-exec_always feh --bg-scale ~/Imagens/Linux\ Wallpaper/akira.jpg
+exec_always feh --bg-scale ~/Imagens/Linux\ Wallpaper/civtribute.png
+
+#exec_always polybar example
+
+client.unfocused #333333 #333333 #FFFFFF #333333
+client.focused_inactive #333333 #333333 #FFFFFF #000000
+client.focused #000000 #000000 #FFFFFF #000000

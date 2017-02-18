@@ -6,10 +6,11 @@ Xcursor.size: 16
 
 rofi.color-enabled: true
 !					bg		border	 separator
-rofi.color-window: #353945, #CC575D, #CC575D
+rofi.color-window: #333333, #282828, #FFFFFF
 
 
 !
-rofi.color-normal: #353945, #FFFFFF, #353945, #CC575D, #FFFFFF
-rofi.color-active: #353945, #FFFFFF, #353945, #CC575D, #FFFFFF
-rofi.color-urgent: #353945, #FFFFFF, #353945, #CC575D, #FFFFFF
+rofi.color-normal: #333333, #FFFFFF, #333333, #282828, #FFFFFF
+rofi.color-active: #333333, #FFFFFF, #333333, #282828, #FFFFFF
+rofi.color-urgent: #333333, #FFFFFF, #333333, #282828, #FFFFFF
+
