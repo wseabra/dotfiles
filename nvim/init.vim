@@ -5,7 +5,7 @@ source $HOME/.config/nvim/plugins.vim
 syntax on             " Enable syntax highlighting
 filetype indent plugin on    " Enable filetype-specific indenting and plugins
 set nocompatible      " We're running Vim, not Vi!
-set shell=/bin/bash
+set shell=/usr/bin/zsh
 set t_Co=256
 set cursorline
 set number
@@ -46,22 +46,22 @@ let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 "Neomake
 
 autocmd! BufWritePost * Neomake
-"autocmd! BufWritePost *.c Neomake clang
-"autocmd! BufWritePost *.cpp Neomake clang
+autocmd! BufWritePost *.c Neomake gcc
+autocmd! BufWritePost *.cpp Neomake gcc
 "let g:neomake_cpp_enabled_makers = ['gcc']
 let g:neomake_open_list = 2
 
-let g:neomake_cpp_clang_maker = {
-			\ 'args': ['-Wno-unused-variable'],
+let g:neomake_cpp_gcc_maker = {
+			\ 'args': ['-Wno-unused-variable -Wunused-parameter'],
 			\ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
 			\ }
-let g:neomake_cpp_enabled_makers = ['clang']
+let g:neomake_cpp_enabled_makers = ['gcc']
 
-let g:neomake_c_clang_maker = {
-			\ 'args': ['-Wno-unused-variable'],
+let g:neomake_c_gcc_maker = {
+			\ 'args': ['-Wno-unused-variable -Wunused-parameter'],
 			\ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
 			\ }
-let g:neomake_c_enabled_makers = ['clang']
+let g:neomake_c_enabled_makers = ['gcc']
 
 let g:neomake_matlab_mlint_maker = {
 			\ 'exe': '/home/waldomiro/Matlab/bin/glnxa64/mlint',
