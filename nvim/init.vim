@@ -31,12 +31,19 @@ let g:NERDTreeShowHidden=1
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 "airline
-let g:airline_theme='molokai'
+let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tmuxline#enabled = 0
 "let g:airline#extensions#bufferline#overwrite_variables = 1
 "let g:airline#extensions#bufferline#enabled = 1
+
+"vimtex
+let g:vimtex_view_general_viewer = 'mupdf'
+"let g:vimtex_view_general_viewer = 'qpdfview'
+            "let g:vimtex_view_general_options
+              "\ = '--unique @pdf\#src:@tex:@line:@col'
+            "let g:vimtex_view_general_options_latexmk = '--unique'
 
 "deoplete
 let g:deoplete#enable_at_startup = 1
@@ -48,6 +55,9 @@ let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 autocmd! BufWritePost * Neomake
 autocmd! BufWritePost *.c Neomake gcc
 autocmd! BufWritePost *.cpp Neomake gcc
+autocmd! BufWritePost *.m Neomake mlint
+
+
 "let g:neomake_cpp_enabled_makers = ['gcc']
 let g:neomake_open_list = 2
 
@@ -64,7 +74,7 @@ let g:neomake_c_gcc_maker = {
 let g:neomake_c_enabled_makers = ['gcc']
 
 let g:neomake_matlab_mlint_maker = {
-			\ 'exe': '/home/waldomiro/Matlab/bin/glnxa64/mlint',
+			\ 'exe': '/home/waldomiro/MATLAB_r2016b/bin/glnxa64/mlint',
 			\ 'errorformat': 'L %l \(C %c\): %m,L %l (C %c-%*[0-9]): %m',
 			\ }
 let g:neomake_matlab_enabled_makers = ['mlint']
@@ -83,11 +93,11 @@ endif
 "if terminal has support for 256 colors
 set termguicolors
 
-colorscheme monokai
-let g:monokai_term_italic = 1
+colorscheme gruvbox
+"let g:monokai_term_italic = 1
 "let g:nord_italic_comments = 1
-"let g:gruvbox_contrast_dark='normal'
-"let g:gruvbox_termcolors=256
+let g:gruvbox_contrast_dark='normal'
+let g:gruvbox_termcolors=256
 "hi Normal guibg=NONE ctermbg=NONE
 
 if has('nvim')
@@ -101,6 +111,7 @@ endfunction
 
 autocmd BufWritePre     * :call TrimWhiteSpace()
 
+"autocmd BufNewFile,BufRead *.tex set makeprg=pdflatex\ %\ &&\ xdg-open\ %:r.pdf\ &&
 
 autocmd! BufWritePost * wshada!
 
