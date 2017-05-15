@@ -52,10 +52,10 @@ let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
 "Neomake
 
-autocmd! BufWritePost * Neomake
-autocmd! BufWritePost *.c Neomake gcc
-autocmd! BufWritePost *.cpp Neomake gcc
-autocmd! BufWritePost *.m Neomake mlint
+"autocmd! BufWritePost * Neomake
+"autocmd! BufWritePost *.c Neomake gcc
+"autocmd! BufWritePost *.cpp Neomake gcc
+"autocmd! BufWritePost *.m Neomake mlint
 
 
 "let g:neomake_cpp_enabled_makers = ['gcc']
