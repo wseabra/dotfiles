@@ -15,7 +15,7 @@ Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & m
 Plug 'majutsushi/tagbar'		"side window with tags from the code
 Plug 'Shougo/deoplete.nvim' | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' | Plug 'zchee/deoplete-jedi' | Plug 'artur-shaik/vim-javacomplete2' "autocomplete tools
 Plug 'neomake/neomake'		"Linting code asynchronous
-Plug 'a.vim'	"Switch between .c and .h files
+"Plug 'a.vim'	"Switch between .c and .h files
 Plug 'edkolev/tmuxline.vim' "tmux theme integration
 "Plug 'juanseabra/tender.vim', {'branch': 'suport_for_SignColumn'} "my fork of tender theme
 "Plug 'bling/vim-bufferline'
@@ -32,6 +32,7 @@ Plug 'morhetz/gruvbox'
 "Plug 'jansenfuller/crayon'
 "Plug 'crusoexia/vim-monokai'
 Plug 'lervag/vimtex'
+"Plug 'donRaphaco/neotex', { 'for': 'tex' }
 Plug 'poppyschmo/deoplete-latex'
 "Plug 'vim-latex/vim-latex'
 call plug#end()

@@ -23,7 +23,7 @@ set completeopt=menu
 set background=dark
 set undodir=~/.config/nvim/undodir
 set undofile
-
+"set spell spelllang=pt,en
 "NERDTree
 let g:NERDTreeShowHidden=1
 
@@ -39,11 +39,11 @@ let g:airline#extensions#tmuxline#enabled = 0
 "let g:airline#extensions#bufferline#enabled = 1
 
 "vimtex
-let g:vimtex_view_general_viewer = 'mupdf'
-"let g:vimtex_view_general_viewer = 'qpdfview'
-            "let g:vimtex_view_general_options
-              "\ = '--unique @pdf\#src:@tex:@line:@col'
-            "let g:vimtex_view_general_options_latexmk = '--unique'
+"let g:vimtex_view_general_viewer = 'mupdf'
+let g:vimtex_view_general_viewer = 'qpdfview'
+            let g:vimtex_view_general_options
+              \ = '--unique @pdf\#src:@tex:@line:@col'
+            let g:vimtex_view_general_options_latexmk = '--unique'
 
 "deoplete
 let g:deoplete#enable_at_startup = 1
@@ -74,7 +74,7 @@ let g:neomake_c_gcc_maker = {
 let g:neomake_c_enabled_makers = ['gcc']
 
 let g:neomake_matlab_mlint_maker = {
-			\ 'exe': '/home/waldomiro/MATLAB_r2016b/bin/glnxa64/mlint',
+			\ 'exe': '/home/waldomiro/R2016b/bin/glnxa64/mlint',
 			\ 'errorformat': 'L %l \(C %c\): %m,L %l (C %c-%*[0-9]): %m',
 			\ }
 let g:neomake_matlab_enabled_makers = ['mlint']
@@ -114,10 +114,14 @@ autocmd BufWritePre     * :call TrimWhiteSpace()
 "autocmd BufNewFile,BufRead *.tex set makeprg=pdflatex\ %\ &&\ xdg-open\ %:r.pdf\ &&
 
 autocmd! BufWritePost * wshada!
+autocmd FileType tex set spell spelllang=pt,en
+autocmd FileType txt set spell spelllang=pt,en
 
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+noremap <F6> :set spell spelllang=<cr>
+noremap <F5> :set spell spelllang=pt,en<cr>
 map <F8> :TagbarToggle<CR>
-"map <F9> :Neomake!<CR>:copen<CR>
+map <F9> :Neomake!<CR>:copen<CR>
 noremap <F7> <Esc>:NERDTreeTabsToggle<CR>
 map <C-n> <Esc>:tabnew<CR>
 imap <C-s> <Esc>:w<CR>
@@ -141,3 +145,6 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap q: <Nop>
 nnoremap Q <Nop>
+noremap j gj
+"move in large line as multiple lines
+noremap k gk
