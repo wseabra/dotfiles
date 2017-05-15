@@ -41,9 +41,9 @@ let g:airline#extensions#tmuxline#enabled = 0
 "vimtex
 "let g:vimtex_view_general_viewer = 'mupdf'
 let g:vimtex_view_general_viewer = 'qpdfview'
-            let g:vimtex_view_general_options
-              \ = '--unique @pdf\#src:@tex:@line:@col'
-            let g:vimtex_view_general_options_latexmk = '--unique'
+let g:vimtex_view_general_options
+			\ = '--unique @pdf\#src:@tex:@line:@col'
+let g:vimtex_view_general_options_latexmk = '--unique'
 
 "deoplete
 let g:deoplete#enable_at_startup = 1
@@ -129,7 +129,7 @@ map <C-s> <Esc>:w<CR>
 imap <C-z> <Esc>:ui<CR>
 map <C-z> <Esc>:u<CR>
 noremap <C-a> GVgg
-noremap <C-I> <Esc>:mark z<CR>gg=G'z<Esc>:delmarks z<CR>
+noremap <C-I> <Esc>gg=G``
 map cn :cn<CR>
 map cp :cp<CR>
 map bn :bn<CR>
