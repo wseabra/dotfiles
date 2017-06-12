@@ -22,7 +22,7 @@ Plug 'edkolev/tmuxline.vim' "tmux theme integration
 "themes to use when i'm on the mood
 "Plug 'joshdick/onedark.vim
 Plug 'morhetz/gruvbox'
-"Plug 'tomasr/molokai'
+Plug 'tomasr/molokai'
 "Plug 'AlessandroYorba/Sidonia'
 "Plug 'davb5/wombat256dave'
 "Plug 'arcticicestudio/nord-vim'

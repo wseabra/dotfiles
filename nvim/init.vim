@@ -13,7 +13,7 @@ set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 set laststatus=2
-set scrolloff=8         "Start scrolling when we're 8 lines away from margins
+set scrolloff=5         "Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 set autoread
@@ -31,7 +31,7 @@ let g:NERDTreeShowHidden=1
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 "airline
-let g:airline_theme='gruvbox'
+let g:airline_theme='molokai'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tmuxline#enabled = 0
@@ -39,11 +39,28 @@ let g:airline#extensions#tmuxline#enabled = 0
 "let g:airline#extensions#bufferline#enabled = 1
 
 "vimtex
-"let g:vimtex_view_general_viewer = 'mupdf'
-let g:vimtex_view_general_viewer = 'qpdfview'
-let g:vimtex_view_general_options
-			\ = '--unique @pdf\#src:@tex:@line:@col'
-let g:vimtex_view_general_options_latexmk = '--unique'
+let g:vimtex_view_general_viewer = 'evince'
+"let g:vimtex_view_general_viewer = 'qpdfview'
+"let g:vimtex_view_general_options
+			"\ = '--unique @pdf\#src:@tex:@line:@col'
+"let g:vimtex_view_general_options_latexmk = '--unique'
+
+
+  if !exists('g:deoplete#omni#input_patterns')
+      let g:deoplete#omni#input_patterns = {}
+  endif
+  let g:deoplete#omni#input_patterns.tex = '\\(?:'
+        \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+        \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
+        \ . '|hyperref\s*\[[^]]*'
+        \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+        \ . '|(?:include(?:only)?|input)\s*\{[^}]*'
+        \ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+        \ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
+        \ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
+        \ . '|usepackage(\s*\[[^]]*\])?\s*\{[^}]*'
+        \ . '|documentclass(\s*\[[^]]*\])?\s*\{[^}]*'
+        \ .')'
 
 "deoplete
 let g:deoplete#enable_at_startup = 1
@@ -93,12 +110,12 @@ endif
 "if terminal has support for 256 colors
 set termguicolors
 
-colorscheme gruvbox
-"let g:monokai_term_italic = 1
+colorscheme molokai
+let g:molokai_term_italic = 1
 "let g:nord_italic_comments = 1
-let g:gruvbox_contrast_dark='normal'
-let g:gruvbox_termcolors=256
-"hi Normal guibg=NONE ctermbg=NONE
+"let g:gruvbox_contrast_dark='normal'
+"let g:gruvbox_termcolors=256
+hi Normal guibg=NONE ctermbg=NONE
 
 if has('nvim')
 	nmap <BS> <C-W>h
