@@ -31,7 +31,7 @@ let g:NERDTreeShowHidden=1
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 "airline
-let g:airline_theme='molokai'
+let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tmuxline#enabled = 0
@@ -110,12 +110,12 @@ endif
 "if terminal has support for 256 colors
 set termguicolors
 
-colorscheme molokai
-let g:molokai_term_italic = 1
+colorscheme gruvbox
+"let g:molokai_term_italic = 1
 "let g:nord_italic_comments = 1
-"let g:gruvbox_contrast_dark='normal'
-"let g:gruvbox_termcolors=256
-hi Normal guibg=NONE ctermbg=NONE
+let g:gruvbox_contrast_dark='normal'
+let g:gruvbox_termcolors=256
+"hi Normal guibg=NONE ctermbg=NONE
 
 if has('nvim')
 	nmap <BS> <C-W>h
