@@ -5,7 +5,7 @@ source $HOME/.config/nvim/plugins.vim
 syntax on             " Enable syntax highlighting
 filetype indent plugin on    " Enable filetype-specific indenting and plugins
 set nocompatible      " We're running Vim, not Vi!
-set shell=/usr/bin/zsh
+set shell=/bin/zsh
 set t_Co=256
 set cursorline
 set number
@@ -23,15 +23,15 @@ set completeopt=menu
 set background=dark
 set undodir=~/.config/nvim/undodir
 set undofile
+set mouse=a
 "set spell spelllang=pt,en
+
 "NERDTree
 let g:NERDTreeShowHidden=1
 
-"enable changing shape cursor
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 "airline
-let g:airline_theme='gruvbox'
+let g:airline_theme='molokai'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tmuxline#enabled = 0
@@ -39,8 +39,8 @@ let g:airline#extensions#tmuxline#enabled = 0
 "let g:airline#extensions#bufferline#enabled = 1
 
 "vimtex
-let g:vimtex_view_general_viewer = 'evince'
-"let g:vimtex_view_general_viewer = 'qpdfview'
+"let g:vimtex_view_general_viewer = 'evince'
+let g:vimtex_view_general_viewer = 'qpdfview'
 "let g:vimtex_view_general_options
 			"\ = '--unique @pdf\#src:@tex:@line:@col'
 "let g:vimtex_view_general_options_latexmk = '--unique'
@@ -69,7 +69,7 @@ let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
 "Neomake
 
-"autocmd! BufWritePost * Neomake
+autocmd! BufWritePost * Neomake
 "autocmd! BufWritePost *.c Neomake gcc
 "autocmd! BufWritePost *.cpp Neomake gcc
 "autocmd! BufWritePost *.m Neomake mlint
@@ -110,11 +110,11 @@ endif
 "if terminal has support for 256 colors
 set termguicolors
 
-colorscheme gruvbox
-"let g:molokai_term_italic = 1
+colorscheme molokai
+let g:molokai_term_italic = 1
 "let g:nord_italic_comments = 1
-let g:gruvbox_contrast_dark='normal'
-let g:gruvbox_termcolors=256
+"let g:gruvbox_contrast_dark='normal'
+"let g:gruvbox_termcolors=256
 "hi Normal guibg=NONE ctermbg=NONE
 
 if has('nvim')
