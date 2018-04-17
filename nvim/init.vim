@@ -108,7 +108,7 @@ if (has("nvim"))
 endif
 
 "if terminal has support for 256 colors
-set termguicolors
+"set termguicolors
 
 colorscheme molokai
 let g:molokai_term_italic = 1
@@ -165,3 +165,5 @@ nnoremap Q <Nop>
 noremap j gj
 "move in large line as multiple lines
 noremap k gk
+noremap <down> gj
+noremap <up> gk

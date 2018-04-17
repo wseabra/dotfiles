@@ -34,3 +34,5 @@
 ! LightGrey + White
 *color7:  #a89984
 *color15: #ebdbb2
+
+*.font:  xft:Hack:size=10.5
