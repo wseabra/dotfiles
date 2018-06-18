@@ -7,19 +7,20 @@ filetype indent plugin on    " Enable filetype-specific indenting and plugins
 set nocompatible      " We're running Vim, not Vi!
 set shell=/bin/zsh
 set t_Co=256
+set termguicolors
 set cursorline
 set number
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
 set laststatus=2
-set scrolloff=5         "Start scrolling when we're 8 lines away from margins
+set scrolloff=5         "Start scrolling when we're 5 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 set autoread
 set noshowmode
 set completeopt=menu
-"set list
+set list
 set background=dark
 set undodir=~/.config/nvim/undodir
 set undofile
@@ -31,16 +32,14 @@ let g:NERDTreeShowHidden=1
 
 
 "airline
-let g:airline_theme='molokai'
+let g:airline_theme='onedark'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tmuxline#enabled = 0
-"let g:airline#extensions#bufferline#overwrite_variables = 1
-"let g:airline#extensions#bufferline#enabled = 1
 
 "vimtex
 "let g:vimtex_view_general_viewer = 'evince'
-let g:vimtex_view_general_viewer = 'qpdfview'
+"let g:vimtex_view_general_viewer = 'qpdfview'
 "let g:vimtex_view_general_options
 			"\ = '--unique @pdf\#src:@tex:@line:@col'
 "let g:vimtex_view_general_options_latexmk = '--unique'
@@ -70,12 +69,7 @@ let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 "Neomake
 
 autocmd! BufWritePost * Neomake
-"autocmd! BufWritePost *.c Neomake gcc
-"autocmd! BufWritePost *.cpp Neomake gcc
-"autocmd! BufWritePost *.m Neomake mlint
 
-
-"let g:neomake_cpp_enabled_makers = ['gcc']
 let g:neomake_open_list = 2
 
 let g:neomake_cpp_gcc_maker = {
@@ -100,6 +94,8 @@ let g:neomake_matlab_enabled_makers = ['mlint']
 "javacomplete2
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
+autocmd FileType cs setlocal omnifunc=omnisharp#Complete
+
 "reload init.vim after save
 autocmd BufWritePost init.vim source ~/.config/nvim/init.vim
 
@@ -107,14 +103,10 @@ if (has("nvim"))
 	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
-"if terminal has support for 256 colors
-"set termguicolors
-
-colorscheme molokai
-let g:molokai_term_italic = 1
-"let g:nord_italic_comments = 1
-"let g:gruvbox_contrast_dark='normal'
-"let g:gruvbox_termcolors=256
+" THEME
+colorscheme onedark
+let g:onedark_termcolors = 256
+let g:onedark_terminal_italics = 1
 "hi Normal guibg=NONE ctermbg=NONE
 
 if has('nvim')
@@ -128,12 +120,11 @@ endfunction
 
 autocmd BufWritePre     * :call TrimWhiteSpace()
 
-"autocmd BufNewFile,BufRead *.tex set makeprg=pdflatex\ %\ &&\ xdg-open\ %:r.pdf\ &&
-
 autocmd! BufWritePost * wshada!
 autocmd FileType tex set spell spelllang=pt,en
 autocmd FileType txt set spell spelllang=pt,en
 
+"Shortcuts
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 noremap <F6> :set spell spelllang=<cr>
 noremap <F5> :set spell spelllang=pt,en<cr>
@@ -162,8 +153,8 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap q: <Nop>
 nnoremap Q <Nop>
-noremap j gj
 "move in large line as multiple lines
+noremap j gj
 noremap k gk
 noremap <down> gj
 noremap <up> gk

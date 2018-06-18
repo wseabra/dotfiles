@@ -12,9 +12,11 @@ Plug  'honza/vim-snippets'	"This repository contains snippets files for various 
 Plug 'ervandew/supertab'		"use of <tab> to all text insertion on code
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'majutsushi/tagbar'		"side window with tags from the code
-Plug 'Shougo/deoplete.nvim' | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' | Plug 'zchee/deoplete-jedi' | Plug 'artur-shaik/vim-javacomplete2' | Plug 'poppyschmo/deoplete-latex' "autocomplete tools
+Plug 'Shougo/deoplete.nvim' | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' | Plug 'zchee/deoplete-jedi' | Plug 'artur-shaik/vim-javacomplete2' | Plug 'poppyschmo/deoplete-latex' | Plug 'Shougo/neco-vim' "autocomplete tools
+Plug 'OmniSharp/omnisharp-vim'
 Plug 'neomake/neomake'		"Linting code asynchronous
 Plug 'lervag/vimtex'	"latex support
-Plug 'morhetz/gruvbox'	"gruvbox theme
-Plug 'tomasr/molokai'	"molokai theme
+"Plug 'morhetz/gruvbox'	"gruvbox theme
+"Plug 'tomasr/molokai'	"molokai theme
+Plug 'joshdick/onedark.vim'
 call plug#end()
