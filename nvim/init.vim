@@ -1,128 +1,77 @@
-"Configuration file for neovim
-"author: Waldomiro Juan Gadelha Seabra
-"wjgs@icomp.ufam.edu.br
-source $HOME/.config/nvim/plugins.vim
-syntax on             " Enable syntax highlighting
-filetype indent plugin on    " Enable filetype-specific indenting and plugins
-set nocompatible      " We're running Vim, not Vi!
+"Config file for Vim
+"Waldomiro Seabra
+
+call plug#begin('~/.config/nvim/plugged')
+Plug 'tomasr/molokai'
+Plug 'scrooloose/nerdtree'	"folder navigator
+"Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
+Plug 'majutsushi/tagbar'		"side window with tags from the code
+Plug 'tpope/vim-fugitive'		"git integration
+Plug 'scrooloose/nerdcommenter'	"commenter helper
+Plug 'airblade/vim-gitgutter' "git diff integration
+Plug 'ctrlpvim/ctrlp.vim'		"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
+Plug 'jiangmiao/auto-pairs'		"Vim plugin, insert or delete brackets, parens, quotes in pair
+Plug 'SirVer/ultisnips'		"UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
+Plug 'honza/vim-snippets'	"This repository contains snippets files for various programming languages.
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }| Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' | Plug 'zchee/deoplete-jedi' | Plug 'wokalski/autocomplete-flow' "Dark powered asynchronous completion framework for neovim/Vim8
+Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
+call plug#end()
+
+syntax on
+filetype indent plugin on
+set nocompatible
 set shell=/bin/zsh
-set t_Co=256
-set termguicolors
 set cursorline
 set number
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
-set laststatus=2
-set scrolloff=5         "Start scrolling when we're 5 lines away from margins
-set sidescrolloff=15
-set sidescroll=1
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
+set scrolloff=5
 set autoread
 set noshowmode
 set completeopt=menu
-set list
-set background=dark
-set undodir=~/.config/nvim/undodir
+set undodir=~/.vim/undodir
 set undofile
 set mouse=a
-"set spell spelllang=pt,en
+set guifont=Inconsolata\ 12
+
+colorscheme molokai
 
 "NERDTree
 let g:NERDTreeShowHidden=1
 
-
 "airline
-let g:airline_theme='onedark'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tmuxline#enabled = 0
-
-"vimtex
-"let g:vimtex_view_general_viewer = 'evince'
-"let g:vimtex_view_general_viewer = 'qpdfview'
-"let g:vimtex_view_general_options
-			"\ = '--unique @pdf\#src:@tex:@line:@col'
-"let g:vimtex_view_general_options_latexmk = '--unique'
-
-
-  if !exists('g:deoplete#omni#input_patterns')
-      let g:deoplete#omni#input_patterns = {}
-  endif
-  let g:deoplete#omni#input_patterns.tex = '\\(?:'
-        \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
-        \ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
-        \ . '|hyperref\s*\[[^]]*'
-        \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-        \ . '|(?:include(?:only)?|input)\s*\{[^}]*'
-        \ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-        \ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
-        \ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
-        \ . '|usepackage(\s*\[[^]]*\])?\s*\{[^}]*'
-        \ . '|documentclass(\s*\[[^]]*\])?\s*\{[^}]*'
-        \ .')'
+"let g:airline_theme='molokai'
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline_powerline_fonts = 1
+"let g:airline#extensions#tmuxline#enabled = 0
 
 "deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_camel_case = 1
+let g:deoplete#enable_refresh_always = 1
+let g:deoplete#max_abbr_width = 0
+let g:deoplete#max_menu_width = 0
+let g:deoplete#omni#input_patterns = get(g:,'deoplete#omni#input_patterns',{})
+
 let g:deoplete#sources#clang#libclang_path =  '/usr/lib/libclang.so'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
-"Neomake
+let g:neosnippet#enable_completed_snippet = 1
 
-autocmd! BufWritePost * Neomake
-
+"neomake
+call neomake#configure#automake('nrwi', 500)
 let g:neomake_open_list = 2
-
-let g:neomake_cpp_gcc_maker = {
-			\ 'args': ['-Wno-unused-variable -Wunused-parameter'],
-			\ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-			\ }
-let g:neomake_cpp_enabled_makers = ['gcc']
-
-let g:neomake_c_gcc_maker = {
-			\ 'args': ['-Wno-unused-variable -Wunused-parameter'],
-			\ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-			\ }
-let g:neomake_c_enabled_makers = ['gcc']
-
-let g:neomake_matlab_mlint_maker = {
-			\ 'exe': '/home/waldomiro/R2016b/bin/glnxa64/mlint',
-			\ 'errorformat': 'L %l \(C %c\): %m,L %l (C %c-%*[0-9]): %m',
-			\ }
-let g:neomake_matlab_enabled_makers = ['mlint']
-
-
-"javacomplete2
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
-autocmd FileType cs setlocal omnifunc=omnisharp#Complete
-
-"reload init.vim after save
-autocmd BufWritePost init.vim source ~/.config/nvim/init.vim
-
-if (has("nvim"))
-	let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-
-" THEME
-colorscheme onedark
-let g:onedark_termcolors = 256
-let g:onedark_terminal_italics = 1
-"hi Normal guibg=NONE ctermbg=NONE
-
-if has('nvim')
-	nmap <BS> <C-W>h
-endif
+let g:neomake_javascript_enabled_makers = ['eslint']
 
 " Removes trailing spaces
 function! TrimWhiteSpace()
 	%s/\s\+$//e
 endfunction
 
-autocmd BufWritePre     * :call TrimWhiteSpace()
-
-autocmd! BufWritePost * wshada!
-autocmd FileType tex set spell spelllang=pt,en
-autocmd FileType txt set spell spelllang=pt,en
+autocmd BufWritePre * :call TrimWhiteSpace()
 
 "Shortcuts
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
@@ -130,12 +79,8 @@ noremap <F6> :set spell spelllang=<cr>
 noremap <F5> :set spell spelllang=pt,en<cr>
 map <F8> :TagbarToggle<CR>
 map <F9> :Neomake!<CR>:copen<CR>
-noremap <F7> <Esc>:NERDTreeTabsToggle<CR>
+noremap <F7> <Esc>:NERDTreeToggle<CR>
 map <C-n> <Esc>:tabnew<CR>
-imap <C-s> <Esc>:w<CR>
-map <C-s> <Esc>:w<CR>
-imap <C-z> <Esc>:ui<CR>
-map <C-z> <Esc>:u<CR>
 noremap <C-a> GVgg
 noremap <C-I> <Esc>gg=G``
 map cn :cn<CR>

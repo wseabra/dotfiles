@@ -8,7 +8,7 @@ export ZSH=/home/waldomiro/.oh-my-zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 #ZSH_THEME="robbyrussell"
-ZSH_THEME="gnzh"
+ZSH_THEME="kolo"
 #ZSH_THEME="gruvbox-powerline"
 
 # Uncomment the following line to use case-sensitive completion.
@@ -87,5 +87,5 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #alias matlab="/home/waldomiro/MATLAB_r2016b/bin/matlab"
 #alias matlab-cli="matlab -nodesktop"
-alias vim="nvim"
+#alias vim="nvim"
 alias dwarffortress="/home/waldomiro/df/df_linux/df"
