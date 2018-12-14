@@ -2,19 +2,19 @@
 "Waldomiro Seabra
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'tomasr/molokai' "theme
-Plug 'scrooloose/nerdtree' "folder navigator
-Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
-Plug 'majutsushi/tagbar' "side window with tags from the code
-Plug 'tpope/vim-fugitive'	"git integration
-Plug 'scrooloose/nerdcommenter'	"commenter helper
-Plug 'airblade/vim-gitgutter' "git diff integration
-Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
-Plug 'jiangmiao/auto-pairs' "Vim plugin, insert or delete brackets, parens, quotes in pair
-Plug 'SirVer/ultisnips' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
-Plug 'honza/vim-snippets'	"This repository contains snippets files for various programming languages.
-Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'} | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' "Dark powered asynchronous completion framework for neovim/Vim8
-Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
+    Plug 'tomasr/molokai' "theme
+    Plug 'scrooloose/nerdtree' "folder navigator
+    Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
+    Plug 'majutsushi/tagbar' "side window with tags from the code
+    Plug 'tpope/vim-fugitive'	"git integration
+    Plug 'scrooloose/nerdcommenter'	"commenter helper
+    Plug 'airblade/vim-gitgutter' "git diff integration
+    Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
+    Plug 'jiangmiao/auto-pairs' "Vim plugin, insert or delete brackets, parens, quotes in pair
+    Plug 'SirVer/ultisnips' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
+    Plug 'honza/vim-snippets'	"This repository contains snippets files for various programming languages.
+    Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'} | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' "Dark powered asynchronous completion framework for neovim/Vim8
+    Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
 call plug#end()
 
 syntax on
@@ -60,7 +60,7 @@ call neomake#configure#automake('nrwi', 500)
 
 " Removes trailing spaces
 function! TrimWhiteSpace()
-  %s/\s\+$//e
+    %s/\s\+$//e
 endfunction
 
 autocmd BufWritePre * :call TrimWhiteSpace()
