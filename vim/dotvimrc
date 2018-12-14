@@ -2,21 +2,21 @@
 "Waldomiro Seabra
 
 call plug#begin('~/.vim/plugged')
-Plug 'tomasr/molokai'
-Plug 'scrooloose/nerdtree'	"folder navigator
-Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
-Plug 'majutsushi/tagbar'		"side window with tags from the code
-Plug 'tpope/vim-fugitive'		"git integration
-Plug 'scrooloose/nerdcommenter'	"commenter helper
-Plug 'airblade/vim-gitgutter' "git diff integration
-Plug 'ctrlpvim/ctrlp.vim'		"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
-Plug 'jiangmiao/auto-pairs'		"Vim plugin, insert or delete brackets, parens, quotes in pair
-Plug 'SirVer/ultisnips'		"UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
-Plug 'honza/vim-snippets'	"This repository contains snippets files for various programming languages.
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' | Plug 'zchee/deoplete-jedi' | Plug 'wokalski/autocomplete-flow' "Dark powered asynchronous completion framework for neovim/Vim8
-Plug 'roxma/nvim-yarp' "coisas do deoplete
-Plug 'roxma/vim-hug-neovim-rpc' "coisas do deoplete
-Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
+    Plug 'tomasr/molokai'
+    Plug 'scrooloose/nerdtree'	"folder navigator
+    Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
+    Plug 'majutsushi/tagbar'		"side window with tags from the code
+    Plug 'tpope/vim-fugitive'		"git integration
+    Plug 'scrooloose/nerdcommenter'	"commenter helper
+    Plug 'airblade/vim-gitgutter' "git diff integration
+    Plug 'ctrlpvim/ctrlp.vim'		"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
+    Plug 'jiangmiao/auto-pairs'		"Vim plugin, insert or delete brackets, parens, quotes in pair
+    Plug 'SirVer/ultisnips'		"UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
+    Plug 'honza/vim-snippets'	"This repository contains snippets files for various programming languages.
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' } | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' "Dark powered asynchronous completion framework for neovim/Vim8
+    Plug 'roxma/nvim-yarp' "coisas do deoplete
+    Plug 'roxma/vim-hug-neovim-rpc' "coisas do deoplete
+    Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
 call plug#end()
 
 syntax on
@@ -36,9 +36,16 @@ set completeopt=menuone
 set undodir=~/.vim/undodir
 set undofile
 set mouse=a
-set guifont=Inconsolata\ 12
+set guifont=Hack\ 9
 
 colorscheme molokai
+
+"GVim
+if has("gui_running")
+  " GUI is running or is about to start.
+  " Maximize gvim window (for an alternative on Windows, see simalt below).
+  set lines=999 columns=999
+endif
 
 "NERDTree
 let g:NERDTreeShowHidden=1
@@ -61,7 +68,6 @@ let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 "neomake
 call neomake#configure#automake('nrwi', 500)
 "let g:neomake_open_list = 2
-let g:neomake_javascript_enabled_makers = ['eslint']
 
 " Removes trailing spaces
 function! TrimWhiteSpace()
