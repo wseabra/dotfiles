@@ -15,6 +15,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'honza/vim-snippets'	"This repository contains snippets files for various programming languages.
     Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'} | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' "Dark powered asynchronous completion framework for neovim/Vim8
     Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
+    Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 call plug#end()
 
 syntax on
@@ -35,6 +36,11 @@ set undofile
 set mouse=a
 
 colorscheme molokai
+
+"cpp enhanced highlighting
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
 
 "NERDTree
 let g:NERDTreeShowHidden=1
