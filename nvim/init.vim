@@ -3,6 +3,7 @@
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'tomasr/molokai' "theme
+Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree' "folder navigator
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'majutsushi/tagbar' "side window with tags from the code
@@ -14,7 +15,7 @@ Plug 'jiangmiao/auto-pairs' "Vim plugin, insert or delete brackets, parens, quot
 Plug 'SirVer/ultisnips' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
 Plug 'honza/vim-snippets'	"This repository contains snippets files for various programming languages.
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'} | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' "Dark powered asynchronous completion framework for neovim/Vim8
-"Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
+Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 call plug#end()
 
@@ -34,8 +35,13 @@ set completeopt=menuone "type of completion window
 set undodir=~/.config/nvim/undodir "place of undo dir
 set undofile "undo file
 set mouse=a "activate mouse
+set background=dark
 
-colorscheme molokai
+colorscheme gruvbox
+
+let g:gruvbox_italic = 1
+let g:gruvbox_contrast_dark = 'hard'
+
 "cpp enhanced highlighting
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
@@ -44,8 +50,11 @@ let g:cpp_class_decl_highlight = 1
 "NERDTree
 let g:NERDTreeShowHidden=1
 
+"TagBar
+let g:tagbar_sort = 0
+
 "airline
-let g:airline_theme='molokai'
+let g:airline_theme='gruvbox'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
@@ -57,19 +66,21 @@ let g:deoplete#max_abbr_width = 0
 let g:deoplete#max_menu_width = 0
 
 let g:deoplete#sources#clang#libclang_path =  '/usr/lib/llvm-3.8/lib/libclang.so.1'
-let g:deoplete#sources#clang#clang_header = '/usr/bin/clang'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.8/lib/clang'
 
 "neomake
 call neomake#configure#automake('nrwi', 500)
 "let g:neomake_open_list = 2
 
+let g:neomake_cpp_enabled_makers = ['gcc']
+
 " Removes trailing spaces
-function! TrimWhiteSpace()
-    %s/\s\+$//e
-endfunction
+"function! TrimWhiteSpace()
+    "%s/\s\+$//e
+"endfunction
 
-autocmd BufWritePre * :call TrimWhiteSpace()
-
+"autocmd BufWritePre * :call TrimWhiteSpace()
+au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
 "Shortcuts
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 noremap <F6> :set spell spelllang=<cr>
@@ -100,3 +111,4 @@ noremap j gj
 noremap k gk
 noremap <down> gj
 noremap <up> gk
+noremap <C-Space> :CtrlPBuffer<CR>
