@@ -24,7 +24,7 @@ filetype indent plugin on
 set shell=/bin/zsh "shell
 set cursorline "enable cursorline
 set number "show line number
-set colorcolumn=120 "color column 120
+set colorcolumn=80 "color column 80
 set shiftwidth=4 "size of identation
 set tabstop=4 "size of tab
 set expandtab "expand tab into spaces
@@ -36,6 +36,7 @@ set undodir=~/.config/nvim/undodir "place of undo dir
 set undofile "undo file
 set mouse=a "activate mouse
 set background=dark
+set termguicolors
 
 colorscheme gruvbox
 
@@ -72,7 +73,7 @@ let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.8/lib/clang'
 call neomake#configure#automake('nrwi', 500)
 "let g:neomake_open_list = 2
 
-let g:neomake_cpp_enabled_makers = ['gcc']
+let g:neomake_cpp_enabled_makers = ['gcc', 'cpplint']
 
 " Removes trailing spaces
 "function! TrimWhiteSpace()
