@@ -2,7 +2,6 @@
 "Waldomiro Seabra
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'tomasr/molokai' "theme
 Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree' "folder navigator
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
@@ -37,6 +36,8 @@ set undofile "undo file
 set mouse=a "activate mouse
 set background=dark
 set termguicolors
+set foldmethod=syntax
+set foldlevelstart=20
 
 colorscheme gruvbox
 
@@ -67,7 +68,7 @@ let g:deoplete#max_abbr_width = 0
 let g:deoplete#max_menu_width = 0
 
 let g:deoplete#sources#clang#libclang_path =  '/usr/lib/llvm-3.8/lib/libclang.so.1'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.8/lib/clang'
+let g:deoplete#sources#clang#clang_header = '/usr/bin/clang'
 
 "neomake
 call neomake#configure#automake('nrwi', 500)
@@ -75,12 +76,6 @@ call neomake#configure#automake('nrwi', 500)
 
 let g:neomake_cpp_enabled_makers = ['gcc', 'cpplint']
 
-" Removes trailing spaces
-"function! TrimWhiteSpace()
-    "%s/\s\+$//e
-"endfunction
-
-"autocmd BufWritePre * :call TrimWhiteSpace()
 au BufWritePost *.c,*.cpp,*.h silent! !ctags -R &
 "Shortcuts
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
