@@ -16,8 +16,8 @@ Plug 'honza/vim-snippets'	"This repository contains snippets files for various p
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'} | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' "Dark powered asynchronous completion framework for neovim/Vim8
 Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
-Plug 'craigemery/vim-autotag' "Automatically discover and \"properly\" update ctags files on save 
 Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
+Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
 syntax on
@@ -77,9 +77,9 @@ call neomake#configure#automake('nrwi', 500)
 "let g:neomake_open_list = 2
 
 let g:neomake_cpp_enabled_makers = ['gcc', 'cpplint']
+let g:neomake_c_enabled_makers = ['gcc', 'cpplint']
 
-"vim-autotag
-let g:autotagTagsFile=".tags"
+let g:ctrlp_extensions = ['tag', 'buffertag']
 
 "Shortcuts
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
@@ -120,4 +120,3 @@ noremap j gj
 noremap k gk
 noremap <down> gj
 noremap <up> gk
-noremap <C-Space> :CtrlPBuffer<CR>
