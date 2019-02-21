@@ -41,10 +41,11 @@ set termguicolors
 set foldmethod=syntax
 set foldlevelstart=20
 
-colorscheme gruvbox
-
+"gruvbox
 let g:gruvbox_italic = 1
 let g:gruvbox_contrast_dark = 'hard'
+
+colorscheme gruvbox
 
 "cpp enhanced highlighting
 let g:cpp_class_scope_highlight = 1
@@ -74,11 +75,10 @@ let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/3.8.0/include'
 
 "neomake
 call neomake#configure#automake('nrwi', 500)
-"let g:neomake_open_list = 2
-
 let g:neomake_cpp_enabled_makers = ['gcc', 'cpplint']
 let g:neomake_c_enabled_makers = ['gcc', 'cpplint']
 
+"CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']
 
 "Shortcuts
