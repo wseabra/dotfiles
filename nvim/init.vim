@@ -14,6 +14,7 @@ Plug 'jiangmiao/auto-pairs' "Vim plugin, insert or delete brackets, parens, quot
 Plug 'SirVer/ultisnips' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
 Plug 'honza/vim-snippets'	"This repository contains snippets files for various programming languages.
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'} | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' "Dark powered asynchronous completion framework for neovim/Vim8
+Plug 'ervandew/supertab' "Perform all your vim insert mode completions with Tab
 Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
