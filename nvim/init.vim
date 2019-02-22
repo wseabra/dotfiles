@@ -12,7 +12,7 @@ Plug 'airblade/vim-gitgutter' "git diff integration
 Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
 Plug 'jiangmiao/auto-pairs' "Vim plugin, insert or delete brackets, parens, quotes in pair
 Plug 'SirVer/ultisnips' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
-Plug 'honza/vim-snippets'	"This repository contains snippets files for various programming languages.
+Plug 'JuanSeabra/vim-snippets'	"This repository contains snippets files for various programming languages.
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'} | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' "Dark powered asynchronous completion framework for neovim/Vim8
 Plug 'ervandew/supertab' "Perform all your vim insert mode completions with Tab
 Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
@@ -36,7 +36,6 @@ set noshowmode "don't show default status line
 set completeopt=menuone "type of completion window
 set undodir=~/.config/nvim/undodir "place of undo dir
 set undofile "undo file
-set mouse=a "activate mouse
 set background=dark
 set termguicolors
 set foldmethod=syntax
@@ -121,3 +120,4 @@ noremap j gj
 noremap k gk
 noremap <down> gj
 noremap <up> gk
+tnoremap <Esc> <C-\><C-n>
