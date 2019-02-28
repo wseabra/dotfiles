@@ -21,6 +21,7 @@ Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for 
 Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'kshenoy/vim-signature'
+Plug 'mhinz/vim-startify'
 call plug#end()
 
 syntax on
@@ -87,6 +88,16 @@ let g:ctrlp_extensions = ['tag', 'buffertag']
 "SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
+"Startfy
+let g:startify_session_persistence=1
+let g:startify_session_sort=1
+let g:startify_bookmarks = [ {'c': '~/.config/nvim/init.vim'}, {'cc': '~/.zshrc'} ]
+let g:startify_lists = [
+            \ { 'type': 'files',     'header': ['   MRU']            },
+            \ { 'type': 'sessions',  'header': ['   Sessions']       },
+            \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+            \ ]
+
 "Shortcuts
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 noremap <F6> :set spell spelllang=<cr>
@@ -107,7 +118,8 @@ map b2 :b2<CR>
 map b3 :b3<CR>
 map b4 :b4<CR>
 map b5 :b5<CR>
-map b6 :b7<CR>
+map b6 :b6<CR>
+map b7 :b7<CR>
 map b8 :b8<CR>
 map b9 :b9<CR>
 map b0 :b0<CR>
