@@ -73,13 +73,20 @@ let g:deoplete#enable_ignore_case = 1
 let g:deoplete#enable_refresh_always = 1
 let g:deoplete#max_abbr_width = 0
 let g:deoplete#max_menu_width = 0
-
 let g:deoplete#sources#clang#libclang_path =  '/usr/lib/llvm-3.8/lib/libclang.so.1'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/3.8.0/include'
 
 "neomake
 call neomake#configure#automake('nrwi', 500)
-let g:neomake_cpp_enabled_makers = ['gcc', 'cpplint']
+"example of maker definition
+"let g:neomake_cpp_clang_maker = {
+"\ 'exe': 'clang++',
+"\ 'args': ['-std=c++11', '-I/usr/local/include/mongocxx/v_noabi', '-I/usr/local/include/bsoncxx/v_noabi', '-L/usr/local/lib', '-lmongocxx', '-lbsoncxx'],
+"\ }
+"let g:neomake_cpp_clangtidy_maker = {
+"\ 'exe': 'clang-tidy',
+"\ }
+let g:neomake_cpp_enabled_makers = ['clang', 'cpplint']
 let g:neomake_c_enabled_makers = ['gcc', 'cpplint']
 
 "CtrlP
