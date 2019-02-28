@@ -7,6 +7,7 @@ Plug 'scrooloose/nerdtree' "folder navigator
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'majutsushi/tagbar' "side window with tags from the code
 Plug 'tpope/vim-fugitive'	"git integration
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'scrooloose/nerdcommenter'	"commenter helper
 Plug 'airblade/vim-gitgutter' "git diff integration
 Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
@@ -19,6 +20,7 @@ Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'kshenoy/vim-signature'
 call plug#end()
 
 syntax on
@@ -59,8 +61,9 @@ let g:NERDTreeShowHidden=1
 let g:tagbar_sort = 0
 
 "airline
-let g:airline_theme='gruvbox'
+let g:airline_theme='light'
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
 
 "deoplete
@@ -80,6 +83,9 @@ let g:neomake_c_enabled_makers = ['gcc', 'cpplint']
 
 "CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']
+
+"SuperTab
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
 "Shortcuts
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
