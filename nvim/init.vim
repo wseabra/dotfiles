@@ -2,7 +2,7 @@
 "Waldomiro Seabra
 
 call plug#begin('~/.config/nvim/plugged')
-Plug 'morhetz/gruvbox'
+"Plug 'morhetz/gruvbox' might come back to use some time
 Plug 'scrooloose/nerdtree' "folder navigator
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'majutsushi/tagbar' "side window with tags from the code
@@ -19,9 +19,9 @@ Plug 'ervandew/supertab' "Perform all your vim insert mode completions with Tab
 Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'kshenoy/vim-signature'
-Plug 'mhinz/vim-startify'
+Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
+Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
+Plug 'mhinz/vim-startify' "The fancy start screen for Vim.
 call plug#end()
 
 syntax on
@@ -39,16 +39,19 @@ set noshowmode "don't show default status line
 set completeopt=menuone "type of completion window
 set undodir=~/.config/nvim/undodir "place of undo dir
 set undofile "undo file
-set background=dark
-set termguicolors
-set foldmethod=syntax
-set foldlevelstart=20
+set background=dark "set backgroud to dark
+set termguicolors "use terminal colors
+set foldmethod=syntax "fold following the language syntax
+set foldlevelstart=20 "prevent folding when oppenning file
 
-"gruvbox
-let g:gruvbox_italic = 1
-let g:gruvbox_contrast_dark = 'hard'
+"theme
+"let g:gruvbox_italic = 1
+"let g:gruvbox_contrast_dark = 'hard'
 
-colorscheme gruvbox
+colorscheme industry
+
+hi Normal guibg=NONE ctermbg=NONE 
+hi ColorColumn ctermbg=0 guibg=lightgrey
 
 "cpp enhanced highlighting
 let g:cpp_class_scope_highlight = 1
@@ -91,6 +94,7 @@ let g:neomake_c_enabled_makers = ['gcc', 'cpplint']
 
 "CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']
+let g:ctrlp_match_window = 'top,order:ttb,max:5'
 
 "SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
