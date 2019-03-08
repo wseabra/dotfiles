@@ -89,4 +89,3 @@ source $ZSH/oh-my-zsh.sh
 #alias matlab-cli="matlab -nodesktop"
 #alias vim="nvim"
 alias dwarffortress="/home/waldomiro/df/df_linux/df"
-alias nvim="nvr -s"

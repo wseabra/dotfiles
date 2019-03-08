@@ -2,7 +2,6 @@
 "Waldomiro Seabra
 
 call plug#begin('~/.config/nvim/plugged')
-"Plug 'morhetz/gruvbox' might come back to use some time
 Plug 'scrooloose/nerdtree' "folder navigator
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'majutsushi/tagbar' "side window with tags from the code
@@ -22,6 +21,7 @@ Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 Plug 'mhinz/vim-startify' "The fancy start screen for Vim.
+Plug 'ayu-theme/ayu-vim' "theme
 call plug#end()
 
 syntax on
@@ -45,13 +45,11 @@ set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=20 "prevent folding when oppenning file
 
 "theme
-"let g:gruvbox_italic = 1
-"let g:gruvbox_contrast_dark = 'hard'
+let ayucolor="dark"   " for dark version of theme
+colorscheme ayu "theme
 
-colorscheme industry
-
-hi Normal guibg=NONE ctermbg=NONE 
-hi ColorColumn ctermbg=0 guibg=lightgrey
+"true black backgroud 
+hi Normal guibg=black ctermbg=0 
 
 "cpp enhanced highlighting
 let g:cpp_class_scope_highlight = 1
@@ -76,8 +74,8 @@ let g:deoplete#enable_ignore_case = 1
 let g:deoplete#enable_refresh_always = 1
 let g:deoplete#max_abbr_width = 0
 let g:deoplete#max_menu_width = 0
-let g:deoplete#sources#clang#libclang_path =  '/usr/lib/llvm-3.8/lib/libclang.so.1'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/3.8.0/include'
+let g:deoplete#sources#clang#libclang_path =  '/usr/lib/libclang.so'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
 "neomake
 call neomake#configure#automake('nrwi', 500)
