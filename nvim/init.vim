@@ -3,10 +3,9 @@
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'scrooloose/nerdtree' "folder navigator
-Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'majutsushi/tagbar' "side window with tags from the code
+Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'tpope/vim-fugitive'	"git integration
-Plug 'gregsexton/gitv', {'on': ['Gitv']}
 Plug 'scrooloose/nerdcommenter'	"commenter helper
 Plug 'airblade/vim-gitgutter' "git diff integration
 Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
@@ -20,7 +19,6 @@ Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for 
 Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
-Plug 'mhinz/vim-startify' "The fancy start screen for Vim.
 Plug 'ayu-theme/ayu-vim' "theme
 call plug#end()
 
@@ -45,8 +43,15 @@ set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=20 "prevent folding when oppenning file
 
 "theme
-let ayucolor="dark"   " for dark version of theme
+let g:ayucolor="dark"   " for dark version of theme
 colorscheme ayu "theme
+
+
+"NERDTree
+let g:NERDTreeShowHidden=1
+
+"TagBar
+let g:tagbar_sort = 0
 
 "true black backgroud 
 hi Normal guibg=black ctermbg=0 
@@ -55,12 +60,6 @@ hi Normal guibg=black ctermbg=0
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
-
-"NERDTree
-let g:NERDTreeShowHidden=1
-
-"TagBar
-let g:tagbar_sort = 0
 
 "airline
 let g:airline_theme='light'
@@ -79,16 +78,9 @@ let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
 "neomake
 call neomake#configure#automake('nrwi', 500)
-"example of maker definition
-"let g:neomake_cpp_clang_maker = {
-"\ 'exe': 'clang++',
-"\ 'args': ['-std=c++11', '-I/usr/local/include/mongocxx/v_noabi', '-I/usr/local/include/bsoncxx/v_noabi', '-L/usr/local/lib', '-lmongocxx', '-lbsoncxx'],
-"\ }
-"let g:neomake_cpp_clangtidy_maker = {
-"\ 'exe': 'clang-tidy',
-"\ }
+
 let g:neomake_cpp_enabled_makers = ['clang', 'cpplint']
-let g:neomake_c_enabled_makers = ['gcc', 'cpplint']
+let g:neomake_c_enabled_makers = ['clang', 'cpplint']
 
 "CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']
@@ -97,23 +89,11 @@ let g:ctrlp_match_window = 'top,order:ttb,max:5'
 "SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-"Startfy
-let g:startify_session_persistence=1
-let g:startify_session_sort=1
-let g:startify_bookmarks = [ {'c': '~/.config/nvim/init.vim'}, {'cc': '~/.zshrc'} ]
-let g:startify_lists = [
-            \ { 'type': 'files',     'header': ['   MRU']            },
-            \ { 'type': 'sessions',  'header': ['   Sessions']       },
-            \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-            \ ]
-
-"Shortcuts
+"Shortcuts TODO fix this mess
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-noremap <F6> :set spell spelllang=<cr>
-noremap <F5> :set spell spelllang=pt,en<cr>
 map <F8> :TagbarToggle<CR>
-map <F9> :Neomake!<CR>:copen<CR>
 noremap <F7> <Esc>:NERDTreeToggle<CR>
+noremap <F5> :setlocal spell! spelllang=pt,en<cr>
 map <C-n> <Esc>:tabnew<CR>
 noremap <C-a> GVgg
 noremap <C-I> <Esc>gg=G``
@@ -147,4 +127,5 @@ noremap j gj
 noremap k gk
 noremap <down> gj
 noremap <up> gk
+"enter normal mode in :terminal
 tnoremap <Esc> <C-\><C-n>
