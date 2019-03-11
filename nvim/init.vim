@@ -20,6 +20,7 @@ Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 Plug 'ayu-theme/ayu-vim' "theme
+Plug 'vim-scripts/sessionman.vim'
 call plug#end()
 
 syntax on
@@ -89,6 +90,9 @@ let g:ctrlp_match_window = 'top,order:ttb,max:5'
 
 "SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
+
+"sessionman
+let g:sessionman_save_on_exit = 1
 
 "Shortcuts TODO fix this mess
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
