@@ -19,7 +19,7 @@ Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for 
 Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
-Plug 'ayu-theme/ayu-vim' "theme
+Plug 'itchyny/landscape.vim' "theme
 call plug#end()
 
 syntax on
@@ -43,7 +43,7 @@ set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=20 "prevent folding when oppenning file
 
 "theme
-colorscheme ayu "theme
+colorscheme landscape "theme
 "true black backgroud 
 hi Normal guibg=black ctermbg=0 
 
@@ -63,7 +63,7 @@ let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 
 "airline
-let g:airline_theme='light'
+let g:airline_theme='cool'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
@@ -74,7 +74,7 @@ let g:deoplete#enable_ignore_case = 1
 let g:deoplete#enable_refresh_always = 1
 let g:deoplete#max_abbr_width = 0
 let g:deoplete#max_menu_width = 0
-let g:deoplete#sources#clang#libclang_path =  '/usr/lib/libclang.so'
+let g:deoplete#sources#clang#libclang_path =  '/usr/lib/llvm-3.8/lib/libclang.so.1'
 let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
 
 "neomake
@@ -85,7 +85,7 @@ let g:neomake_c_enabled_makers = ['clang', 'cpplint']
 
 "CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']
-let g:ctrlp_match_window = 'top,order:ttb,max:5'
+let g:ctrlp_match_window = 'bottom,order:btt,max:10'
 
 "SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
