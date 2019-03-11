@@ -43,18 +43,19 @@ set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=20 "prevent folding when oppenning file
 
 "theme
-let g:ayucolor="dark"   " for dark version of theme
 colorscheme ayu "theme
-
+"true black backgroud 
+hi Normal guibg=black ctermbg=0 
 
 "NERDTree
 let g:NERDTreeShowHidden=1
+"close tab if only window is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let NERDTreeQuitOnOpen = 1
 
 "TagBar
 let g:tagbar_sort = 0
-
-"true black backgroud 
-hi Normal guibg=black ctermbg=0 
 
 "cpp enhanced highlighting
 let g:cpp_class_scope_highlight = 1

@@ -1,7 +1,9 @@
 #!/bin/bash
 
 #Neovim
-mkdir $HOME/.config/nvim
+if [[ ! -d "$HOME/.config/nvim" ]]; then
+    mkdir $HOME/.config/nvim
+fi
 
 ln -s $HOME/dotfiles/nvim/init.vim $HOME/.config/nvim/
 
@@ -13,6 +15,8 @@ ln -s $HOME/dotfiles/.zshrc $HOME/
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions \
+    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
