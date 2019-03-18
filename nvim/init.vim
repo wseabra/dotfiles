@@ -19,7 +19,6 @@ Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for 
 Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
-Plug 'vim-scripts/sessionman.vim'
 Plug 'itchyny/landscape.vim' "theme
 call plug#end()
 
@@ -39,21 +38,22 @@ set completeopt=menuone "type of completion window
 set undodir=~/.config/nvim/undodir "place of undo dir
 set undofile "undo file
 set background=dark "set backgroud to dark
-set termguicolors "use terminal colors
+set termguicolors "use gui colors in terminal
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=20 "prevent folding when oppenning file
 
 "theme
 colorscheme landscape "theme
 "true black backgroud 
-hi Normal guibg=black ctermbg=0 
+hi Normal guibg=NONE ctermbg=NONE
+hi Comment gui=italic
 
 "NERDTree
 let g:NERDTreeShowHidden=1
 "close tab if only window is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-let NERDTreeQuitOnOpen = 1
+"let NERDTreeQuitOnOpen = 1
 
 "TagBar
 let g:tagbar_sort = 0
@@ -64,7 +64,7 @@ let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 
 "airline
-let g:airline_theme='cool'
+let g:airline_theme='landscape'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
@@ -75,8 +75,8 @@ let g:deoplete#enable_ignore_case = 1
 let g:deoplete#enable_refresh_always = 1
 let g:deoplete#max_abbr_width = 0
 let g:deoplete#max_menu_width = 0
-let g:deoplete#sources#clang#libclang_path =  '/usr/lib/libclang.so'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
+let g:deoplete#sources#clang#libclang_path =  '/usr/lib/llvm-3.8/lib/libclang.so.1'
+let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.8/include'
 
 "neomake
 call neomake#configure#automake('nrwi', 500)
@@ -91,8 +91,9 @@ let g:ctrlp_match_window = 'bottom,order:btt,max:10'
 "SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-"sessionman
-let g:sessionman_save_on_exit = 1
+au TermOpen * setlocal nonumber
+command! -nargs=* Term split | resize 20 | startinsert | terminal <args>
+command! -nargs=* Vterm vsplit | startinsert | terminal <args>
 
 "Shortcuts TODO fix this mess
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
@@ -121,16 +122,22 @@ vmap <C-c> "+y
 vmap <C-x> "+x
 nmap <C-v> <ESC>"+p
 imap <C-v> <ESC>"+pa
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-nnoremap q: <Nop>
-nnoremap Q <Nop>
+tnoremap <A-h> <C-\><C-N><C-w>h
+tnoremap <A-j> <C-\><C-N><C-w>j
+tnoremap <A-k> <C-\><C-N><C-w>k
+tnoremap <A-l> <C-\><C-N><C-w>l
+inoremap <A-h> <C-\><C-N><C-w>h
+inoremap <A-j> <C-\><C-N><C-w>j
+inoremap <A-k> <C-\><C-N><C-w>k
+inoremap <A-l> <C-\><C-N><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
+"nnoremap q: <Nop>
+"nnoremap Q <Nop>
 "move in large line as multiple lines
 noremap j gj
 noremap k gk
 noremap <down> gj
 noremap <up> gk
-"enter normal mode in :terminal
-tnoremap <Esc> <C-\><C-n>
