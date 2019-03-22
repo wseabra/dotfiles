@@ -131,6 +131,11 @@ let g:ctrlp_match_window = 'bottom,order:btt,max:10'
 "SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
+"UltiSnips
+"Prevent conflit with SuperTab <tab>
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
 if has('nvim')
     ":terminal options
     au TermOpen * setlocal nonumber
