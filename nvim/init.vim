@@ -31,7 +31,7 @@ Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for 
 Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
-
+Plug 'Yggdroot/indentLine'
 Plug 'itchyny/landscape.vim' "theme
 if !has('nvim')
     Plug 'roxma/nvim-yarp'
@@ -90,6 +90,8 @@ if has('gui_running')
     set guifont=Hack\ Regular\ 9
 endif
 
+"indentLine
+let g:indentLine_char = '┆'
 
 "NERDTree
 let g:NERDTreeShowHidden=1
