@@ -31,8 +31,8 @@ Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for 
 Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
-Plug 'itchyny/landscape.vim' "theme
 
+Plug 'itchyny/landscape.vim' "theme
 if !has('nvim')
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
@@ -65,7 +65,7 @@ endif
 
 set undofile "undo file
 set background=dark "set backgroud to dark
-"set termguicolors "use gui colors in terminal
+set termguicolors "use gui colors in terminal
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=20 "prevent folding when oppenning file
 
@@ -74,18 +74,20 @@ if !has('nvim')
 endif
 
 "visual
-colorscheme elflord "theme
+colorscheme landscape "theme
 hi Normal guibg=NONE ctermbg=NONE
 hi Comment gui=italic cterm=italic
 hi SignColumn guibg=black ctermbg=0
 hi LineNr guibg=black ctermbg=0
-hi ColorColumn guibg=black ctermbg=0
+hi ColorColumn guibg=#121212 ctermbg=0
+hi CursorLine guibg=#121212
+hi CursorLineNr guibg=#121212
 
 if has('gui_running')
-    colorscheme landscape
     hi Normal guibg=black
-    hi ColorColumn guibg=darkgray
+    hi ColorColumn guibg=#121212
     set lines=999 columns=999
+    set guifont=Hack\ Regular\ 9
 endif
 
 
