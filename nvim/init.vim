@@ -9,9 +9,17 @@ endif
 
 Plug 'scrooloose/nerdtree' "folder navigator
 Plug 'majutsushi/tagbar' "side window with tags from the code
+
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
+
 Plug 'tpope/vim-fugitive'	"git integration
-Plug 'scrooloose/nerdcommenter'	"commenter helper
+Plug 'christoomey/vim-conflicted' "Easy git merge conflict resolution in Vim
+
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent' "Vim plugin: Text objects for indented blocks of lines prefix i
+Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
+Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple 
+
 Plug 'airblade/vim-gitgutter' "git diff integration
 Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
 Plug 'jiangmiao/auto-pairs' "Vim plugin, insert or delete brackets, parens, quotes in pair
@@ -44,7 +52,7 @@ syntax on
 filetype indent plugin on
 set shell=/bin/zsh "shell
 set cursorline "enable cursorline
-set number "show line number
+set number relativenumber "show line number
 set colorcolumn=80 "color column 80
 set shiftwidth=4 "size of identation
 set tabstop=4 "size of tab
@@ -75,7 +83,7 @@ endif
 
 "visual
 colorscheme landscape "theme
-hi Normal guibg=NONE ctermbg=NONE
+" hi Normal guibg=NONE ctermbg=NONE
 hi Comment gui=italic cterm=italic
 hi SignColumn guibg=black ctermbg=0
 hi LineNr guibg=black ctermbg=0
