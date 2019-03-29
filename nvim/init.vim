@@ -30,13 +30,11 @@ Plug 'airblade/vim-gitgutter' "git diff integration
 Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
 
 Plug 'ervandew/supertab' "Perform all your vim insert mode completions with Tab
-Plug 'SirVer/ultisnips' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
-Plug 'JuanSeabra/vim-snippets'	"This repository contains snippets files for various programming languages.
-Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-ultisnips'
+Plug 'ncm2/ncm2-ultisnips' | Plug 'SirVer/ultisnips' | Plug 'JuanSeabra/vim-snippets' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
 Plug 'ncm2/ncm2-pyclang'
 Plug 'ncm2/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
 if !has('nvim')
@@ -57,6 +55,7 @@ set scrolloff=5 "scroll when x lines of bottom
 set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
 set completeopt=noinsert,menuone,noselect "type of completion window
+set pumheight=15
 set list lcs=tab:\┆\ 
 set showcmd
 
@@ -95,21 +94,28 @@ if has('gui_running')
     hi Normal guibg=black
     hi ColorColumn guibg=#121212
     set lines=999 columns=999
-    set guifont=Hack\ Regular\ 9
+    set guifont=Hack\ Regular\ 10
 endif
 
 "ncm2
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
 " path to directory where libclang.so can be found
-let g:ncm2_pyclang#library_path = '/usr/lib/'
+if ! empty(glob("/usr/lib/libclang.so"))
+   let g:ncm2_pyclang#library_path = '/usr/lib/libclang.so'
+else
+    let g:ncm2_pyclang#library_path = '/usr/lib/llvm-3.8/lib/libclang.so.1'
+endif
 " a list of relative paths for compile_commands.json
 let g:ncm2_pyclang#database_path = [
             \ 'compile_commands.json',
             \ 'build/compile_commands.json'
             \ ]
 " a list of relative paths looking for .clang_complete
-let g:ncm2_pyclang#args_file_path = ['.clang']
+let g:ncm2_pyclang#args_file_path = [
+            \ '.clang',
+            \ '../.clang'
+            \ ]
 "Goto Declaration
 autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
 " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
@@ -121,6 +127,7 @@ inoremap <c-c> <ESC>
 " Press enter key to trigger snippet expansion
 " The parameters are the same as `:help feedkeys()`
 inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
 
 "GitGutter
 let g:gitgutter_map_keys = 0
@@ -172,9 +179,9 @@ if has('nvim')
     command! -nargs=* Vterm vsplit | startinsert | terminal <args>
 endif
 
-let &t_SI = "\<Esc>[6 q"
-let &t_SR = "\<Esc>[4 q"
-let &t_EI = "\<Esc>[2 q"
+let &t_SI = "\<Esc>[5 q"
+let &t_SR = "\<Esc>[3 q"
+let &t_EI = "\<Esc>[1 q"
 
 "Shortcuts TODO fix this mess
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
@@ -188,10 +195,10 @@ nnoremap <leader>; A;<Esc>
 map bn :bn<CR>
 map bp :bp<CR>
 map bd :bd<CR>
-vmap <C-c> "+y
-vmap <C-x> "+x
-nmap <C-v> <ESC>"+p
-imap <C-v> <ESC>"+pa
+" vmap <C-c> "+y
+" vmap <C-x> "+x
+" nmap <C-v> <ESC>"+p
+" imap <C-v> <ESC>"+pa
 
 if has('nvim')
     tnoremap <A-h> <C-\><C-N><C-w>h
