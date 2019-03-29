@@ -16,7 +16,7 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
-Plug 'vim-scripts/a.vim' "Alternate Files quickly (.c --> .h etc)
+Plug 'JuanSeabra/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
 
 Plug 'tpope/vim-fugitive'	"git integration
@@ -102,7 +102,7 @@ endif
 autocmd BufEnter * call ncm2#enable_for_buffer()
 " path to directory where libclang.so can be found
 if ! empty(glob("/usr/lib/libclang.so"))
-   let g:ncm2_pyclang#library_path = '/usr/lib/libclang.so'
+    let g:ncm2_pyclang#library_path = '/usr/lib/libclang.so'
 else
     let g:ncm2_pyclang#library_path = '/usr/lib/llvm-3.8/lib/libclang.so.1'
 endif
@@ -195,10 +195,6 @@ nnoremap <leader>; A;<Esc>
 map bn :bn<CR>
 map bp :bp<CR>
 map bd :bd<CR>
-" vmap <C-c> "+y
-" vmap <C-x> "+x
-" nmap <C-v> <ESC>"+p
-" imap <C-v> <ESC>"+pa
 
 if has('nvim')
     tnoremap <A-h> <C-\><C-N><C-w>h
