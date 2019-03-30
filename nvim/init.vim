@@ -21,8 +21,12 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 "}}}
-"{{{A.vim Plugin
+"{{{General Plugins
 Plug 'JuanSeabra/a.vim' "Alternate Files quickly (.c --> .h etc)
+Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
+Plug 'christoomey/vim-titlecase' "Teach Vim about titlecase, with support for motions and text objects
+Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
+Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
 "}}}
 "{{{Tags Plugins
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
@@ -33,8 +37,6 @@ Plug 'airblade/vim-gitgutter' "git diff integration
 "}}}
 "{{{Text Objects Plugins
 Plug 'kana/vim-textobj-user'
-Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
-Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'kana/vim-textobj-entire' "Text objects for entire buffer 
 Plug 'glts/vim-textobj-comment' "Vim text objects for comments  
 Plug 'kana/vim-textobj-line' "Text objects for the current line  
@@ -115,7 +117,7 @@ if has('gui_running')
     set guifont=Hack\ Regular\ 10
 endif
 "}}}
-"{{{ncm2 configuration
+"{{{Ncm2 Configuration
 "ncm2
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -147,7 +149,7 @@ inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 let g:gitgutter_map_keys = 0
 autocmd BufEnter * GitGutter
 "}}}
-"{{{indentLine
+"{{{Indentline
 let g:indentLine_char = '┆'
 "}}}
 "{{{NERDTree
@@ -158,18 +160,18 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "{{{TagBar
 let g:tagbar_sort = 0
 "}}}
-"{{{cpp enhanced highlighting
+"{{{Cpp Enhanced Highlighting
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 "}}}
-"{{{airline
+"{{{Airline
 let g:airline_theme='simple'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
 "}}}
-"{{{neomake
+"{{{Neomake
 call neomake#configure#automake('nrwi', 500)
 let g:neomake_cpp_enabled_makers = ['clang', 'cpplint']
 let g:neomake_c_enabled_makers = ['clang', 'cpplint']
@@ -187,21 +189,21 @@ let g:UltiSnipsJumpForwardTrigger= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 "}}}
-"{{{:terminal options
+"{{{:terminal Options
 if has('nvim')
     au TermOpen * setlocal nonumber norelativenumber
     command! -nargs=* Term split | resize 20 | startinsert | terminal <args>
     command! -nargs=* Vterm vsplit | startinsert | terminal <args>
 endif
 "}}}
-"{{{change cursor shape
+"{{{Change Cursor Shape
 if !has('gui_running')
     let &t_SI = "\<Esc>[5 q"
     let &t_SR = "\<Esc>[3 q"
     let &t_EI = "\<Esc>[1 q"
 endif
 "}}}
-"{{{Keymaps TODO fix this mess
+"{{{Keymaps TODO Fix This Mess
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 map <F8> :TagbarToggle<CR>
 noremap <F7> <Esc>:NERDTreeToggle<CR>
