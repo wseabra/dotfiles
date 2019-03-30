@@ -1,6 +1,6 @@
 "Config file for NeoVim/Vim8
 "Waldomiro Seabra
-
+"{{{Plugins
 if has('nvim')
     call plug#begin('~/.config/nvim/plugged')
 else
@@ -24,7 +24,7 @@ Plug 'christoomey/vim-conflicted' "Easy git merge conflict resolution in Vim
 
 Plug 'kana/vim-textobj-user'
 Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
-Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple 
+Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 
 Plug 'airblade/vim-gitgutter' "git diff integration
 Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
@@ -41,7 +41,8 @@ if !has('nvim')
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
 call plug#end()
-
+"}}}
+"{{{Set Commands
 syntax on
 filetype indent plugin on
 set shell=/bin/zsh "shell
@@ -58,6 +59,8 @@ set completeopt=noinsert,menuone,noselect "type of completion window
 set pumheight=15
 set list lcs=tab:\┆\ 
 set showcmd
+set wildmenu
+set path+=**
 
 if has('nvim')
     set undodir=~/.config/nvim/undodir "place of undo dir
@@ -72,13 +75,23 @@ set undofile "undo file
 set background=dark "set backgroud to dark
 set termguicolors "use gui colors in terminal
 set foldmethod=syntax "fold following the language syntax
-set foldlevelstart=20 "prevent folding when oppenning file
+set foldlevelstart=99 "prevent folding when oppenning file
+autocmd BufEnter .vimrc setlocal foldmethod=marker 
+autocmd BufRead .vimrc :normal zM
+autocmd BufEnter init.vim setlocal foldmethod=marker 
+autocmd BufRead init.vim :normal zM
+" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
+set shortmess+=c
 
 if !has('nvim')
     set timeoutlen=1000 ttimeoutlen=0 "reduce delay in switching mode
     set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
 endif
-
+"weird specific shell script to build my work project
+" set makeprg=cd\ $HOME/doctor_strange/\ &&\ ./build_all.sh\ $HOME/Qt/5.11.1/gcc_64
+"}}}
+"{{{Visual Configuration
 "visual
 let ayucolor="dark"
 colorscheme ayu "theme
@@ -96,7 +109,8 @@ if has('gui_running')
     set lines=999 columns=999
     set guifont=Hack\ Regular\ 10
 endif
-
+"}}}
+"{{{ncm2 configuration
 "ncm2
 " enable ncm2 for all buffers
 autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -118,76 +132,75 @@ let g:ncm2_pyclang#args_file_path = [
             \ ]
 "Goto Declaration
 autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
-" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-" found' messages
-set shortmess+=c
-
 " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
 inoremap <c-c> <ESC>
 " Press enter key to trigger snippet expansion
 " The parameters are the same as `:help feedkeys()`
 inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-
-
-"GitGutter
+"}}}
+"{{{GitGutter
 let g:gitgutter_map_keys = 0
-
-"indentLine
+"}}}
+"{{{indentLine
 let g:indentLine_char = '┆'
-
-"NERDTree
+"}}}
+"{{{NERDTree
 let g:NERDTreeShowHidden=1
 "close tab if only window is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-"TagBar
+"}}}
+"{{{TagBar
 let g:tagbar_sort = 0
-
-"cpp enhanced highlighting
+"}}}
+"{{{cpp enhanced highlighting
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
-
-"airline
+"}}}
+"{{{airline
 let g:airline_theme='simple'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
-
-"neomake
+"}}}
+"{{{neomake
 call neomake#configure#automake('nrwi', 500)
 let g:neomake_cpp_enabled_makers = ['clang', 'cpplint']
 let g:neomake_c_enabled_makers = ['clang', 'cpplint']
-
-"CtrlP
+"}}}
+"{{{CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']
 let g:ctrlp_match_window = 'bottom,order:btt,max:10'
-
-"SuperTab
+"}}}
+"{{{SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
-
-"UltiSnips
+"}}}
+"{{{UltiSnips
 "Prevent conflit with SuperTab <tab>
 let g:UltiSnipsJumpForwardTrigger= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
-
+"}}}
+"{{{:terminal options
 if has('nvim')
-    ":terminal options
     au TermOpen * setlocal nonumber norelativenumber
     command! -nargs=* Term split | resize 20 | startinsert | terminal <args>
     command! -nargs=* Vterm vsplit | startinsert | terminal <args>
 endif
-
-let &t_SI = "\<Esc>[5 q"
-let &t_SR = "\<Esc>[3 q"
-let &t_EI = "\<Esc>[1 q"
-
-"Shortcuts TODO fix this mess
+"}}}
+"{{{change cursor shape
+if !has('gui_running')
+    let &t_SI = "\<Esc>[5 q"
+    let &t_SR = "\<Esc>[3 q"
+    let &t_EI = "\<Esc>[1 q"
+endif
+"}}}
+"{{{Keymaps TODO fix this mess
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 map <F8> :TagbarToggle<CR>
 noremap <F7> <Esc>:NERDTreeToggle<CR>
 noremap <F5> :setlocal spell! spelllang=pt,en<cr>
+noremap <F9> :!cd $HOME/doctor_strange/ && build_all.sh $HOME/Qt/5.11.1/gcc_64<CR>
 map <leader>n <Esc>:tabnew<CR>
 noremap <leader>a GVgg
 noremap <leader>i <Esc>gg=G``
@@ -225,3 +238,4 @@ noremap j gj
 noremap k gk
 noremap <down> gj
 noremap <up> gk
+"}}}
