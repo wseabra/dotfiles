@@ -13,7 +13,7 @@ Plug 'majutsushi/tagbar' "side window with tags from the code
 "{{{SignColumn Plugins
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 Plug 'Yggdroot/indentLine'
-Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
+Plug 'w0rp/ale'
 "}}}
 "{{{Visual Plugins
 Plug 'itchyny/landscape.vim' "theme
@@ -27,6 +27,8 @@ Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that a
 Plug 'christoomey/vim-titlecase' "Teach Vim about titlecase, with support for motions and text objects
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'edkolev/tmuxline.vim'
 "}}}
 "{{{Tags Plugins
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
@@ -53,7 +55,7 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-ultisnips' | Plug 'SirVer/ultisnips' | Plug 'JuanSeabra/vim-snippets' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
 Plug 'ncm2/ncm2-pyclang'
-Plug 'ncm2/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
+" Plug 'ncm2/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
 if !has('nvim')
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
@@ -79,6 +81,7 @@ set list lcs=tab:\┆\  "show indent lines when using tab
 set showcmd "show command been typed
 set wildmenu "activate wild bottom menu
 set path+=** "set recursive search when using :find
+set mouse=a
 if has('nvim')
     set undodir=~/.config/nvim/undodir "place of undo dir
 else
@@ -97,6 +100,7 @@ set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when oppenning file
 autocmd BufEnter .vimrc,init.vim setlocal foldmethod=marker 
 autocmd BufRead .vimrc,init.vim :normal zM
+set makeprg=cd\ $HOME/doctor_strange/src/\ &&\ ./build_all.sh\ $HOME/Qt/5.11.1/gcc_64
 "}}}
 "{{{Visual Configuration
 "visual
@@ -170,11 +174,14 @@ let g:airline_theme='simple'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#ale#enabled = 1
 "}}}
-"{{{Neomake
-call neomake#configure#automake('nrwi', 500)
-let g:neomake_cpp_enabled_makers = ['clang', 'cpplint']
-let g:neomake_c_enabled_makers = ['clang', 'cpplint']
+"{{{Ale
+let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
+let b:ale_linters = {
+            \ 'cpp': ['clang', 'cpplint'],
+            \ 'c': ['clang', 'cpplint']
+            \ }
 "}}}
 "{{{CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']
