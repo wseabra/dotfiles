@@ -6,29 +6,44 @@ if has('nvim')
 else
     call plug#begin('~/.vim/plugged')
 endif
-
+"{{{Side Windows Plugins
 Plug 'scrooloose/nerdtree' "folder navigator
 Plug 'majutsushi/tagbar' "side window with tags from the code
+"}}}
+"{{{SignColumn Plugins
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 Plug 'Yggdroot/indentLine'
+Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
+"}}}
+"{{{Visual Plugins
 Plug 'itchyny/landscape.vim' "theme
 Plug 'ayu-theme/ayu-vim'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
-Plug 'neomake/neomake' "Asynchronous linting and make framework for Neovim/Vim
+"}}}
+"{{{A.vim Plugin
 Plug 'JuanSeabra/a.vim' "Alternate Files quickly (.c --> .h etc)
+"}}}
+"{{{Tags Plugins
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
-
+"}}}
+"{{{Git Plugins
 Plug 'tpope/vim-fugitive'	"git integration
-Plug 'christoomey/vim-conflicted' "Easy git merge conflict resolution in Vim
-
+Plug 'airblade/vim-gitgutter' "git diff integration
+"}}}
+"{{{Text Objects Plugins
 Plug 'kana/vim-textobj-user'
 Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
-
-Plug 'airblade/vim-gitgutter' "git diff integration
+Plug 'kana/vim-textobj-entire' "Text objects for entire buffer 
+Plug 'glts/vim-textobj-comment' "Vim text objects for comments  
+Plug 'kana/vim-textobj-line' "Text objects for the current line  
+Plug 'rhysd/vim-textobj-continuous-line' "line which continues onto multiple lines as text object  
+"}}}
+"{{{Fuzzy Finder Plugin
 Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
-
+"}}}
+"{{{Completion Related Plugins
 Plug 'ervandew/supertab' "Perform all your vim insert mode completions with Tab
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2'
@@ -40,6 +55,7 @@ Plug 'ncm2/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
 if !has('nvim')
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
+"}}}
 call plug#end()
 "}}}
 "{{{Set Commands
@@ -47,8 +63,8 @@ syntax on
 filetype indent plugin on
 set shell=/bin/zsh "shell
 set cursorline "enable cursorline
-set number relativenumber "show line number
 set colorcolumn=80 "color column 80
+set number relativenumber "show line number and relative number
 set shiftwidth=4 "size of identation
 set tabstop=4 "size of tab
 set expandtab "expand tab into spaces
@@ -56,12 +72,11 @@ set scrolloff=5 "scroll when x lines of bottom
 set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
 set completeopt=noinsert,menuone,noselect "type of completion window
-set pumheight=15
-set list lcs=tab:\┆\ 
-set showcmd
-set wildmenu
-set path+=**
-
+set pumheight=15 "maximum size of completion window
+set list lcs=tab:\┆\  "show indent lines when using tab
+set showcmd "show command been typed
+set wildmenu "activate wild bottom menu
+set path+=** "set recursive search when using :find
 if has('nvim')
     set undodir=~/.config/nvim/undodir "place of undo dir
 else
@@ -69,27 +84,17 @@ else
         call system ("bash -c \"mkdir ~/.vim/undodir\"")
     endif
     set undodir=~/.vim/undodir "place of undo dir
+    set timeoutlen=1000 ttimeoutlen=0 "reduce delay in switching mode
 endif
-
 set undofile "undo file
+set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
 set background=dark "set backgroud to dark
 set termguicolors "use gui colors in terminal
+set shortmess+=c " suppress the annoying 'match x of y', 'The only match' and 'Pattern not found' messages
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when oppenning file
-autocmd BufEnter .vimrc setlocal foldmethod=marker 
-autocmd BufRead .vimrc :normal zM
-autocmd BufEnter init.vim setlocal foldmethod=marker 
-autocmd BufRead init.vim :normal zM
-" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-" found' messages
-set shortmess+=c
-
-if !has('nvim')
-    set timeoutlen=1000 ttimeoutlen=0 "reduce delay in switching mode
-    set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
-endif
-"weird specific shell script to build my work project
-" set makeprg=cd\ $HOME/doctor_strange/\ &&\ ./build_all.sh\ $HOME/Qt/5.11.1/gcc_64
+autocmd BufEnter .vimrc,init.vim setlocal foldmethod=marker 
+autocmd BufRead .vimrc,init.vim :normal zM
 "}}}
 "{{{Visual Configuration
 "visual
