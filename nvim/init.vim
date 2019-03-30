@@ -145,6 +145,7 @@ inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 "}}}
 "{{{GitGutter
 let g:gitgutter_map_keys = 0
+autocmd BufEnter * GitGutter
 "}}}
 "{{{indentLine
 let g:indentLine_char = '┆'
