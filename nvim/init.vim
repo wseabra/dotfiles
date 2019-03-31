@@ -176,7 +176,7 @@ let g:airline#extensions#ale#enabled = 1
 "}}}
 "{{{Ale
 let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
-let b:ale_linters = {
+let g:ale_linters = {
             \ 'cpp': ['clang', 'cpplint'],
             \ 'c': ['clang', 'cpplint']
             \ }
