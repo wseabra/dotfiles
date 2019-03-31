@@ -1,4 +1,4 @@
-"Config file for NeoVim/Vim8
+"Config File For Neovim/Vim8
 "Waldomiro Seabra
 "{{{Plugins
 if has('nvim')
@@ -12,7 +12,6 @@ Plug 'majutsushi/tagbar' "side window with tags from the code
 "}}}
 "{{{SignColumn Plugins
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
-Plug 'Yggdroot/indentLine'
 Plug 'w0rp/ale'
 "}}}
 "{{{Visual Plugins
@@ -28,7 +27,8 @@ Plug 'christoomey/vim-titlecase' "Teach Vim about titlecase, with support for mo
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'edkolev/tmuxline.vim'
+" Plug 'edkolev/tmuxline.vim'
+Plug 'Yggdroot/indentLine'
 "}}}
 "{{{Tags Plugins
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
@@ -98,8 +98,8 @@ set termguicolors "use gui colors in terminal
 set shortmess+=c " suppress the annoying 'match x of y', 'The only match' and 'Pattern not found' messages
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when oppenning file
-autocmd BufEnter .vimrc,init.vim setlocal foldmethod=marker 
-autocmd BufRead .vimrc,init.vim :normal zM
+autocmd BufEnter .vimrc,init.vim,tmux.conf,.tmux.conf setlocal foldmethod=marker 
+autocmd BufRead .vimrc,init.vim,tmux.conf,.tmux.conf :normal zM
 set makeprg=cd\ $HOME/doctor_strange/src/\ &&\ ./build_all.sh\ $HOME/Qt/5.11.1/gcc_64
 "}}}
 "{{{Visual Configuration
@@ -210,6 +210,9 @@ if !has('gui_running')
     let &t_EI = "\<Esc>[1 q"
 endif
 "}}}
+"{{{TmuxLine
+" let g:tmuxline_preset = 'powerline'
+"}}}
 "{{{Keymaps TODO Fix This Mess
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 map <F8> :TagbarToggle<CR>
@@ -220,9 +223,9 @@ map <leader>n <Esc>:tabnew<CR>
 noremap <leader>a GVgg
 noremap <leader>i <Esc>gg=G``
 nnoremap <leader>; A;<Esc>
-map bn :bn<CR>
-map bp :bp<CR>
-map bd :bd<CR>
+map <leader>bn :bn<CR>
+map <leader>bp :bp<CR>
+map <leader>bd :bd<CR>
 
 if has('nvim')
     tnoremap <A-h> <C-\><C-N><C-w>h
