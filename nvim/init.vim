@@ -15,7 +15,6 @@ Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 Plug 'w0rp/ale'
 "}}}
 "{{{Visual Plugins
-Plug 'itchyny/landscape.vim' "theme
 Plug 'ayu-theme/ayu-vim'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
@@ -27,7 +26,6 @@ Plug 'christoomey/vim-titlecase' "Teach Vim about titlecase, with support for mo
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'edkolev/tmuxline.vim'
 Plug 'Yggdroot/indentLine'
 "}}}
 "{{{Tags Plugins
@@ -39,10 +37,10 @@ Plug 'airblade/vim-gitgutter' "git diff integration
 "}}}
 "{{{Text Objects Plugins
 Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-entire' "Text objects for entire buffer 
-Plug 'glts/vim-textobj-comment' "Vim text objects for comments  
-Plug 'kana/vim-textobj-line' "Text objects for the current line  
-Plug 'rhysd/vim-textobj-continuous-line' "line which continues onto multiple lines as text object  
+Plug 'kana/vim-textobj-entire' "Text objects for entire buffer
+Plug 'glts/vim-textobj-comment' "Vim text objects for comments
+Plug 'kana/vim-textobj-line' "Text objects for the current line
+Plug 'rhysd/vim-textobj-continuous-line' "line which continues onto multiple lines as text object
 "}}}
 "{{{Fuzzy Finder Plugin
 Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
@@ -98,7 +96,7 @@ set termguicolors "use gui colors in terminal
 set shortmess+=c " suppress the annoying 'match x of y', 'The only match' and 'Pattern not found' messages
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when oppenning file
-autocmd BufEnter .vimrc,init.vim,tmux.conf,.tmux.conf setlocal foldmethod=marker 
+autocmd BufEnter .vimrc,init.vim,tmux.conf,.tmux.conf setlocal foldmethod=marker
 autocmd BufRead .vimrc,init.vim,tmux.conf,.tmux.conf :normal zM
 set makeprg=cd\ $HOME/doctor_strange/src/\ &&\ ./build_all.sh\ $HOME/Qt/5.11.1/gcc_64
 "}}}
@@ -209,9 +207,6 @@ if !has('gui_running')
     let &t_SR = "\<Esc>[3 q"
     let &t_EI = "\<Esc>[1 q"
 endif
-"}}}
-"{{{TmuxLine
-" let g:tmuxline_preset = 'powerline'
 "}}}
 "{{{Keymaps TODO Fix This Mess
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
