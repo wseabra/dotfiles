@@ -88,4 +88,6 @@ source $ZSH/oh-my-zsh.sh
 #alias matlab="/home/waldomiro/MATLAB_r2016b/bin/matlab"
 #alias matlab-cli="matlab -nodesktop"
 #alias vim="nvim"
-alias dwarffortress="/home/waldomiro/df/df_linux/df"
+alias dwarffortress="$HOME/df/df_linux/df"
+alias ta="tmux attach"
+alias tw="$HOME/dotfiles/tmux_Work.sh"
