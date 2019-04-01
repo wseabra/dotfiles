@@ -184,6 +184,7 @@ let g:ale_linters = {
 "{{{CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']
 let g:ctrlp_match_window = 'bottom,order:btt,max:10'
+let g:ctrlp_map = '<C-k>'
 "}}}
 "{{{SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
