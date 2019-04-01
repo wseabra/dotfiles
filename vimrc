@@ -16,8 +16,10 @@ Plug 'w0rp/ale'
 "}}}
 "{{{Visual Plugins
 Plug 'ayu-theme/ayu-vim'
+Plug 'bluz71/vim-moonfly-colors'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
+Plug 'edkolev/tmuxline.vim'
 "}}}
 "{{{General Plugins
 Plug 'JuanSeabra/a.vim' "Alternate Files quickly (.c --> .h etc)
@@ -103,8 +105,10 @@ set makeprg=cd\ $HOME/doctor_strange/src/\ &&\ ./build_all.sh\ $HOME/Qt/5.11.1/g
 "}}}
 "{{{Visual Configuration
 "visual
-let ayucolor="dark"
-colorscheme ayu "theme
+let g:moonflyCursorColor = 1
+let g:moonflyUnderlineMatchParen = 1
+" let ayucolor="dark"
+colorscheme moonfly "theme
 hi Normal guibg=black ctermbg=0
 hi Comment gui=italic cterm=italic
 hi SignColumn guibg=black ctermbg=0
@@ -154,6 +158,7 @@ autocmd BufEnter * GitGutter
 "}}}
 "{{{Indentline
 let g:indentLine_char = '┆'
+let g:indentLine_setColors = 0
 "}}}
 "{{{NERDTree
 let g:NERDTreeShowHidden=1
@@ -169,11 +174,13 @@ let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 "}}}
 "{{{Airline
-let g:airline_theme='simple'
+" let g:airline_theme='simple'
+let g:airline_theme = 'moonfly'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#tmuxline#enabled = 0
 "}}}
 "{{{Ale
 let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
