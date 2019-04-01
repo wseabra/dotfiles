@@ -217,20 +217,26 @@ if !has('gui_running')
     let &t_EI = "\<Esc>[1 q"
 endif
 "}}}
-"{{{Keymaps TODO Fix This Mess
+"{{{Keymaps
+"{{{Miscellaneous
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-map <F8> :TagbarToggle<CR>
-noremap <F7> <Esc>:NERDTreeToggle<CR>
-noremap <F5> :setlocal spell! spelllang=pt,en<cr>
-noremap <F9> :!cd $HOME/doctor_strange/ && build_all.sh $HOME/Qt/5.11.1/gcc_64<CR>
 map <leader>n <Esc>:tabnew<CR>
 noremap <leader>a GVgg
 noremap <leader>i <Esc>gg=G``
 nnoremap <leader>; A;<Esc>
+"}}}
+"{{{F# Keymaps
+map <F8> :TagbarToggle<CR>
+noremap <F7> <Esc>:NERDTreeToggle<CR>
+noremap <F5> :setlocal spell! spelllang=pt,en<cr>
+noremap <F9> :!cd $HOME/doctor_strange/ && build_all.sh $HOME/Qt/5.11.1/gcc_64<CR>
+"}}}
+"{{{Buffer Movement
 map <leader>bn :bn<CR>
 map <leader>bp :bp<CR>
 map <leader>bd :bd<CR>
-
+"}}}
+"{{{Window Movement maps
 if has('nvim')
     tnoremap <A-h> <C-\><C-N><C-w>h
     tnoremap <A-j> <C-\><C-N><C-w>j
@@ -254,10 +260,11 @@ else
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
 endif
-
-"move in large line as multiple lines
+"}}}
+"{{{Move In Large Line As Multiple Lines
 noremap j gj
 noremap k gk
 noremap <down> gj
 noremap <up> gk
+"}}}
 "}}}
