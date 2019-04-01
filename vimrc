@@ -96,8 +96,8 @@ set termguicolors "use gui colors in terminal
 set shortmess+=c " suppress the annoying 'match x of y', 'The only match' and 'Pattern not found' messages
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when oppenning file
-autocmd BufEnter .vimrc,init.vim,tmux.conf,.tmux.conf setlocal foldmethod=marker
-autocmd BufRead .vimrc,init.vim,tmux.conf,.tmux.conf :normal zM
+autocmd BufEnter .vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=marker
+autocmd BufRead .vimrc,vimrc,tmux.conf,.tmux.conf :normal zM
 set makeprg=cd\ $HOME/doctor_strange/src/\ &&\ ./build_all.sh\ $HOME/Qt/5.11.1/gcc_64
 "}}}
 "{{{Visual Configuration
