@@ -27,6 +27,7 @@ Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'Yggdroot/indentLine'
+Plug 'markonm/traces.vim'
 "}}}
 "{{{Tags Plugins
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
