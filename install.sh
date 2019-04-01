@@ -1,4 +1,9 @@
 #!/bin/bash
+
+#Tmux
+ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
+ln -s $HOME/dotfiles/simple.conf $HOME/.simple.conf
+
 #Vim
 if [[ ! -d "$HOME/.vim" ]]; then
     mkdir $HOME/.vim
