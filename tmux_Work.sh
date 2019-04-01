@@ -1,4 +1,11 @@
 #!/bin/bash
+#check if Work session is already up, if it is attach it
+WORKSESSION=`tmux list-sessions | grep -o -E '^Work:' | sed 's/://g'`
+echo $WORKSESSION
+if [[ $WORKSESSION ]]; then
+    tmux attach -t Work
+    exit 0
+fi
 if [[ -d $1 ]]; then
     tmux new-session -s Work -c $1 -d
     tmux send-keys 'vim' C-m   
