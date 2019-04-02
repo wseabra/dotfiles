@@ -24,7 +24,7 @@ Plug 'edkolev/tmuxline.vim'
 "{{{General Plugins
 Plug 'JuanSeabra/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
-Plug 'christoomey/vim-titlecase' "Teach Vim about titlecase, with support for motions and text objects
+" Plug 'christoomey/vim-titlecase' "Teach Vim about titlecase, with support for motions and text objects
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
 Plug 'christoomey/vim-tmux-navigator'
@@ -73,7 +73,6 @@ set number relativenumber "show line number and relative number
 set shiftwidth=4 "size of identation
 set tabstop=4 "size of tab
 set expandtab "expand tab into spaces
-set scrolloff=5 "scroll when x lines of bottom
 set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
 set completeopt=noinsert,menuone,noselect "type of completion window
@@ -111,14 +110,13 @@ let g:moonflyUnderlineMatchParen = 1
 colorscheme moonfly "theme
 hi Normal guibg=black ctermbg=0
 hi Comment gui=italic cterm=italic
-hi SignColumn guibg=black ctermbg=0
-hi LineNr guibg=black ctermbg=0
+" hi SignColumn guibg=black ctermbg=0
+" hi LineNr guibg=black ctermbg=0
 " hi ColorColumn guibg=#121212 ctermbg=0
 " hi CursorLine guibg=#121212
 " hi CursorLineNr guibg=#121212
 
 if has('gui_running')
-    hi Normal guibg=black
     hi ColorColumn guibg=#121212
     set lines=999 columns=999
     set guifont=Hack\ Regular\ 10
