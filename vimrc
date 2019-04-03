@@ -61,6 +61,7 @@ if !has('nvim')
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
 "}}}
+packadd termdebug
 call plug#end()
 "}}}
 "{{{Set Commands
@@ -222,6 +223,7 @@ map <leader>n <Esc>:tabnew<CR>
 noremap <leader>a GVgg
 noremap <leader>i <Esc>gg=G``
 nnoremap <leader>; A;<Esc>
+command! Q :q
 "}}}
 "{{{F# Keymaps
 map <F8> :TagbarToggle<CR>
