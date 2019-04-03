@@ -62,6 +62,7 @@ if !has('nvim')
     Plug 'roxma/vim-hug-neovim-rpc'
 endif
 "}}}
+packadd termdebug
 call plug#end()
 "}}}
 "{{{Set Commands
@@ -74,7 +75,6 @@ set number relativenumber "show line number and relative number
 set shiftwidth=4 "size of identation
 set tabstop=4 "size of tab
 set expandtab "expand tab into spaces
-set scrolloff=5 "scroll when x lines of bottom
 set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
 set completeopt=noinsert,menuone,noselect "type of completion window
@@ -113,14 +113,13 @@ let g:moonflyUnderlineMatchParen = 1
 colorscheme moonfly "theme
 hi Normal guibg=black ctermbg=0
 hi Comment gui=italic cterm=italic
-hi SignColumn guibg=black ctermbg=0
-hi LineNr guibg=black ctermbg=0
+" hi SignColumn guibg=black ctermbg=0
+" hi LineNr guibg=black ctermbg=0
 " hi ColorColumn guibg=#121212 ctermbg=0
 " hi CursorLine guibg=#121212
 " hi CursorLineNr guibg=#121212
 
 if has('gui_running')
-    hi Normal guibg=black
     hi ColorColumn guibg=#121212
     set lines=999 columns=999
     set guifont=Hack\ Regular\ 10
@@ -219,20 +218,27 @@ if !has('gui_running')
     let &t_EI = "\<Esc>[1 q"
 endif
 "}}}
-"{{{Keymaps TODO Fix This Mess
+"{{{Keymaps
+"{{{Miscellaneous
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-map <F8> :TagbarToggle<CR>
-noremap <F7> <Esc>:NERDTreeToggle<CR>
-noremap <F5> :setlocal spell! spelllang=pt,en<cr>
-noremap <F9> :!cd $HOME/doctor_strange/ && build_all.sh $HOME/Qt/5.11.1/gcc_64<CR>
 map <leader>n <Esc>:tabnew<CR>
 noremap <leader>a GVgg
 noremap <leader>i <Esc>gg=G``
 nnoremap <leader>; A;<Esc>
+command! Q :q
+"}}}
+"{{{F# Keymaps
+map <F8> :TagbarToggle<CR>
+noremap <F7> <Esc>:NERDTreeToggle<CR>
+noremap <F5> :setlocal spell! spelllang=pt,en<cr>
+noremap <F9> :!cd $HOME/doctor_strange/ && build_all.sh $HOME/Qt/5.11.1/gcc_64<CR>
+"}}}
+"{{{Buffer Movement
 map <leader>bn :bn<CR>
 map <leader>bp :bp<CR>
 map <leader>bd :bd<CR>
-
+"}}}
+"{{{Window Movement maps
 if has('nvim')
     tnoremap <A-h> <C-\><C-N><C-w>h
     tnoremap <A-j> <C-\><C-N><C-w>j
@@ -256,10 +262,11 @@ else
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
 endif
-
-"move in large line as multiple lines
+"}}}
+"{{{Move In Large Line As Multiple Lines
 noremap j gj
 noremap k gk
 noremap <down> gj
 noremap <up> gk
+"}}}
 "}}}
