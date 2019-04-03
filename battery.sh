@@ -1,8 +1,8 @@
 #!/bin/bash
 
-BAT=$(acpi | awk '{print $3" "$4}' | sed 's/,//g')
+BAT=$(acpi | awk 'NR==1{print $3" "$4}' | sed 's/,//g')
 
-if [[ $BAT ]]; then
+if [[ -n $BAT ]]; then
     echo $BAT
 else
     echo ?

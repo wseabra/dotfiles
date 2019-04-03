@@ -24,7 +24,7 @@ Plug 'edkolev/tmuxline.vim'
 "{{{General Plugins
 Plug 'JuanSeabra/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
-Plug 'christoomey/vim-titlecase' "Teach Vim about titlecase, with support for motions and text objects
+" Plug 'christoomey/vim-titlecase' "Teach Vim about titlecase, with support for motions and text objects
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
 Plug 'christoomey/vim-tmux-navigator'
@@ -44,6 +44,7 @@ Plug 'kana/vim-textobj-entire' "Text objects for entire buffer
 Plug 'glts/vim-textobj-comment' "Vim text objects for comments
 Plug 'kana/vim-textobj-line' "Text objects for the current line
 Plug 'rhysd/vim-textobj-continuous-line' "line which continues onto multiple lines as text object
+" Plug 'kana/vim-textobj-indent'
 "}}}
 "{{{Fuzzy Finder Plugin
 Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
@@ -102,6 +103,7 @@ set foldlevelstart=99 "prevent folding when oppenning file
 autocmd BufEnter .vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=marker
 autocmd BufRead .vimrc,vimrc,tmux.conf,.tmux.conf :normal zM
 set makeprg=cd\ $HOME/doctor_strange/src/\ &&\ ./build_all.sh\ $HOME/Qt/5.11.1/gcc_64
+set hlsearch
 "}}}
 "{{{Visual Configuration
 "visual
