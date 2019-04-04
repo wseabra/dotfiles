@@ -52,16 +52,9 @@ Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder fo
 "}}}
 "{{{Completion Related Plugins
 Plug 'ervandew/supertab' "Perform all your vim insert mode completions with Tab
+Plug 'Shougo/deoplete.nvim' | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' "Dark powered asynchronous completion framework for neovim/Vim8
 Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-ultisnips' | Plug 'SirVer/ultisnips' | Plug 'JuanSeabra/vim-snippets' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
-Plug 'ncm2/ncm2-pyclang'
-" Plug 'ncm2/ncm2-neoinclude' | Plug 'Shougo/neoinclude.vim'
-if !has('nvim')
-    Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'roxma/vim-hug-neovim-rpc'
 "}}}
 packadd termdebug
 call plug#end()
@@ -126,34 +119,6 @@ if has('gui_running')
     set guifont=Hack\ Regular\ 10
 endif
 "}}}
-"{{{Ncm2 Configuration
-"ncm2
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-" path to directory where libclang.so can be found
-if ! empty(glob("/usr/lib/libclang.so"))
-    let g:ncm2_pyclang#library_path = '/usr/lib/libclang.so'
-else
-    let g:ncm2_pyclang#library_path = '/usr/lib/llvm-3.8/lib/libclang.so.1'
-endif
-" a list of relative paths for compile_commands.json
-let g:ncm2_pyclang#database_path = [
-            \ 'compile_commands.json',
-            \ 'build/compile_commands.json'
-            \ ]
-" a list of relative paths looking for .clang_complete
-let g:ncm2_pyclang#args_file_path = [
-            \ '.clang',
-            \ '../.clang'
-            \ ]
-"Goto Declaration
-autocmd FileType c,cpp nnoremap <buffer> gd :<c-u>call ncm2_pyclang#goto_declaration()<cr>
-" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-inoremap <c-c> <ESC>
-" Press enter key to trigger snippet expansion
-" The parameters are the same as `:help feedkeys()`
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-"}}}
 "{{{GitGutter
 let g:gitgutter_map_keys = 0
 autocmd BufEnter * GitGutter
@@ -187,9 +152,23 @@ let g:airline#extensions#tmuxline#enabled = 0
 "{{{Ale
 let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
 let g:ale_linters = {
-            \ 'cpp': ['clang', 'cpplint'],
-            \ 'c': ['clang', 'cpplint']
+            \ 'cpp': ['cpplint'],
+            \ 'c': ['cpplint']
             \ }
+"}}}
+"{{{Deoplete
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_ignore_case = 1
+let g:deoplete#enable_refresh_always = 1
+let g:deoplete#max_abbr_width = 0
+let g:deoplete#max_menu_width = 0
+if ! empty(glob("/usr/lib/libclang.so"))
+    let g:deoplete#sources#clang#libclang_path =  '/usr/lib/libclang.so'
+    let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/'
+else
+    let g:deoplete#sources#clang#libclang_path =  '/usr/lib/llvm-3.8/lib/libclang.so.1'
+    let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/'
+endif
 "}}}
 "{{{CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']
