@@ -15,8 +15,7 @@ Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 Plug 'w0rp/ale'
 "}}}
 "{{{Visual Plugins
-Plug 'ayu-theme/ayu-vim'
-" Plug 'bluz71/vim-moonfly-colors'
+Plug 'danielwe/base16-vim'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'edkolev/tmuxline.vim'
@@ -24,7 +23,6 @@ Plug 'edkolev/tmuxline.vim'
 "{{{General Plugins
 Plug 'JuanSeabra/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
-" Plug 'christoomey/vim-titlecase' "Teach Vim about titlecase, with support for motions and text objects
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
 Plug 'christoomey/vim-tmux-navigator'
@@ -45,7 +43,6 @@ Plug 'kana/vim-textobj-entire' "Text objects for entire buffer
 Plug 'glts/vim-textobj-comment' "Vim text objects for comments
 Plug 'kana/vim-textobj-line' "Text objects for the current line
 Plug 'rhysd/vim-textobj-continuous-line' "line which continues onto multiple lines as text object
-" Plug 'kana/vim-textobj-indent'
 "}}}
 "{{{Fuzzy Finder Plugin
 Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
@@ -74,7 +71,7 @@ set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
 set completeopt=noinsert,menuone,noselect "type of completion window
 set pumheight=15 "maximum size of completion window
-set list lcs=tab:\┆\  "show indent lines when using tab
+set list lcs=tab:\┆\ ,eol:\¬ "show indent lines when using tab
 set showcmd "show command been typed
 set wildmenu "activate wild bottom menu
 set path+=** "set recursive search when using :find
@@ -102,17 +99,9 @@ set hlsearch
 "}}}
 "{{{Visual Configuration
 "visual
-" let g:moonflyCursorColor = 1
-" let g:moonflyUnderlineMatchParen = 1
-let ayucolor="dark"
-colorscheme ayu "theme
-hi Normal guibg=black ctermbg=0
+let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme base16-irblack "theme
 hi Comment gui=italic cterm=italic
-" hi SignColumn guibg=black ctermbg=0
-" hi LineNr guibg=black ctermbg=0
-" hi ColorColumn guibg=#121212 ctermbg=0
-" hi CursorLine guibg=#121212
-" hi CursorLineNr guibg=#121212
 
 if has('gui_running')
     hi ColorColumn guibg=#121212
@@ -185,13 +174,6 @@ let g:UltiSnipsJumpForwardTrigger= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 "}}}
-"{{{:terminal Options
-if has('nvim')
-    au TermOpen * setlocal nonumber norelativenumber
-    command! -nargs=* Term split | resize 20 | startinsert | terminal <args>
-    command! -nargs=* Vterm vsplit | startinsert | terminal <args>
-endif
-"}}}
 "{{{Change Cursor Shape
 if !has('gui_running')
     let &t_SI = "\<Esc>[5 q"
@@ -210,8 +192,8 @@ command! Q :q
 "}}}
 "{{{F# Keymaps
 noremap <F5>  :setlocal spell! spelllang=pt,en<CR>
-noremap <F8>  :TagbarToggle<CR>
 noremap <F7>  :NERDTreeToggle<CR>
+noremap <F8>  :TagbarToggle<CR>
 noremap <F9>  :Make<CR>
 noremap <F10> :Dispatch cd $HOME/doctor_strange/src/bin/ && ./DoctorStrangeCli<CR>
 noremap <F12> :Dispatch g++ % -o %< -g -lm -O2 -std=c++11<CR>
