@@ -27,7 +27,6 @@ Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'Yggdroot/indentLine'
-Plug 'markonm/traces.vim'
 Plug 'tpope/vim-dispatch'
 "}}}
 "{{{Tags Plugins
@@ -60,6 +59,7 @@ call plug#end()
 "{{{Set Commands
 syntax on
 filetype indent plugin on
+set nocompatible
 set shell=/bin/zsh "shell
 set cursorline "enable cursorline
 set colorcolumn=80 "color column 80
