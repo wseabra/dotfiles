@@ -52,6 +52,7 @@ Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder fo
 "}}}
 "{{{Completion Related Plugins
 Plug 'ervandew/supertab' "Perform all your vim insert mode completions with Tab
+Plug 'SirVer/ultisnips' | Plug 'JuanSeabra/vim-snippets' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
 Plug 'Shougo/deoplete.nvim' | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' "Dark powered asynchronous completion framework for neovim/Vim8
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/vim-hug-neovim-rpc'
@@ -208,10 +209,12 @@ nnoremap <leader>; A;<Esc>
 command! Q :q
 "}}}
 "{{{F# Keymaps
-map <F8> :TagbarToggle<CR>
-noremap <F7> <Esc>:NERDTreeToggle<CR>
-noremap <F5> :setlocal spell! spelllang=pt,en<cr>
-noremap <F9> :Make<CR>
+noremap <F5>  :setlocal spell! spelllang=pt,en<CR>
+noremap <F8>  :TagbarToggle<CR>
+noremap <F7>  :NERDTreeToggle<CR>
+noremap <F9>  :Make<CR>
+noremap <F10> :Dispatch cd $HOME/doctor_strange/src/bin/ && ./DoctorStrangeCli<CR>
+noremap <F12> :Dispatch g++ % -o %< -g -lm -O2 -std=c++11<CR>
 "}}}
 "{{{Buffer Movement
 map <leader>bn :bn<CR>
