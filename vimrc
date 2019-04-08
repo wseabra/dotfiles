@@ -19,6 +19,7 @@ Plug 'danielwe/base16-vim'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'edkolev/tmuxline.vim'
+Plug 'ryanoasis/vim-devicons'
 "}}}
 "{{{General Plugins
 Plug 'JuanSeabra/a.vim' "Alternate Files quickly (.c --> .h etc)
@@ -33,7 +34,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
 "}}}
 "{{{Git Plugins
-Plug 'tpope/vim-fugitive'	"git integration
+Plug 'tpope/vim-fugitive' "git integration
 Plug 'airblade/vim-gitgutter' "git diff integration
 "}}}
 "{{{Text Objects Plugins
@@ -44,7 +45,7 @@ Plug 'kana/vim-textobj-line' "Text objects for the current line
 Plug 'rhysd/vim-textobj-continuous-line' "line which continues onto multiple lines as text object
 "}}}
 "{{{Fuzzy Finder Plugin
-Plug 'ctrlpvim/ctrlp.vim'	"Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
+Plug 'ctrlpvim/ctrlp.vim' "Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
 "}}}
 "{{{Completion Related Plugins
 Plug 'ervandew/supertab' "Perform all your vim insert mode completions with Tab
@@ -69,9 +70,9 @@ set tabstop=4 "size of tab
 set expandtab "expand tab into spaces
 set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
-set completeopt=noinsert,menuone,noselect "type of completion window
+set completeopt=menuone "type of completion window
 set pumheight=15 "maximum size of completion window
-set list lcs=tab:\┆\ ,eol:\¬ "show indent lines when using tab
+set list lcs=tab:\┆\ ,eol:\¬,trail:\· "show indent lines when using tab
 set showcmd "show command been typed
 set wildmenu "activate wild bottom menu
 set path+=** "set recursive search when using :find
@@ -89,7 +90,6 @@ set undofile "undo file
 set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
 set background=dark "set backgroud to dark
 set termguicolors "use gui colors in terminal
-set shortmess+=c " suppress the annoying 'match x of y', 'The only match' and 'Pattern not found' messages
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when oppenning file
 autocmd BufEnter .vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=marker
@@ -118,7 +118,6 @@ let g:indentLine_char = '┆'
 let g:indentLine_setColors = 0
 "}}}
 "{{{NERDTree
-let g:NERDTreeShowHidden=1
 "close tab if only window is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 "}}}

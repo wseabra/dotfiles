@@ -91,3 +91,4 @@ source $ZSH/oh-my-zsh.sh
 alias dwarffortress="$HOME/df/df_linux/df"
 alias ta="tmux attach"
 alias tw="$HOME/dotfiles/tmux_Work.sh"
+bindkey -v
