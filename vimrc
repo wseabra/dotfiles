@@ -1,11 +1,7 @@
-"Config File For Neovim/Vim8
+"Config File For Vim8
 "Waldomiro Seabra
 "{{{Plugins
-if has('nvim')
-    call plug#begin('~/.config/nvim/plugged')
-else
-    call plug#begin('~/.vim/plugged')
-endif
+call plug#begin('~/.vim/plugged')
 "{{{Side Windows Plugins
 Plug 'scrooloose/nerdtree' "folder navigator
 Plug 'majutsushi/tagbar' "side window with tags from the code
@@ -72,20 +68,16 @@ set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
 set completeopt=menuone "type of completion window
 set pumheight=15 "maximum size of completion window
-set list lcs=tab:\┆\ ,eol:\¬,trail:\· "show indent lines when using tab
+set list lcs=tab:\┆\ ,eol:\¬,trail:\· "show indent lines when using tab, end of line and trail whitespaces
 set showcmd "show command been typed
 set wildmenu "activate wild bottom menu
 set path+=** "set recursive search when using :find
 set mouse=a
-if has('nvim')
-    set undodir=~/.config/nvim/undodir "place of undo dir
-else
-    if !isdirectory("~/.vim/undodir")
-        call system ("bash -c \"mkdir ~/.vim/undodir\"")
-    endif
-    set undodir=~/.vim/undodir "place of undo dir
-    set timeoutlen=1000 ttimeoutlen=0 "reduce delay in switching mode
+if !isdirectory("~/.vim/undodir")
+    call system ("bash -c \"mkdir ~/.vim/undodir\"")
 endif
+set undodir=~/.vim/undodir "place of undo dir
+set timeoutlen=1000 ttimeoutlen=0 "reduce delay in switching mode
 set undofile "undo file
 set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
 set background=dark "set backgroud to dark
@@ -131,7 +123,6 @@ let g:cpp_class_decl_highlight = 1
 "}}}
 "{{{Airline
 let g:airline_theme='simple'
-" let g:airline_theme = 'moonfly'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
@@ -188,6 +179,7 @@ noremap <leader>a GVgg
 noremap <leader>i <Esc>gg=G``
 nnoremap <leader>; A;<Esc>
 command! Q :q
+command! W :w
 "}}}
 "{{{F# Keymaps
 noremap <F5>  :setlocal spell! spelllang=pt,en<CR>
@@ -203,29 +195,10 @@ map <leader>bp :bp<CR>
 map <leader>bd :bd<CR>
 "}}}
 "{{{Window Movement maps
-if has('nvim')
-    tnoremap <A-h> <C-\><C-N><C-w>h
-    tnoremap <A-j> <C-\><C-N><C-w>j
-    tnoremap <A-k> <C-\><C-N><C-w>k
-    tnoremap <A-l> <C-\><C-N><C-w>l
-    inoremap <A-h> <C-\><C-N><C-w>h
-    inoremap <A-j> <C-\><C-N><C-w>j
-    inoremap <A-k> <C-\><C-N><C-w>k
-    inoremap <A-l> <C-\><C-N><C-w>l
-    nnoremap <A-h> <C-w>h
-    nnoremap <A-j> <C-w>j
-    nnoremap <A-k> <C-w>k
-    nnoremap <A-l> <C-w>l
-else
-    tnoremap <C-h> <C-\><C-N><C-w>h
-    tnoremap <C-j> <C-\><C-N><C-w>j
-    tnoremap <C-k> <C-\><C-N><C-w>k
-    tnoremap <C-l> <C-\><C-N><C-w>l
-    nnoremap <C-h> <C-w>h
-    nnoremap <C-j> <C-w>j
-    nnoremap <C-k> <C-w>k
-    nnoremap <C-l> <C-w>l
-endif
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 "}}}
 "{{{Move In Large Line As Multiple Lines
 noremap j gj
