@@ -44,11 +44,9 @@ Plug 'rhysd/vim-textobj-continuous-line' "line which continues onto multiple lin
 Plug 'ctrlpvim/ctrlp.vim' "Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
 "}}}
 "{{{Completion Related Plugins
-Plug 'ervandew/supertab' "Perform all your vim insert mode completions with Tab
 Plug 'SirVer/ultisnips' | Plug 'JuanSeabra/vim-snippets' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
-Plug 'Shougo/deoplete.nvim' | Plug 'Shougo/neoinclude.vim' | Plug 'zchee/deoplete-clang' "Dark powered asynchronous completion framework for neovim/Vim8
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
 "}}}
 packadd termdebug
 call plug#end()
@@ -136,18 +134,21 @@ let g:ale_linters = {
             \ 'c': ['cpplint']
             \ }
 "}}}
-"{{{Deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_ignore_case = 1
-let g:deoplete#enable_refresh_always = 1
-let g:deoplete#max_abbr_width = 0
-let g:deoplete#max_menu_width = 0
-if ! empty(glob("/usr/lib/libclang.so"))
-    let g:deoplete#sources#clang#libclang_path =  '/usr/lib/libclang.so'
-    let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/'
-else
-    let g:deoplete#sources#clang#libclang_path =  '/usr/lib/llvm-3.8/lib/libclang.so.1'
-    let g:deoplete#sources#clang#clang_header = '/usr/lib/clang/'
+"{{{{Vim-lsp
+let g:mucomplete#enable_auto_at_startup = 1
+if executable('clangd')
+    augroup lsp_clangd
+        autocmd!
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'clangd',
+                    \ 'cmd': {server_info->['clangd']},
+                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+                    \ })
+        autocmd FileType c setlocal omnifunc=lsp#complete
+        autocmd FileType cpp setlocal omnifunc=lsp#complete
+        autocmd FileType objc setlocal omnifunc=lsp#complete
+        autocmd FileType objcpp setlocal omnifunc=lsp#complete
+    augroup end
 endif
 "}}}
 "{{{CtrlP
@@ -155,11 +156,7 @@ let g:ctrlp_extensions = ['tag', 'buffertag']
 let g:ctrlp_match_window = 'bottom,order:btt,max:10'
 let g:ctrlp_map = '<leader>p'
 "}}}
-"{{{SuperTab
-let g:SuperTabDefaultCompletionType = "<c-n>"
-"}}}
 "{{{UltiSnips
-"Prevent conflit with SuperTab <tab>
 let g:UltiSnipsJumpForwardTrigger= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger= "<c-k>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
@@ -182,12 +179,12 @@ command! Q :q
 command! W :w
 "}}}
 "{{{F# Keymaps
-noremap <F5>  :setlocal spell! spelllang=pt,en<CR>
-noremap <F7>  :NERDTreeToggle<CR>
-noremap <F8>  :TagbarToggle<CR>
-noremap <F9>  :Make<CR>
-noremap <F10> :Dispatch cd $HOME/doctor_strange/src/bin/ && ./DoctorStrangeCli<CR>
-noremap <F12> :Dispatch g++ % -o %< -g -lm -O2 -std=c++11<CR>
+noremap <F6>  :setlocal spell! spelllang=pt,en<CR>
+noremap <F8>  :NERDTreeToggle<CR>
+noremap <F9>  :TagbarToggle<CR>
+noremap <F10>  :Make<CR>
+noremap <F11> :Dispatch cd $HOME/doctor_strange/src/bin/ && ./DoctorStrangeCli<CR>
+noremap <F13> :Dispatch g++ % -o %< -g -lm -O2 -std=c++11<CR>
 "}}}
 "{{{Buffer Movement
 map <leader>bn :bn<CR>
