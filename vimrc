@@ -180,11 +180,11 @@ command! W :w
 "}}}
 "{{{F# Keymaps
 noremap <F6>  :setlocal spell! spelllang=pt,en<CR>
-noremap <F8>  :NERDTreeToggle<CR>
-noremap <F9>  :TagbarToggle<CR>
-noremap <F10>  :Make<CR>
-noremap <F11> :Dispatch cd $HOME/doctor_strange/src/bin/ && ./DoctorStrangeCli<CR>
-noremap <F13> :Dispatch g++ % -o %< -g -lm -O2 -std=c++11<CR>
+noremap <F7>  :NERDTreeToggle<CR>
+noremap <F8>  :TagbarToggle<CR>
+noremap <F9>  :Make<CR>
+noremap <F10> :Dispatch cd $HOME/doctor_strange/src/bin/ && ./DoctorStrangeCli<CR>
+noremap <F12> :Dispatch g++ % -o %< -g -lm -O2 -std=c++11<CR>
 "}}}
 "{{{Buffer Movement
 map <leader>bn :bn<CR>
