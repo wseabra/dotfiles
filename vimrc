@@ -130,12 +130,15 @@ let g:airline#extensions#tmuxline#enabled = 0
 "{{{Ale
 let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
 let g:ale_linters = {
-            \ 'cpp': ['cpplint'],
-            \ 'c': ['cpplint']
+            \ 'cpp': ['cpplint', 'cppcheck'],
+            \ 'c': ['cpplint', 'clang']
             \ }
+let g:ale_set_highlights = 1
 "}}}
-"{{{{Vim-lsp
-let g:mucomplete#enable_auto_at_startup = 1
+"{{{Vim-lsp
+let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
+let g:lsp_signs_enabled = 0         " enable signs
+let g:lsp_diagnostics_echo_cursor = 0 " enable echo under cursor when in normal mode
 if executable('clangd')
     augroup lsp_clangd
         autocmd!
