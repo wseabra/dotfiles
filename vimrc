@@ -186,7 +186,7 @@ noremap <F6>  :setlocal spell! spelllang=pt,en<CR>
 noremap <F7>  :NERDTreeToggle<CR>
 noremap <F8>  :TagbarToggle<CR>
 noremap <F9>  :Make<CR>
-noremap <F10> :Dispatch cd $HOME/doctor_strange/src/bin/ && ./DoctorStrangeCli<CR>
+noremap <F10> :Dispatch cd $HOME/doctor_strange/src/bin/ && ./SATCli<CR>
 noremap <F12> :Dispatch g++ % -o %< -g -lm -O2 -std=c++11<CR>
 "}}}
 "{{{Buffer Movement
