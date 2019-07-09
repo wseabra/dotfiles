@@ -47,6 +47,9 @@ Plug 'ctrlpvim/ctrlp.vim' "Full path fuzzy file, buffer, mru, tag, ... finder fo
 Plug 'SirVer/ultisnips' | Plug 'JuanSeabra/vim-snippets' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
+Plug 'ryanolsonx/vim-lsp-javascript'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 "}}}
 packadd termdebug
 call plug#end()
@@ -84,7 +87,7 @@ set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when oppenning file
 autocmd BufEnter .vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=marker
 autocmd BufRead .vimrc,vimrc,tmux.conf,.tmux.conf :normal zM
-set makeprg=cd\ $HOME/doctor_strange/src/\ &&\ ./build_all.sh\ $HOME/Qt/5.11.1/gcc_64
+" set makeprg=cd\ $HOME/doctor_strange/src/\ &&\ ./build_all.sh\ $HOME/Qt/5.11.1/gcc_64
 set hlsearch
 "}}}
 "{{{Visual Configuration
@@ -153,6 +156,16 @@ if executable('clangd')
         autocmd FileType objcpp setlocal omnifunc=lsp#complete
     augroup end
 endif
+if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'typescript-language-server',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+        \ 'whitelist': ['typescript', 'javascript'],
+        \ })
+        autocmd FileType js setlocal omnifunc=lsp#complete
+        autocmd FileType ts setlocal omnifunc=lsp#complete
+endif
 "}}}
 "{{{CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']
@@ -186,7 +199,7 @@ noremap <F6>  :setlocal spell! spelllang=pt,en<CR>
 noremap <F7>  :NERDTreeToggle<CR>
 noremap <F8>  :TagbarToggle<CR>
 noremap <F9>  :Make<CR>
-noremap <F10> :Dispatch cd $HOME/doctor_strange/src/bin/ && ./SATCli<CR>
+" noremap <F10> :Dispatch cd $HOME/doctor_strange/src/bin/ && ./SBTVD-SAT<CR>
 noremap <F12> :Dispatch g++ % -o %< -g -lm -O2 -std=c++11<CR>
 "}}}
 "{{{Buffer Movement
