@@ -1,21 +1,19 @@
 #!/bin/bash
 
 #Tmux
-ln -s $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
-ln -s $HOME/dotfiles/simple.conf $HOME/.simple.conf
+ln -sf $HOME/dotfiles/tmux.conf $HOME/.tmux.conf
+ln -sf $HOME/dotfiles/simple.conf $HOME/.simple.conf
 
 #Vim
-if [[ ! -d "$HOME/.vim" ]]; then
-    mkdir $HOME/.vim
-fi
+mkdir -p $HOME/.vim
 
-ln -s $HOME/dotfiles/vimrc $HOME/.vimrc
+ln -sf $HOME/dotfiles/vimrc $HOME/.vimrc
 
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 #zsh
-ln -s $HOME/dotfiles/zshrc $HOME/.zshrc
+ln -sf $HOME/dotfiles/zshrc $HOME/.zshrc
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
