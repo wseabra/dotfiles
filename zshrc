@@ -89,7 +89,7 @@ source $ZSH/oh-my-zsh.sh
 #alias matlab="/home/waldomiro/MATLAB_r2016b/bin/matlab"
 #alias matlab-cli="matlab -nodesktop"
 #alias vim="nvim"
-alias dwarffortress="$HOME/df/df_linux/df"
+# alias dwarffortress="$HOME/df/df_linux/df"
 alias ta="tmux attach"
 alias tw="$HOME/dotfiles/tmux_Work.sh"
 bindkey -v
@@ -98,3 +98,4 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PATH="$PATH:/opt/mssql-tools/bin"
+# source /usr/share/nvm/init-nvm.sh
