@@ -14,6 +14,6 @@ run nm-applet&
 run pamac-tray&
 run blueman-applet&
 run nitrogen --restore
-run insync start
-run dropbox start
+run insync start&
+run dropbox start&
 run light-locker --lock-on-suspend&
