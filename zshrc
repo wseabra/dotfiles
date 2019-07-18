@@ -72,6 +72,9 @@ source $ZSH/oh-my-zsh.sh
    export EDITOR='vim'
  fi
 
+precmd() { 
+    echo $PWD > /tmp/current_dir
+}
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
