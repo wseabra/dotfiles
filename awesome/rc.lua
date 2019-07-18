@@ -415,7 +415,7 @@ clientkeys = my_table.join(
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
-    awful.key({ altkey,           }, "f4",      function (c) c:kill()                         end,
+    awful.key({ altkey,           }, "F4",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
@@ -519,7 +519,20 @@ clientbuttons = gears.table.join(
 -- Set keys
 root.keys(globalkeys)
 -- }}}
+-- Changing spotify notifications.
+naughty.config.presets.spotify = { 
+    -- if you want to disable Spotify notifications completely, return false
+    callback = function(args)
+        return true
+    end,
 
+    -- Adjust the size of the notification
+    height = 100,
+    width  = 400,
+    -- Guessing the value, find a way to fit it to the proper size later
+    icon_size = 90
+}
+table.insert(naughty.dbus.config.mapping, {{appname = "Spotify"}, naughty.config.presets.spotify})
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
@@ -559,6 +572,8 @@ awful.rules.rules = {
       properties = {floating = true} },
     { rule = { class = "Nm-connection-editor" },
       properties = {floating = true} },
+    { rule = { class = "Blueman-manager" },
+      properties = {floating = true} },
     { rule = { class = "Nitrogen" },
       properties = {floating = true} },
     { rule = { class = "Steam" },
@@ -567,7 +582,7 @@ awful.rules.rules = {
       properties = {maximized = true, tag = awful.util.tagnames[2] } },
     { rule = { class = "vlc" },
       properties = {maximized = true, tag = awful.util.tagnames[4] } },
-    { rule = { class = "Spotify" },
+    { rule = { instance = "spotify" },
       properties = {tag = awful.util.tagnames[3] } },
     { rule = {class = "xfce4-appfinder" },
       properties = {floating = true, placement = awful.placement.top} },
