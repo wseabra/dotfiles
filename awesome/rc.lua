@@ -287,10 +287,14 @@ globalkeys = my_table.join(
 
     -- Standard program
     awful.key({ modkey,           }, "Return", 
-        function (c)
+        function ()
+            local c = awful.client.getmaster()
             if c.class == "Sakura" then
-                currentDir = io.lines("/tmp/current_dir")
-                awful.spawn(terminal .. " -c " .. currentDir)
+                local file = io.open("/tmp/current_dir","r")
+                io.input(file)
+                local currentDir = io.read()
+                io.close(file)
+                awful.spawn(terminal .. " --working-directory=" .. currentDir)
             else
                 awful.spawn(terminal)
             end
@@ -590,7 +594,7 @@ awful.rules.rules = {
       properties = {maximized = true, tag = awful.util.tagnames[2] } },
     { rule = { class = "vlc" },
       properties = {maximized = true, tag = awful.util.tagnames[4] } },
-    { rule = { instance = "spotify" },
+    { rule = { class = "[Ss]potify" },
       properties = {tag = awful.util.tagnames[3] } },
     { rule = {class = "xfce4-appfinder" },
       properties = {floating = true, placement = awful.placement.top} },
