@@ -252,6 +252,18 @@ globalkeys = my_table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
+    awful.key({ altkey,           }, "Tab",
+        function ()
+            awful.client.focus.byidx( 1)
+        end,
+        {description = "focus next by index", group = "client"}
+    ),
+    awful.key({ altkey, "Shift"   }, "Tab",
+        function ()
+            awful.client.focus.byidx(-1)
+        end,
+        {description = "focus previous by index", group = "client"}
+    ),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
@@ -365,6 +377,10 @@ globalkeys = my_table.join(
     awful.key({ modkey }, "b", function () awful.spawn(browser) end,
               {description = "open chrome", group = "custom"}),
 
+    -- Menubar
+    awful.key({ modkey }, "p", function() awful.util.spawn("xfce4-appfinder", {floating = true,
+                                                                               placement = awful.placement.top}) end,
+              {description = "show the menubar", group = "launcher"}),
     --thunar
     awful.key({ modkey },            "t",     function () awful.util.spawn( "thunar" ) end,
               {description = "open thunar", group = "custom"}),
@@ -398,6 +414,8 @@ clientkeys = my_table.join(
         end,
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+              {description = "close", group = "client"}),
+    awful.key({ altkey,           }, "f4",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
@@ -551,6 +569,8 @@ awful.rules.rules = {
       properties = {maximized = true, tag = awful.util.tagnames[4] } },
     { rule = { class = "Spotify" },
       properties = {tag = awful.util.tagnames[3] } },
+    { rule = {class = "xfce4-appfinder" },
+      properties = {floating = true, placement = awful.placement.top} },
 
 }
 -- }}}
