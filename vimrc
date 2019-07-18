@@ -166,6 +166,14 @@ if executable('typescript-language-server')
         autocmd FileType js setlocal omnifunc=lsp#complete
         autocmd FileType ts setlocal omnifunc=lsp#complete
 endif
+if executable('pyls')
+    " pip install python-language-server
+    au User lsp_setup call lsp#register_server({
+                \ 'name': 'pyls',
+                \ 'cmd': {server_info->['pyls']},
+                \ 'whitelist': ['python'],
+                \ })
+endif
 "}}}
 "{{{CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']
