@@ -289,7 +289,7 @@ globalkeys = my_table.join(
     awful.key({ modkey,           }, "Return", 
         function ()
             local c = awful.client.getmaster()
-            if c.class == "Sakura" then
+            if c and c.class == "Sakura" then
                 local file = io.open("/tmp/current_dir","r")
                 io.input(file)
                 local currentDir = io.read()
