@@ -14,6 +14,7 @@ Plug 'w0rp/ale'
 Plug 'danielwe/base16-vim'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
+Plug 'leafgarland/typescript-vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'ryanoasis/vim-devicons'
 "}}}
@@ -121,6 +122,9 @@ let g:tagbar_sort = 0
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
+"}}}
+"{{{typescript-vim
+let g:typescript_indent_disable = 1
 "}}}
 "{{{Airline
 let g:airline_theme='simple'
