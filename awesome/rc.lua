@@ -17,7 +17,7 @@ local beautiful     = require("beautiful")
 local naughty       = require("naughty")
 local lain          = require("lain")
 --local menubar       = require("menubar")
-local freedesktop   = require("freedesktop")
+-- local freedesktop   = require("freedesktop")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
                       require("awful.hotkeys_popup.keys")
 local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
@@ -97,7 +97,7 @@ local guieditor    = "gvim"
 local scrlocker    = "light-locker-command -l"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { "1:", "2:", "3:", "4:", "5:" }
+awful.util.tagnames = { "1:", "2:", "3:", "4:", "5:", "6:"}
 awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
@@ -111,7 +111,7 @@ awful.layout.layouts = {
     --awful.layout.suit.spiral.dwindle,
     --awful.layout.suit.max.fullscreen,
     --awful.layout.suit.magnifier,
-    --awful.layout.suit.corner.nw,
+    -- awful.layout.suit.corner.nw,
     --awful.layout.suit.corner.ne,
     --awful.layout.suit.corner.sw,
     --awful.layout.suit.corner.se,
@@ -178,8 +178,7 @@ awful.util.tasklist_buttons = my_table.join(
 
 beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
 -- }}}
-
-
+beautiful.notification_icon_size = 60
 -- {{{ Screen
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", function(s)
@@ -213,7 +212,7 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(my_table.join(
-    awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end),
+    -- awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -291,10 +290,14 @@ globalkeys = my_table.join(
             local c = awful.client.getmaster()
             if c and c.class == "Sakura" then
                 local file = io.open("/tmp/current_dir","r")
-                io.input(file)
-                local currentDir = io.read()
-                io.close(file)
-                awful.spawn(terminal .. " --working-directory=" .. currentDir)
+                if file then
+                    io.input(file)
+                    local currentDir = io.read()
+                    io.close(file)
+                    awful.spawn(terminal .. " --working-directory=\"" .. currentDir .. "\"")
+                else
+                    awful.spawn(terminal)
+                end
             else
                 awful.spawn(terminal)
             end
@@ -376,6 +379,17 @@ globalkeys = my_table.join(
         end),
     awful.key({}, "XF86AudioPrev", function()
             awful.util.spawn("playerctl previous", false)
+        end),
+
+        --Screen Capture
+    awful.key({}, "Print", function()
+            awful.util.spawn("xfce4-screenshooter -f")
+        end),
+    awful.key({"Control"}, "Print", function()
+            awful.util.spawn("xfce4-screenshooter -w")
+        end),
+    awful.key({"Shift"}, "Print", function()
+            awful.util.spawn("xfce4-screenshooter -r")
         end),
 
     -- Copy primary to clipboard (terminals to gtk)
@@ -531,20 +545,6 @@ clientbuttons = gears.table.join(
 -- Set keys
 root.keys(globalkeys)
 -- }}}
--- Changing spotify notifications.
-naughty.config.presets.spotify = { 
-    -- if you want to disable Spotify notifications completely, return false
-    callback = function(args)
-        return true
-    end,
-
-    -- Adjust the size of the notification
-    height = 100,
-    width  = 400,
-    -- Guessing the value, find a way to fit it to the proper size later
-    icon_size = 90
-}
-table.insert(naughty.dbus.config.mapping, {{appname = "Spotify"}, naughty.config.presets.spotify})
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
@@ -564,40 +564,46 @@ awful.rules.rules = {
 
     -- Titlebars
     { rule_any = { type = { "dialog", "normal" } },
-      properties = { titlebars_enabled = true } },
+      properties = { titlebars_enabled = false } },
 
     -- Set Firefox to always map on the first tag on screen 1.
     { rule = { class = "Google-chrome" },
-      properties = { screen = 1, tag = awful.util.tagnames[1] } },
+      properties = { screen = 1, tag = awful.util.tagnames[1], titlebars_enabled = false } },
 
     { rule = { class = "Gimp", role = "gimp-image-window" },
           properties = { maximized = true } },
     { rule = { class = "Telegram" },
       properties = {floating = true} },
-    { rule = { class = "Thunar" },
-      properties = {floating = true} },
+    -- { rule = { class = "Thunar" },
+    --   properties = {floating = true} },
     { rule = { class = "Pavucontrol" },
       properties = {floating = true} },
     { rule = { class = "Arandr" },
       properties = {floating = true} },
     { rule = { class = "insync.py" },
-      properties = {floating = true} },
+      properties = {floating = true, titlebars_enabled = false} },
     { rule = { class = "Nm-connection-editor" },
       properties = {floating = true} },
     { rule = { class = "Blueman-manager" },
       properties = {floating = true} },
     { rule = { class = "Nitrogen" },
       properties = {floating = true} },
+    -- { rule = { class = "Engrampa" },
+    --   properties = {floating = true} },
     { rule = { class = "Steam" },
-      properties = {floating = true, tag = awful.util.tagnames[2] } },
+      properties = {floating = true, tag = awful.util.tagnames[4], titlebars_enabled = false } },
     { rule = { class = "Dwarf_Fortress" },
-      properties = {maximized = true, tag = awful.util.tagnames[2] } },
+      properties = {tag = awful.util.tagnames[4], titlebars_enabled = false } },
     { rule = { class = "vlc" },
-      properties = {maximized = true, tag = awful.util.tagnames[4] } },
+      properties = {tag = awful.util.tagnames[6] } },
     { rule = { class = "[Ss]potify" },
-      properties = {tag = awful.util.tagnames[3] } },
+      properties = {tag = awful.util.tagnames[5] } },
     { rule = {class = "xfce4-appfinder" },
       properties = {floating = true, placement = awful.placement.top} },
+    { rule = {instance = "fm.exe" },
+      properties = {titlebars_enabled = false} },
+    { rule = {instance = "Celeste.bin.x86_64" },
+      properties = {titlebars_enabled = false} },
 
 }
 -- }}}

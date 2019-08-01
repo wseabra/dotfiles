@@ -178,13 +178,13 @@ if executable('pyls')
                 \ 'whitelist': ['python'],
                 \ })
 endif
-if executable('lua-lsp')
-    au User lsp_setup call lsp#register_server({
-                \ 'name': 'lua-lsp',
-                \ 'cmd': {server_info->[&shell, &shellcmdflag, 'lua-lsp']},
-                \ 'whitelist': ['lua'],
-                \ })
-endif
+" if executable('lua-lsp')
+"     au User lsp_setup call lsp#register_server({
+"                 \ 'name': 'lua-lsp',
+"                 \ 'cmd': {server_info->[&shell, &shellcmdflag, 'lua-lsp']},
+"                 \ 'whitelist': ['lua'],
+"                 \ })
+" endif
 "}}}
 "{{{CtrlP
 let g:ctrlp_extensions = ['tag', 'buffertag']

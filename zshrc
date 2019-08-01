@@ -72,6 +72,10 @@ source $ZSH/oh-my-zsh.sh
    export EDITOR='vim'
  fi
 
+#  if [[ -e /tmp/current_dir ]]; then
+#     dir=`cat /tmp/current_dir`
+#     cd $dir
+#  fi
 precmd() { 
     echo $PWD > /tmp/current_dir
 }

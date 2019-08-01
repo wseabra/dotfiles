@@ -24,9 +24,9 @@ theme.fg_urgent                                 = "#CC9393"
 theme.bg_normal                                 = "#1A1A1A"
 theme.bg_focus                                  = "#313131"
 theme.bg_urgent                                 = "#1A1A1A"
-theme.border_width                              = dpi(1)
+theme.border_width                              = dpi(2)
 theme.border_normal                             = "#3F3F3F"
-theme.border_focus                              = "#7F7F7F"
+theme.border_focus                              = "#EA6F81" --"#7F7F7F"
 theme.border_marked                             = "#CC9393"
 theme.tasklist_bg_focus                         = "#1A1A1A"
 theme.titlebar_bg_focus                         = theme.bg_focus
@@ -56,7 +56,11 @@ theme.widget_battery_empty                      = theme.dir .. "/icons/battery_e
 theme.widget_mem                                = theme.dir .. "/icons/mem.png"
 theme.widget_cpu                                = theme.dir .. "/icons/cpu.png"
 theme.widget_temp                               = theme.dir .. "/icons/temp.png"
-theme.widget_net                                = theme.dir .. "/icons/net.png"
+theme.net_great                          = theme.dir .. "/icons/net.png"
+theme.net_good                           = theme.dir .. "/icons/net_good.png"
+theme.net_mid                            = theme.dir .. "/icons/net_mid.png"
+theme.net_weak                           = theme.dir .. "/icons/net_weak.png"
+theme.ethernet_icon                             = theme.dir .. "/icons/net_wired.png"
 theme.widget_hdd                                = theme.dir .. "/icons/hdd.png"
 theme.widget_music                              = theme.dir .. "/icons/note.png"
 theme.widget_music_on                           = theme.dir .. "/icons/note_on.png"
@@ -243,16 +247,66 @@ theme.volume = lain.widget.alsa({
 })
 
 -- Net
-local neticon = wibox.widget.imagebox(theme.widget_net)
-local net = lain.widget.net({
+-- local neticon = wibox.widget.imagebox(theme.widget_net)
+-- local net = lain.widget.net({
+--     settings = function()
+--         widget:set_markup(markup.font(theme.font,
+--                           markup("#7AC82E", " " .. net_now.received)
+--                           .. " " ..
+--                           markup("#46A8C3", " " .. net_now.sent .. " ")))
+--     end
+-- })
+local wifi_icon = wibox.widget.imagebox()
+local wifi_ssid = wibox.widget.textbox()
+local eth_icon = wibox.widget.imagebox()
+local net = lain.widget.net {
+    notify = "on",
+    wifi_state = "on",
+    eth_state = "on",
     settings = function()
-        widget:set_markup(markup.font(theme.font,
-                          markup("#7AC82E", " " .. net_now.received)
-                          .. " " ..
-                          markup("#46A8C3", " " .. net_now.sent .. " ")))
-    end
-})
+        local eth0 = net_now.devices.enp1s0
+        if eth0 then
+            if eth0.ethernet then
+                eth_icon:set_image(theme.ethernet_icon)
+            else
+                eth_icon:set_image()
+            end
+        end
 
+        local wlan0 = net_now.devices.wlp2s0
+        if wlan0 then
+            if wlan0.wifi then
+                local signal = wlan0.signal
+                if signal < -83 then
+                    wifi_icon:set_image(theme.net_weak)
+                elseif signal < -70 then
+                    wifi_icon:set_image(theme.net_mid)
+                elseif signal < -53 then
+                    wifi_icon:set_image(theme.net_good)
+                elseif signal >= -53 then
+                    wifi_icon:set_image(theme.net_great)
+                end
+                f = io.popen("iw dev ".. "wlp2s0" .." link")
+                for line in f:lines() do
+                    -- Connected to 00:01:8e:11:45:ac (on wlp1s0)
+                    mac     = string.match(line, "Connected to ([0-f:]+)") or mac
+                    -- SSID: 00018E1145AC
+                    essid   = string.match(line, "SSID: (.+)") or essid
+                    -- tx bitrate: 36.0 MBit/s
+                    bitrate = string.match(line, "tx bitrate: (.+/s)") or bitrate
+                end
+                f:close()
+                wifi_ssid:set_markup_silently(markup.font(theme.font," " .. essid .. " "))
+            else
+                wifi_icon:set_image()
+                wifi_ssid:set_markup_silently("")
+            end
+        end
+        -- if wlan0.wifi == nil and eth0.ethernet == nil then
+        --     wifi_ssid:set_markup_silently(markup.font(theme.font,"Not connected"))
+        -- end
+    end
+}
 -- Separators
 local spr     = wibox.widget.textbox(' ')
 local arrl_dl = separators.arrow_left(theme.bg_focus, "alpha")
@@ -270,7 +324,12 @@ function theme.at_screen_connect(s)
     gears.wallpaper.maximized(wallpaper, s, true)
 
     -- Tags
-    awful.tag(awful.util.tagnames, s, awful.layout.layouts[1])
+    awful.tag(awful.util.tagnames, s, {awful.layout.suit.tile,
+                                        awful.layout.suit.tile,
+                                        awful.layout.suit.floating,
+                                        awful.layout.suit.max,
+                                        awful.layout.suit.max,
+                                        awful.layout.suit.max })
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -304,41 +363,43 @@ function theme.at_screen_connect(s)
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
+                layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
             spr,
             -- arrl_ld,
             -- wibox.container.background(mpdicon, theme.bg_focus),
             -- wibox.container.background(theme.mpd.widget, theme.bg_focus),
-            arrl_ld,
-            wibox.container.background(volicon, theme.bg_focus),
-            wibox.container.background(theme.volume.widget, theme.bg_focus),
+            -- arrl_ld,
+            volicon,
+            theme.volume.widget,
             -- arrl_ld,
             -- wibox.container.background(mailicon, theme.bg_focus),
             --wibox.container.background(theme.mail.widget, theme.bg_focus),
-            arrl_dl,
+            -- arrl_dl,
             memicon,
             mem.widget,
-            arrl_ld,
-            wibox.container.background(cpuicon, theme.bg_focus),
-            wibox.container.background(cpu.widget, theme.bg_focus),
-            arrl_dl,
+            -- arrl_ld,
+            cpuicon,
+            cpu.widget,
+            -- arrl_dl,
             tempicon,
             temp.widget,
             -- arrl_ld,
             -- wibox.container.background(fsicon, theme.bg_focus),
             --wibox.container.background(theme.fs.widget, theme.bg_focus),
-            arrl_ld,
-            wibox.container.background(baticon, theme.bg_focus),
-            wibox.container.background(bat.widget, theme.bg_focus),
             -- arrl_ld,
-            -- wibox.container.background(neticon, theme.bg_focus),
-            -- wibox.container.background(net.widget, theme.bg_focus),
-            arrl_dl,
+            baticon,
+            bat.widget,
+            -- arrl_dl,
+            net.widget,
+            wifi_icon,
+            wifi_ssid,
+            eth_icon,
+            -- arrl_ld,
             clock,
             spr,
-            arrl_ld,
-            wibox.container.background(s.mylayoutbox, theme.bg_focus),
+            -- arrl_dl,
+           s.mylayoutbox,
         },
     }
 end
