@@ -97,7 +97,7 @@ local guieditor    = "gvim"
 local scrlocker    = "light-locker-command -l"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { "1:", "2:", "3:", "4:", "5:", "6:"}
+awful.util.tagnames = { "1:", "2:", "3:", "4:", "5:", "6:", "7:"}
 awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
@@ -412,7 +412,7 @@ globalkeys = my_table.join(
               {description = "open thunar", group = "custom"}),
     -- Prompt
     awful.key({ modkey }, "r", function ()
-            os.execute(string.format("dmenu_run -i -fn 'Monospace' -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
+            os.execute(string.format("dmenu_run -i -nb '%s' -nf '%s' -sb '%s' -sf '%s'",
             beautiful.bg_normal, beautiful.fg_normal, beautiful.bg_focus, beautiful.fg_focus))
         end,
               {description = "run prompt", group = "launcher"}),
@@ -597,7 +597,9 @@ awful.rules.rules = {
     { rule = { class = "vlc" },
       properties = {tag = awful.util.tagnames[6] } },
     { rule = { class = "[Ss]potify" },
-      properties = {tag = awful.util.tagnames[5] } },
+      properties = {tag = awful.util.tagnames[6] } },
+    { rule = { class = "discord" },
+      properties = {tag = awful.util.tagnames[7] } },
     { rule = {class = "xfce4-appfinder" },
       properties = {floating = true, placement = awful.placement.top} },
     { rule = {instance = "fm.exe" },
