@@ -1,3 +1,4 @@
+
 "Config File For Vim8
 "Waldomiro Seabra
 "{{{Plugins
@@ -8,27 +9,28 @@ Plug 'majutsushi/tagbar' "side window with tags from the code
 "}}}
 "{{{SignColumn Plugins
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 "}}}
 "{{{Visual Plugins
 Plug 'danielwe/base16-vim'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'leafgarland/typescript-vim'
-Plug 'edkolev/tmuxline.vim'
+" Plug 'edkolev/tmuxline.vim'
 Plug 'ryanoasis/vim-devicons'
 "}}}
 "{{{General Plugins
-Plug 'JuanSeabra/a.vim' "Alternate Files quickly (.c --> .h etc)
+" Plug 'JuanSeabra/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
-Plug 'christoomey/vim-tmux-navigator'
+"Plug 'christoomey/vim-tmux-navigator'
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-dispatch'
+Plug 'jiangmiao/auto-pairs'
 "}}}
 "{{{Tags Plugins
-Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
+" Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
 "}}}
 "{{{Git Plugins
 Plug 'tpope/vim-fugitive' "git integration
@@ -42,15 +44,17 @@ Plug 'kana/vim-textobj-line' "Text objects for the current line
 Plug 'rhysd/vim-textobj-continuous-line' "line which continues onto multiple lines as text object
 "}}}
 "{{{Fuzzy Finder Plugin
-Plug 'ctrlpvim/ctrlp.vim' "Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
+" Plug 'ctrlpvim/ctrlp.vim' "Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
 "}}}
 "{{{Completion Related Plugins
-Plug 'SirVer/ultisnips' | Plug 'JuanSeabra/vim-snippets' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
+Plug 'SirVer/ultisnips' | Plug 'wseabra/vim-snippets' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
+Plug 'thomasfaingnaert/vim-lsp-snippets'
+Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
-Plug 'ryanolsonx/vim-lsp-javascript'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+"Plug 'ryanolsonx/vim-lsp-javascript'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
 "}}}
 packadd termdebug
 call plug#end()
@@ -86,10 +90,15 @@ set background=dark "set backgroud to dark
 set termguicolors "use gui colors in terminal
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when oppenning file
-autocmd BufEnter .vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=marker
-autocmd BufRead .vimrc,vimrc,tmux.conf,.tmux.conf :normal zM
-" set makeprg=cd\ $HOME/doctor_strange/src/\ &&\ ./build_all.sh\ $HOME/Qt/5.11.1/gcc_64
+autocmd BufEnter init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=marker
+autocmd BufRead init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf :normal zM
+set makeprg=cd\ \build_linux_x64\ &&\ make\ all
 set hlsearch
+
+autocmd Filetype json setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd Filetype javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+
 "}}}
 "{{{Visual Configuration
 "visual
@@ -137,8 +146,8 @@ let g:airline#extensions#tmuxline#enabled = 0
 "{{{Ale
 let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
 let g:ale_linters = {
-            \ 'cpp': ['cpplint', 'cppcheck'],
-            \ 'c': ['cpplint', 'clang']
+            \ 'cpp': ['cquery'],
+            \ 'c': ['cquery']
             \ }
 let g:ale_set_highlights = 1
 "}}}
@@ -146,38 +155,52 @@ let g:ale_set_highlights = 1
 let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
 let g:lsp_signs_enabled = 0         " enable signs
 let g:lsp_diagnostics_echo_cursor = 0 " enable echo under cursor when in normal mode
-if executable('clangd')
-    augroup lsp_clangd
-        autocmd!
-        autocmd User lsp_setup call lsp#register_server({
-                    \ 'name': 'clangd',
-                    \ 'cmd': {server_info->['clangd']},
-                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-                    \ })
-        autocmd FileType c setlocal omnifunc=lsp#complete
-        autocmd FileType cpp setlocal omnifunc=lsp#complete
-        autocmd FileType objc setlocal omnifunc=lsp#complete
-        autocmd FileType objcpp setlocal omnifunc=lsp#complete
-    augroup end
+if executable('cquery')
+    echo "Cquery available"
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'cquery',
+      \ 'cmd': {server_info->['cquery']},
+      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+      \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery/cache' },
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+      \ })
+   autocmd FileType c setlocal omnifunc=lsp#complete
+   autocmd FileType cpp setlocal omnifunc=lsp#complete
+   autocmd FileType objc setlocal omnifunc=lsp#complete
+   autocmd FileType objcpp setlocal omnifunc=lsp#complete
 endif
-if executable('typescript-language-server')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'typescript-language-server',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-        \ 'whitelist': ['typescript', 'javascript'],
-        \ })
-        autocmd FileType js setlocal omnifunc=lsp#complete
-        autocmd FileType ts setlocal omnifunc=lsp#complete
-endif
-if executable('pyls')
-    " pip install python-language-server
-    au User lsp_setup call lsp#register_server({
-                \ 'name': 'pyls',
-                \ 'cmd': {server_info->['pyls']},
-                \ 'whitelist': ['python'],
-                \ })
-endif
+" if executable('clangd')
+"    augroup lsp_clangd
+"        autocmd!
+"        autocmd User lsp_setup call lsp#register_server({
+"                    \ 'name': 'clangd',
+"                    \ 'cmd': {server_info->['clangd', '-background-index']},
+"                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+"                    \ })
+"        autocmd FileType c setlocal omnifunc=lsp#complete
+"        autocmd FileType cpp setlocal omnifunc=lsp#complete
+"        autocmd FileType objc setlocal omnifunc=lsp#complete
+"        autocmd FileType objcpp setlocal omnifunc=lsp#complete
+"    augroup end
+" endif
+"if executable('typescript-language-server')
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'typescript-language-server',
+"        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+"        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+"        \ 'whitelist': ['typescript', 'javascript'],
+"        \ })
+"        autocmd FileType js setlocal omnifunc=lsp#complete
+"        autocmd FileType ts setlocal omnifunc=lsp#complete
+"endif
+"if executable('pyls')
+"    " pip install python-language-server
+"    au User lsp_setup call lsp#register_server({
+"                \ 'name': 'pyls',
+"                \ 'cmd': {server_info->['pyls']},
+"                \ 'whitelist': ['python'],
+"                \ })
+"endif
 " if executable('lua-lsp')
 "     au User lsp_setup call lsp#register_server({
 "                 \ 'name': 'lua-lsp',
@@ -187,21 +210,21 @@ endif
 " endif
 "}}}
 "{{{CtrlP
-let g:ctrlp_extensions = ['tag', 'buffertag']
-let g:ctrlp_match_window = 'bottom,order:btt,max:10'
-let g:ctrlp_map = '<leader>p'
+" let g:ctrlp_extensions = ['tag', 'buffertag']
+" let g:ctrlp_match_window = 'bottom,order:btt,max:10'
+" let g:ctrlp_map = '<leader>p'
 "}}}
 "{{{UltiSnips
-let g:UltiSnipsJumpForwardTrigger= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger= "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
+"let g:UltiSnipsJumpForwardTrigger= "<c-j>"
+"let g:UltiSnipsJumpBackwardTrigger= "<c-k>"
+"let g:UltiSnipsRemoveSelectModeMappings = 0
 "}}}
 "{{{Change Cursor Shape
-if !has('gui_running')
-    let &t_SI = "\<Esc>[5 q"
-    let &t_SR = "\<Esc>[3 q"
-    let &t_EI = "\<Esc>[1 q"
-endif
+" if !has('gui_running')
+"     let &t_SI = "\<Esc>[5 q"
+"     let &t_SR = "\<Esc>[3 q"
+"     let &t_EI = "\<Esc>[1 q"
+" endif
 "}}}
 "{{{Keymaps
 "{{{Miscellaneous
@@ -210,16 +233,29 @@ map <leader>n <Esc>:tabnew<CR>
 noremap <leader>a GVgg
 noremap <leader>i <Esc>gg=G``
 nnoremap <leader>; A;<Esc>
+nnoremap <C-]> :ALEGoToDefinition<CR>
+nnoremap <C-W><C-]> :ALEGoToDefinitionInVSplit<CR>
 command! Q :q
 command! W :w
+function! SwitchSourceHeader()
+  if (expand ("%:e") == "cpp")
+    find %:t:r.h
+  else 
+    if (expand ("%:e") == "h")
+        find %:t:r.cpp
+    endif
+  endif
+endfunction
+command! A call SwitchSourceHeader()
 "}}}
 "{{{F# Keymaps
-noremap <F6>  :setlocal spell! spelllang=pt,en<CR>
-noremap <F7>  :NERDTreeToggle<CR>
-noremap <F8>  :TagbarToggle<CR>
-noremap <F9>  :Make<CR>
-" noremap <F10> :Dispatch cd $HOME/doctor_strange/src/bin/ && ./SBTVD-SAT<CR>
-noremap <F12> :Dispatch g++ % -o %< -g -lm -O2 -std=c++11<CR>
+noremap <F6> :setlocal spell! spelllang=pt,en<CR>
+noremap <F7> :NERDTreeToggle<CR>
+noremap <F8> :TagbarToggle<CR>
+noremap <F2> :Make<CR>
+" noremap <F3> :Dispatch cd $PWD/build_linux_x64/bin/Debug/ && ./AeroDiagnosticApp /host<CR>
+" noremap <F4> :Dispatch cd $PWD/build_linux_x64/bin/Debug/ && ./ConsoleDiagnosticApp<CR>
+" noremap <F12> :Dispatch g++ % -o %< -g -lm -O2 -std=c++11<CR>
 "}}}
 "{{{Buffer Movement
 map <leader>bn :bn<CR>
@@ -233,8 +269,8 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 "}}}
 "{{{Move In Large Line As Multiple Lines
-noremap j gj
-noremap k gk
+" noremap j gj
+" noremap k gk
 noremap <down> gj
 noremap <up> gk
 "}}}
