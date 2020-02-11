@@ -252,6 +252,7 @@ map <leader>n <Esc>:tabnew<CR>
 noremap <leader>a GVgg
 noremap <leader>i <Esc>gg=G``
 nnoremap <leader>; A;<Esc>
+nnoremap <leader>p <Esc> :find 
 nnoremap <C-]> :ALEGoToDefinition<CR>
 nnoremap <C-W><C-]> :ALEGoToDefinitionInVSplit<CR>
 command! Q :q
