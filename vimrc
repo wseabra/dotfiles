@@ -94,6 +94,8 @@ autocmd BufEnter init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=
 autocmd BufRead init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf :normal zM
 set makeprg=cd\ \build_linux_x64\ &&\ make\ all
 set hlsearch
+set backspace=indent,eol,start
+set incsearch
 
 autocmd Filetype json setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd Filetype javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
@@ -104,7 +106,7 @@ autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 "visual
 let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-irblack "theme
-hi Comment gui=italic cterm=italic
+" hi Comment gui=italic cterm=italic
 
 if has('gui_running')
     hi ColorColumn guibg=#121212
@@ -146,22 +148,39 @@ let g:airline#extensions#tmuxline#enabled = 0
 "{{{Ale
 let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
 let g:ale_linters = {
-            \ 'cpp': ['cquery'],
+            \ 'cpp': ['ccls'],
             \ 'c': ['cquery']
             \ }
 let g:ale_set_highlights = 1
+let g:ale_sign_warning = ''
+let g:ale_sign_error = ''
+" highlight clear ALEErrorSign
+" highlight clear ALEWarningSign
 "}}}
 "{{{Vim-lsp
 let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
 let g:lsp_signs_enabled = 0         " enable signs
 let g:lsp_diagnostics_echo_cursor = 0 " enable echo under cursor when in normal mode
-if executable('cquery')
-    echo "Cquery available"
+" if executable('cquery')
+"    au User lsp_setup call lsp#register_server({
+"       \ 'name': 'cquery',
+"       \ 'cmd': {server_info->['cquery']},
+"       \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+"       \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery/cache' },
+"       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+"       \ })
+"    autocmd FileType c setlocal omnifunc=lsp#complete
+"    autocmd FileType cpp setlocal omnifunc=lsp#complete
+"    autocmd FileType objc setlocal omnifunc=lsp#complete
+"    autocmd FileType objcpp setlocal omnifunc=lsp#complete
+" endif
+" Register ccls C++ lanuage server.
+if executable('ccls')
    au User lsp_setup call lsp#register_server({
-      \ 'name': 'cquery',
-      \ 'cmd': {server_info->['cquery']},
+      \ 'name': 'ccls',
+      \ 'cmd': {server_info->['ccls']},
       \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-      \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery/cache' },
+      \ 'initialization_options': {'cache': {'directory': '/tmp/ccls/cache' }},
       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
       \ })
    autocmd FileType c setlocal omnifunc=lsp#complete
@@ -220,11 +239,11 @@ endif
 "let g:UltiSnipsRemoveSelectModeMappings = 0
 "}}}
 "{{{Change Cursor Shape
-" if !has('gui_running')
-"     let &t_SI = "\<Esc>[5 q"
-"     let &t_SR = "\<Esc>[3 q"
-"     let &t_EI = "\<Esc>[1 q"
-" endif
+if !has('gui_running')
+    let &t_SI = "\<Esc>[5 q"
+    let &t_SR = "\<Esc>[3 q"
+    let &t_EI = "\<Esc>[1 q"
+endif
 "}}}
 "{{{Keymaps
 "{{{Miscellaneous
