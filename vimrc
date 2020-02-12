@@ -111,7 +111,7 @@ autocmd BufEnter * GitGutter
 "}}}
 "{{{Indentline
 let g:indentLine_char = '→'
-let g:indentLine_setColors = 0
+" let g:indentLine_setColors = 0
 "}}}
 "{{{NERDTree
 "close tab if only window is NERDTree
