@@ -16,11 +16,9 @@ Plug 'danielwe/base16-vim'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'leafgarland/typescript-vim'
-" Plug 'edkolev/tmuxline.vim'
 Plug 'ryanoasis/vim-devicons'
 "}}}
 "{{{General Plugins
-" Plug 'JuanSeabra/a.vim' "Alternate Files quickly (.c --> .h etc)
 Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
@@ -28,9 +26,6 @@ Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-dispatch'
 Plug 'jiangmiao/auto-pairs'
-"}}}
-"{{{Tags Plugins
-" Plug 'ludovicchabant/vim-gutentags' "A Vim plugin that manages your tag files https://bolt80.com/gutentags/
 "}}}
 "{{{Git Plugins
 Plug 'tpope/vim-fugitive' "git integration
@@ -42,9 +37,6 @@ Plug 'kana/vim-textobj-entire' "Text objects for entire buffer
 Plug 'glts/vim-textobj-comment' "Vim text objects for comments
 Plug 'kana/vim-textobj-line' "Text objects for the current line
 Plug 'rhysd/vim-textobj-continuous-line' "line which continues onto multiple lines as text object
-"}}}
-"{{{Fuzzy Finder Plugin
-" Plug 'ctrlpvim/ctrlp.vim' "Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
 "}}}
 "{{{Completion Related Plugins
 Plug 'SirVer/ultisnips' | Plug 'wseabra/vim-snippets' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
@@ -67,14 +59,12 @@ set shell=/bin/zsh "shell
 set cursorline "enable cursorline
 set colorcolumn=80 "color column 80
 set number relativenumber "show line number and relative number
-set shiftwidth=4 "size of identation
-set tabstop=4 "size of tab
 set expandtab "expand tab into spaces
 set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
 set completeopt=menuone "type of completion window
 set pumheight=15 "maximum size of completion window
-set list lcs=tab:\┆\ ,eol:\¬,trail:\· "show indent lines when using tab, end of line and trail whitespaces
+set list lcs=tab:\→\ ,eol:\¬,trail:\· "show indent lines when using tab, end of line and trail white spaces
 set showcmd "show command been typed
 set wildmenu "activate wild bottom menu
 set path+=** "set recursive search when using :find
@@ -86,17 +76,18 @@ set undodir=~/.vim/undodir "place of undo dir
 set timeoutlen=1000 ttimeoutlen=0 "reduce delay in switching mode
 set undofile "undo file
 set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
-set background=dark "set backgroud to dark
+set background=dark "set background to dark
 set termguicolors "use gui colors in terminal
 set foldmethod=syntax "fold following the language syntax
-set foldlevelstart=99 "prevent folding when oppenning file
+set foldlevelstart=99 "prevent folding when opening file
 autocmd BufEnter init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=marker
 autocmd BufRead init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf :normal zM
 set makeprg=cd\ \build_linux_x64\ &&\ make\ all
-set hlsearch
-set backspace=indent,eol,start
-set incsearch
+set hlsearch incsearch "highlight search and incremental search"
+set backspace=indent,eol,start "sane backspace behaviour
 
+set shiftwidth=4 "size of indentation
+set tabstop=4 "size of tab
 autocmd Filetype json setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd Filetype javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
@@ -119,7 +110,7 @@ let g:gitgutter_map_keys = 0
 autocmd BufEnter * GitGutter
 "}}}
 "{{{Indentline
-let g:indentLine_char = '┆'
+let g:indentLine_char = '→'
 let g:indentLine_setColors = 0
 "}}}
 "{{{NERDTree
@@ -152,29 +143,23 @@ let g:ale_linters = {
             \ 'c': ['cquery']
             \ }
 let g:ale_set_highlights = 1
+highlight ALEError ctermbg=none ctermfg=red cterm=underline
+highlight ALEWarning ctermbg=none ctermfg=cyan cterm=underline
 let g:ale_sign_warning = ''
-let g:ale_sign_error = ''
-" highlight clear ALEErrorSign
-" highlight clear ALEWarningSign
+let g:ale_sign_error = '✗'
+hi ALEErrorSign ctermfg=red
+hi ALEWarningSign ctermfg=cyan
 "}}}
 "{{{Vim-lsp
 let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
 let g:lsp_signs_enabled = 0         " enable signs
 let g:lsp_diagnostics_echo_cursor = 0 " enable echo under cursor when in normal mode
-" if executable('cquery')
-"    au User lsp_setup call lsp#register_server({
-"       \ 'name': 'cquery',
-"       \ 'cmd': {server_info->['cquery']},
-"       \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-"       \ 'initialization_options': { 'cacheDirectory': '/tmp/cquery/cache' },
-"       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-"       \ })
-"    autocmd FileType c setlocal omnifunc=lsp#complete
-"    autocmd FileType cpp setlocal omnifunc=lsp#complete
-"    autocmd FileType objc setlocal omnifunc=lsp#complete
-"    autocmd FileType objcpp setlocal omnifunc=lsp#complete
-" endif
-" Register ccls C++ lanuage server.
+" let g:lsp_signs_error = {'text': '✗'}
+" let g:lsp_signs_warning = {'text': '', 'icon': '/path/to/some/icon'} " icons require GUI
+" let g:lsp_signs_hint = {'icon': '/path/to/some/other/icon'} " icons require GUI
+" hi LspError ctermbg=none ctermfg=red cterm=underline
+" hi LspWarning ctermbg=none ctermfg=yellow cterm=underline
+" Register ccls C++ language server.
 if executable('ccls')
    au User lsp_setup call lsp#register_server({
       \ 'name': 'ccls',
@@ -188,20 +173,6 @@ if executable('ccls')
    autocmd FileType objc setlocal omnifunc=lsp#complete
    autocmd FileType objcpp setlocal omnifunc=lsp#complete
 endif
-" if executable('clangd')
-"    augroup lsp_clangd
-"        autocmd!
-"        autocmd User lsp_setup call lsp#register_server({
-"                    \ 'name': 'clangd',
-"                    \ 'cmd': {server_info->['clangd', '-background-index']},
-"                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-"                    \ })
-"        autocmd FileType c setlocal omnifunc=lsp#complete
-"        autocmd FileType cpp setlocal omnifunc=lsp#complete
-"        autocmd FileType objc setlocal omnifunc=lsp#complete
-"        autocmd FileType objcpp setlocal omnifunc=lsp#complete
-"    augroup end
-" endif
 "if executable('typescript-language-server')
 "    au User lsp_setup call lsp#register_server({
 "        \ 'name': 'typescript-language-server',
@@ -227,16 +198,6 @@ endif
 "                 \ 'whitelist': ['lua'],
 "                 \ })
 " endif
-"}}}
-"{{{CtrlP
-" let g:ctrlp_extensions = ['tag', 'buffertag']
-" let g:ctrlp_match_window = 'bottom,order:btt,max:10'
-" let g:ctrlp_map = '<leader>p'
-"}}}
-"{{{UltiSnips
-"let g:UltiSnipsJumpForwardTrigger= "<c-j>"
-"let g:UltiSnipsJumpBackwardTrigger= "<c-k>"
-"let g:UltiSnipsRemoveSelectModeMappings = 0
 "}}}
 "{{{Change Cursor Shape
 if !has('gui_running')
@@ -289,8 +250,6 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 "}}}
 "{{{Move In Large Line As Multiple Lines
-" noremap j gj
-" noremap k gk
 noremap <down> gj
 noremap <up> gk
 "}}}
