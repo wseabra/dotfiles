@@ -140,15 +140,15 @@ let g:airline#extensions#tmuxline#enabled = 0
 let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
 let g:ale_linters = {
             \ 'cpp': ['ccls'],
-            \ 'c': ['cquery']
+            \ 'c': ['ccls']
             \ }
 let g:ale_set_highlights = 1
 highlight ALEError ctermbg=none ctermfg=red cterm=underline
 highlight ALEWarning ctermbg=none ctermfg=cyan cterm=underline
 let g:ale_sign_warning = ''
 let g:ale_sign_error = '✗'
-hi ALEErrorSign ctermfg=red
-hi ALEWarningSign ctermfg=cyan
+hi ALEErrorSign ctermfg=red ctermbg=NONE
+hi ALEWarningSign ctermfg=cyan ctermbg=NONE
 "}}}
 "{{{Vim-lsp
 let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
