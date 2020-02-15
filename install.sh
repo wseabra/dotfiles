@@ -29,4 +29,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
 
 ln -sf $PWD/zshrc $HOME/.zshrc
 echo "-----zsh configurations installed-----"
-
+#sakura term
+echo "-----Installing sakura configurations-"
+mkdir -p $HOME/.config/sakura
+ln -sf $PWD/sakura.conf $HOME/.config/sakura/sakura.conf
