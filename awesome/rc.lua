@@ -569,10 +569,8 @@ awful.rules.rules = {
     -- Set Firefox to always map on the first tag on screen 1.
     { rule = { class = "firefox" },
       properties = { screen = 1, tag = awful.util.tagnames[1], titlebars_enabled = false } },
-
     { rule = { class = "Google-chrome" },
       properties = { screen = 1, tag = awful.util.tagnames[1], titlebars_enabled = false } },
-
     { rule = { class = "Gimp", role = "gimp-image-window" },
           properties = { maximized = true } },
     { rule = { class = "Telegram" },
@@ -599,10 +597,12 @@ awful.rules.rules = {
       properties = {tag = awful.util.tagnames[4], titlebars_enabled = false } },
     { rule = { class = "vlc" },
       properties = {tag = awful.util.tagnames[6] } },
-    { rule = { class = "[Ss]potify" },
-      properties = {tag = awful.util.tagnames[6] } },
+    { rule = { class = "Spotify" },
+      properties = {tag = awful.util.tagnames[5] } },
     { rule = {class = "xfce4-appfinder" },
       properties = {floating = true, placement = awful.placement.top} },
+    { rule = {class = "Galculator" },
+      properties = {floating = true} },
     { rule = {instance = "fm.exe" },
       properties = {titlebars_enabled = false} },
     { rule = {instance = "Celeste.bin.x86_64" },

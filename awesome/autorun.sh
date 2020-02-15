@@ -8,12 +8,13 @@ function run {
 }
 
 # run program [some arguments]
-run redshift-gtk&
-run picom&
-run nm-applet&
-run blueman-applet&
+run redshift-gtk
+run picom
+run nm-applet
+run xfce4-power-manager
+run blueman-applet
 run nitrogen --restore
-run insync start&
-run dropbox start&
-run light-locker --lock-on-suspend&
-run caffeine&
+run insync start
+run dropbox start
+run light-locker --lock-on-suspend
+run caffeine
