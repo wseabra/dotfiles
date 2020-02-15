@@ -97,7 +97,7 @@ autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 "visual
 let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-irblack "theme
-" hi Comment gui=italic cterm=italic
+hi Comment gui=italic cterm=italic
 
 if has('gui_running')
     hi ColorColumn guibg=#121212

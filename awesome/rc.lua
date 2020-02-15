@@ -92,12 +92,12 @@ local altkey       = "Mod1"
 local terminal     = "sakura"
 local editor       = os.getenv("EDITOR") or "vim"
 local gui_editor   = "gvim"
-local browser      = "google-chrome-stable"
+local browser      = "firefox"
 local guieditor    = "gvim"
 local scrlocker    = "light-locker-command -l"
 
 awful.util.terminal = terminal
-awful.util.tagnames = { "1:", "2:", "3:", "4:", "5:", "6:", "7:"}
+awful.util.tagnames = { "1:", "2:", "3:", "4:", "5:", "6:"}
 awful.layout.layouts = {
     awful.layout.suit.tile,
     awful.layout.suit.tile.left,
@@ -564,9 +564,12 @@ awful.rules.rules = {
 
     -- Titlebars
     { rule_any = { type = { "dialog", "normal" } },
-      properties = { titlebars_enabled = false } },
+      properties = { titlebars_enabled = true } },
 
     -- Set Firefox to always map on the first tag on screen 1.
+    { rule = { class = "firefox" },
+      properties = { screen = 1, tag = awful.util.tagnames[1], titlebars_enabled = false } },
+
     { rule = { class = "Google-chrome" },
       properties = { screen = 1, tag = awful.util.tagnames[1], titlebars_enabled = false } },
 
@@ -598,8 +601,6 @@ awful.rules.rules = {
       properties = {tag = awful.util.tagnames[6] } },
     { rule = { class = "[Ss]potify" },
       properties = {tag = awful.util.tagnames[6] } },
-    { rule = { class = "discord" },
-      properties = {tag = awful.util.tagnames[7] } },
     { rule = {class = "xfce4-appfinder" },
       properties = {floating = true, placement = awful.placement.top} },
     { rule = {instance = "fm.exe" },
