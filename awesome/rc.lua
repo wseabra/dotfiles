@@ -89,7 +89,7 @@ local themes = {
 local chosen_theme = themes[7]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
-local terminal     = "sakura"
+local terminal     = "st"
 local editor       = os.getenv("EDITOR") or "vim"
 local gui_editor   = "gvim"
 local browser      = "firefox"
@@ -401,11 +401,19 @@ globalkeys = my_table.join(
 
     -- User programs
     awful.key({ modkey }, "b", function () awful.spawn(browser) end,
-              {description = "open chrome", group = "custom"}),
+              {description = "open browser", group = "custom"}),
+    awful.key({ modkey, "Shift" }, "p", 
+    function ()
+        awful.spawn.with_shell("~/.config/awesome/restartpicom.sh") 
+
+        naughty.notify({ preset = naughty.config.presets.normal,
+            title = "Running Picom script",
+            text = "Starting/Stoping Picom" })
+    end,
+              {description = "restart picom", group = "custom"}),
 
     -- Menubar
-    awful.key({ modkey }, "p", function() awful.util.spawn("xfce4-appfinder", {floating = true,
-                                                                               placement = awful.placement.top}) end,
+    awful.key({ modkey }, "p", function() awful.util.spawn("xfce4-appfinder") end,
               {description = "show the menubar", group = "launcher"}),
     --thunar
     awful.key({ modkey },            "t",     function () awful.util.spawn( "thunar" ) end,
@@ -564,7 +572,7 @@ awful.rules.rules = {
 
     -- Titlebars
     { rule_any = { type = { "dialog", "normal" } },
-      properties = { titlebars_enabled = true } },
+      properties = { titlebars_enabled = false } },
 
     -- Set Firefox to always map on the first tag on screen 1.
     { rule = { class = "firefox" },
@@ -599,8 +607,8 @@ awful.rules.rules = {
       properties = {tag = awful.util.tagnames[6] } },
     { rule = { class = "Spotify" },
       properties = {tag = awful.util.tagnames[5] } },
-    { rule = {class = "xfce4-appfinder" },
-      properties = {floating = true, placement = awful.placement.top} },
+    { rule = {class = "Xfce4-appfinder" },
+      properties = {floating = true, placement = awful.placement.top, titlebars_enabled = false } },
     { rule = {class = "Galculator" },
       properties = {floating = true} },
     { rule = {instance = "fm.exe" },
