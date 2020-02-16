@@ -44,9 +44,8 @@ Plug 'thomasfaingnaert/vim-lsp-snippets'
 Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
-"Plug 'ryanolsonx/vim-lsp-javascript'
-" Plug 'prabirshrestha/asyncomplete.vim'
-" Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 "}}}
 packadd termdebug
 call plug#end()
@@ -62,7 +61,7 @@ set number relativenumber "show line number and relative number
 set expandtab "expand tab into spaces
 set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
-set completeopt=menuone "type of completion window
+set completeopt=menuone,popup,noinsert,noselect "type of completion window
 set pumheight=15 "maximum size of completion window
 set list lcs=tab:\→\ ,eol:\¬,trail:\· "show indent lines when using tab, end of line and trail white spaces
 set showcmd "show command been typed
@@ -140,7 +139,7 @@ let g:airline#extensions#tmuxline#enabled = 0
 let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
 let g:ale_linters = {
             \ 'cpp': ['ccls'],
-            \ 'c': ['ccls']
+            \ 'c': ['ccls'],
             \ }
 let g:ale_set_highlights = 1
 highlight ALEError ctermbg=none ctermfg=red cterm=underline
@@ -149,6 +148,14 @@ let g:ale_sign_warning = ''
 let g:ale_sign_error = '✗'
 hi ALEErrorSign ctermfg=red ctermbg=NONE
 hi ALEWarningSign ctermfg=cyan ctermbg=NONE
+"}}}
+"{{{Ultisnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"}}}
+"{{{Asyncomplete
+let g:asyncomplete_popup_delay = 1000
 "}}}
 "{{{Vim-lsp
 let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
@@ -173,31 +180,33 @@ if executable('ccls')
    autocmd FileType objc setlocal omnifunc=lsp#complete
    autocmd FileType objcpp setlocal omnifunc=lsp#complete
 endif
-"if executable('typescript-language-server')
-"    au User lsp_setup call lsp#register_server({
-"        \ 'name': 'typescript-language-server',
-"        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-"        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-"        \ 'whitelist': ['typescript', 'javascript'],
-"        \ })
-"        autocmd FileType js setlocal omnifunc=lsp#complete
-"        autocmd FileType ts setlocal omnifunc=lsp#complete
-"endif
-"if executable('pyls')
-"    " pip install python-language-server
-"    au User lsp_setup call lsp#register_server({
-"                \ 'name': 'pyls',
-"                \ 'cmd': {server_info->['pyls']},
-"                \ 'whitelist': ['python'],
-"                \ })
-"endif
-" if executable('lua-lsp')
-"     au User lsp_setup call lsp#register_server({
-"                 \ 'name': 'lua-lsp',
-"                 \ 'cmd': {server_info->[&shell, &shellcmdflag, 'lua-lsp']},
-"                 \ 'whitelist': ['lua'],
-"                 \ })
-" endif
+if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'javascript support using typescript-language-server',
+      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+      \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
+      \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact'],
+      \ })
+    autocmd FileType javascript setlocal omnifunc=lsp#complete
+    autocmd FileType typescript setlocal omnifunc=lsp#complete
+endif
+if executable('pyls')
+   " pip install python-language-server
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'pyls',
+      \ 'cmd': {server_info->['pyls']},
+      \ 'whitelist': ['python'],
+      \ })
+   autocmd FileType python setlocal omnifunc=lsp#complete
+endif
+if executable('lua-lsp')
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'lua-lsp',
+      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'lua-lsp']},
+      \ 'whitelist': ['lua'],
+      \ })
+   autocmd FileType lua setlocal omnifunc=lsp#complete
+endif
 "}}}
 "{{{Change Cursor Shape
 if !has('gui_running')

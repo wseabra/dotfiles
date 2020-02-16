@@ -606,7 +606,7 @@ awful.rules.rules = {
     { rule = { class = "vlc" },
       properties = {tag = awful.util.tagnames[6] } },
     { rule = { class = "Spotify" },
-      properties = {tag = awful.util.tagnames[5] } },
+      properties = {floating = true, tag = awful.util.tagnames[5] } },
     { rule = {class = "Xfce4-appfinder" },
       properties = {floating = true, placement = awful.placement.top, titlebars_enabled = false } },
     { rule = {class = "Galculator" },
