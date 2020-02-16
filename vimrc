@@ -13,6 +13,7 @@ Plug 'dense-analysis/ale'
 "}}}
 "{{{Visual Plugins
 Plug 'danielwe/base16-vim'
+Plug 'tomasiser/vim-code-dark'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'leafgarland/typescript-vim'
@@ -94,8 +95,9 @@ autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 "}}}
 "{{{Visual Configuration
 "visual
-let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme base16-irblack "theme
+" let base16colorspace=256  " Access colors present in 256 colorspace
+" colorscheme base16-irblack "theme
+colorscheme codedark "theme
 hi Comment gui=italic cterm=italic
 
 if has('gui_running')
