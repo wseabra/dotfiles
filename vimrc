@@ -14,6 +14,7 @@ Plug 'dense-analysis/ale'
 "{{{Visual Plugins
 Plug 'danielwe/base16-vim'
 Plug 'tomasiser/vim-code-dark'
+Plug 'lifepillar/vim-solarized8'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'leafgarland/typescript-vim'
@@ -27,6 +28,7 @@ Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-dispatch'
 Plug 'jiangmiao/auto-pairs'
+Plug 'puremourning/vimspector'
 "}}}
 "{{{Git Plugins
 Plug 'tpope/vim-fugitive' "git integration
@@ -93,12 +95,14 @@ autocmd Filetype javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2 expand
 autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 
 "}}}
+let g:vimspector_enable_mappings = 'HUMAN'
 "{{{Visual Configuration
 "visual
 " let base16colorspace=256  " Access colors present in 256 colorspace
 " colorscheme base16-irblack "theme
-colorscheme codedark "theme
+colorscheme solarized8 "theme
 hi Comment gui=italic cterm=italic
+hi Normal guibg=NONE ctermbg=NONE
 
 if has('gui_running')
     hi ColorColumn guibg=#121212
@@ -130,7 +134,7 @@ let g:cpp_class_decl_highlight = 1
 let g:typescript_indent_disable = 1
 "}}}
 "{{{Airline
-let g:airline_theme='simple'
+let g:airline_theme='solarized'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1
