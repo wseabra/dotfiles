@@ -28,7 +28,7 @@ Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-dispatch'
 Plug 'jiangmiao/auto-pairs'
-Plug 'puremourning/vimspector'
+" Plug 'puremourning/vimspector'
 "}}}
 "{{{Git Plugins
 Plug 'tpope/vim-fugitive' "git integration
@@ -95,7 +95,6 @@ autocmd Filetype javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2 expand
 autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 
 "}}}
-let g:vimspector_enable_mappings = 'HUMAN'
 "{{{Visual Configuration
 "visual
 " let base16colorspace=256  " Access colors present in 256 colorspace
