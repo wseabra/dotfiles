@@ -416,7 +416,7 @@ globalkeys = my_table.join(
     awful.key({ modkey }, "p", function() awful.util.spawn("xfce4-appfinder") end,
               {description = "show the menubar", group = "launcher"}),
     --thunar
-    awful.key({ modkey },            "t",     function () awful.util.spawn( "thunar" ) end,
+    awful.key({ modkey, "Shift" },            "t",     function () awful.util.spawn( "thunar" ) end,
               {description = "open thunar", group = "custom"}),
     -- Prompt
     awful.key({ modkey }, "r", function ()

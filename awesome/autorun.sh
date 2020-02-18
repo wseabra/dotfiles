@@ -12,6 +12,7 @@ run redshift-gtk
 run picom
 run nm-applet
 run xfce4-power-manager
+run volumeicon
 run blueman-applet
 run nitrogen --restore
 run insync start
