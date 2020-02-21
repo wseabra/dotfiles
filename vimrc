@@ -77,9 +77,9 @@ endif
 set undodir=~/.vim/undodir "place of undo dir
 set timeoutlen=1000 ttimeoutlen=0 "reduce delay in switching mode
 set undofile "undo file
-" set t_Co=16  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
+set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
 set background=dark "set background to dark
-" set termguicolors "use gui colors in terminal
+set termguicolors "use gui colors in terminal
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when opening file
 autocmd BufEnter init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=marker
@@ -102,7 +102,7 @@ autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 let g:solarized_use16=1
 colorscheme solarized8 "theme
 hi Comment gui=italic cterm=italic
-hi Normal guibg=NONE ctermbg=NONE
+    " hi Normal guibg=NONE ctermbg=NONE
 
 if has('gui_running')
     hi ColorColumn guibg=#121212
