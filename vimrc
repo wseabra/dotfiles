@@ -24,7 +24,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
-"Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-dispatch'
 Plug 'jiangmiao/auto-pairs'
@@ -77,9 +77,9 @@ endif
 set undodir=~/.vim/undodir "place of undo dir
 set timeoutlen=1000 ttimeoutlen=0 "reduce delay in switching mode
 set undofile "undo file
-set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
+" set t_Co=16  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
 set background=dark "set background to dark
-set termguicolors "use gui colors in terminal
+" set termguicolors "use gui colors in terminal
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when opening file
 autocmd BufEnter init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=marker
@@ -99,6 +99,7 @@ autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 "visual
 " let base16colorspace=256  " Access colors present in 256 colorspace
 " colorscheme base16-irblack "theme
+let g:solarized_use16=1
 colorscheme solarized8 "theme
 hi Comment gui=italic cterm=italic
 hi Normal guibg=NONE ctermbg=NONE
