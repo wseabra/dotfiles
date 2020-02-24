@@ -1,0 +1,11 @@
+#!/bin/bash
+SEP="|"
+while [[ true ]]; do
+    DATE=$(date +"%a %d %b %H:%M")
+    BAT=$(./battery.sh)
+    VOL=$(./volume.sh)
+    SPOTIFY=$(./current_song_spotify.sh)
+
+    xsetroot -name "$SPOTIFY $VOL $BAT $DATE"
+    sleep 1
+done &

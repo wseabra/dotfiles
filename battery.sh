@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BAT=$(acpi | awk 'NR==1{print $3" "$4}' | sed 's/,//g')
+BAT=$(acpi | awk -f bat.awk)
 
 if [[ -n $BAT ]]; then
     echo $BAT

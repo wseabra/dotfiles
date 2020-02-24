@@ -1,0 +1,11 @@
+## my start up script dwmstart
+
+#!/bin/bash
+./dwmstatusbar
+
+exec light-locker --lock-on-suspend &
+exec picom --experimental-backends --backend glx &
+exec nitrogen --restore &
+
+exec dwm
+
