@@ -6,6 +6,12 @@
 exec light-locker --lock-on-suspend &
 exec picom --experimental-backends --backend glx &
 exec nitrogen --restore &
+exec insync start &
+exec dropbox start &
+exec nm-applet &
+exec blueman-applet &
+exec light-locker --lock-on-suspend &
+exec caffeine &
 
 exec dwm
 

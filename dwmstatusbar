@@ -1,5 +1,4 @@
 #!/bin/bash
-SEP="|"
 while [[ true ]]; do
     DATE=$(date +"%a %d %b %H:%M")
     BAT=$(./battery.sh)
