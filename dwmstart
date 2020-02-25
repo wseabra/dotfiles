@@ -8,6 +8,7 @@ exec picom &
 exec nitrogen --restore &
 # exec insync start &
 # exec dropbox start &
+exec dunst &
 exec nm-applet &
 exec blueman-applet &
 exec light-locker --lock-on-suspend &
