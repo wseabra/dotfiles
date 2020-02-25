@@ -3,7 +3,7 @@
 pidOfPicom=$(pidof picom)
 
 if [[ -z "$pidOfPicom" ]]; then
-    picom -b --experimental-backends --backend glx
+    picom -b
 else
     kill $pidOfPicom
 fi

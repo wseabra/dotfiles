@@ -1,13 +1,13 @@
 ## my start up script dwmstart
 
 #!/bin/bash
-./dwmstatusbar
+/home/waldomiro/dotfiles/dwmstatusbar
 
 exec light-locker --lock-on-suspend &
-exec picom --experimental-backends --backend glx &
+exec picom &
 exec nitrogen --restore &
-exec insync start &
-exec dropbox start &
+# exec insync start &
+# exec dropbox start &
 exec nm-applet &
 exec blueman-applet &
 exec light-locker --lock-on-suspend &
