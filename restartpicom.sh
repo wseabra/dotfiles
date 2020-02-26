@@ -3,7 +3,7 @@
 pidOfPicom=$(pidof picom)
 
 if [[ -z "$pidOfPicom" ]]; then
-    picom -b
+    picom &
 else
     kill $pidOfPicom
 fi

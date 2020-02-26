@@ -1,18 +1,25 @@
 ## my start up script dwmstart
 
 #!/bin/bash
-/home/waldomiro/dotfiles/dwmstatusbar
 
-exec light-locker --lock-on-suspend &
-exec picom &
-exec nitrogen --restore &
-# exec insync start &
-# exec dropbox start &
-exec dunst &
-exec nm-applet &
-exec blueman-applet &
-exec light-locker --lock-on-suspend &
-exec caffeine &
+exec dwmstatusbar
 
-exec dwm
+function run {
+  if ! pgrep -f $1 ;
+  then
+    $@&
+  fi
+}
+run light-locker --lock-on-suspend 
+run picom 
+run nitrogen --restore 
+# run insync start 
+# run dropbox start 
+run dunst 
+run nm-applet 
+run blueman-applet 
+run light-locker --lock-on-suspend 
+run caffeine 
+
+run dwm
 
