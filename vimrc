@@ -1,5 +1,11 @@
 
 "Config File For Vim8
+"        _              ___                     __ _
+" __   _(_)_ __ ___    ( _ )    ___ ___  _ __  / _(_) __ _
+" \ \ / / | '_ ` _ \   / _ \   / __/ _ \| '_ \| |_| |/ _` |
+"  \ V /| | | | | | | | (_) | | (_| (_) | | | |  _| | (_| |
+"   \_/ |_|_| |_| |_|  \___/   \___\___/|_| |_|_| |_|\__, |
+"                                                    |___/
 "Waldomiro Seabra
 "{{{Plugins
 call plug#begin('~/.vim/plugged')
@@ -12,11 +18,7 @@ Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 Plug 'dense-analysis/ale'
 "}}}
 "{{{Visual Plugins
-Plug 'danielwe/base16-vim'
-Plug 'tomasiser/vim-code-dark'
 Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'lifepillar/vim-solarized8'
-Plug 'dylanaraps/wal.vim'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'leafgarland/typescript-vim'
@@ -29,8 +31,6 @@ Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-dispatch'
-Plug 'jiangmiao/auto-pairs'
-" Plug 'puremourning/vimspector'
 "}}}
 "{{{Git Plugins
 Plug 'tpope/vim-fugitive' "git integration
