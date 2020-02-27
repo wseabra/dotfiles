@@ -18,7 +18,6 @@ Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 Plug 'dense-analysis/ale'
 "}}}
 "{{{Visual Plugins
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'lifepillar/vim-solarized8'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
@@ -63,7 +62,6 @@ set shell=/bin/zsh "shell
 set cursorline "enable cursorline
 set colorcolumn=80 "color column 80
 set number relativenumber "show line number and relative number
-set expandtab "expand tab into spaces
 set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
 set completeopt=menuone,popup,noinsert,noselect "type of completion window
@@ -71,7 +69,8 @@ set pumheight=15 "maximum size of completion window
 set list lcs=tab:\→\ ,eol:\¬,trail:\· "show indent lines when using tab, end of line and trail white spaces
 set showcmd "show command been typed
 set wildmenu "activate wild bottom menu
-set path+=** "set recursive search when using :find
+" set path+=** "set recursive search when using :find
+set path+=Dependencies/**,ConsoleApp/**,diag.ui,diag.ui/src/**,Lib/** "set recursive search when using :find
 set mouse=a
 if !isdirectory("~/.vim/undodir")
     call system ("bash -c \"mkdir ~/.vim/undodir\"")
@@ -90,6 +89,7 @@ set makeprg=cd\ \build_linux_x64\ &&\ make\ all
 set hlsearch incsearch "highlight search and incremental search"
 set backspace=indent,eol,start "sane backspace behaviour
 
+set expandtab "expand tab into spaces
 set shiftwidth=4 "size of indentation
 set tabstop=4 "size of tab
 autocmd Filetype json setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
@@ -101,10 +101,10 @@ autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 "visual
 " let base16colorspace=256  " Access colors present in 256 colorspace
 " colorscheme base16-irblack "theme
-" let g:solarized_use16=1
+let g:solarized_use16=1
 colorscheme solarized8 "theme
-hi Comment gui=italic cterm=italic
-hi Normal guibg=NONE ctermbg=NONE
+" hi Comment gui=italic cterm=italic
+    " hi Normal guibg=NONE ctermbg=NONE
 
 if has('gui_running')
     hi ColorColumn guibg=#121212
@@ -117,7 +117,7 @@ let g:gitgutter_map_keys = 0
 autocmd BufEnter * GitGutter
 "}}}
 "{{{Indentline
-let g:indentLine_char = '→'
+" let g:indentLine_char = '→'
 " let g:indentLine_setColors = 0
 "}}}
 "{{{NERDTree
