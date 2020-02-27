@@ -1,8 +1,0 @@
-{
-  "global": {
-  },
-  "luaVersion": "luajit-5.3.5",
-  "packagePath": "src/?.lua;src/?/init.lua;src/lib/?.lua;src/lib/?/init.lua",
-  "cwd": "~/dotfiles/awesome"
-}
-# vim:set ft=json:

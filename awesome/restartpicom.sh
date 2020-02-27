@@ -1,1 +1,0 @@
-/home/waldomiro/dotfiles/restartpicom.sh
