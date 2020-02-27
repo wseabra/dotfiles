@@ -2,18 +2,18 @@
 
 #!/bin/bash
 
-exec dwmstatusbar
-
 function run {
   if ! pgrep -f $1 ;
   then
     $@&
   fi
 }
+
+run dwmstatusbar
 run light-locker --lock-on-suspend 
 run picom 
 run nitrogen --restore 
-# run insync start 
+run insync start 
 # run dropbox start 
 run dunst 
 run nm-applet 
@@ -21,5 +21,5 @@ run blueman-applet
 run light-locker --lock-on-suspend 
 run caffeine 
 
-run dwm
+exec dwm
 

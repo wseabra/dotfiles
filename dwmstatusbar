@@ -77,11 +77,11 @@ SPTY() {
 	echo " $ARTIST - $TITLE"
 }
 
-pidOfDwmStatus=$(pidof dwmstatusbar)
-
-if [[ "$pidOfDwmStatus" ]]; then
-    kill $pidOfDwmStatus
-fi
+# pidOfDwmStatus=$(pidof dwmstatusbar)
+#
+# if [[ "$pidOfDwmStatus" ]]; then
+#     kill $pidOfDwmStatus
+# fi
 
 while [[ true ]]; do
     DATE=$(date +"%a %d %b %H:%M")
