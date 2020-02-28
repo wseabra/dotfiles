@@ -104,7 +104,7 @@ autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 let g:solarized_use16=1
 colorscheme solarized8 "theme
 " hi Comment gui=italic cterm=italic
-    " hi Normal guibg=NONE ctermbg=NONE
+hi Normal guibg=NONE ctermbg=NONE
 
 if has('gui_running')
     hi ColorColumn guibg=#121212
