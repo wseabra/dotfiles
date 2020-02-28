@@ -19,6 +19,7 @@ Plug 'dense-analysis/ale'
 "}}}
 "{{{Visual Plugins
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'lifepillar/vim-solarized8'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'leafgarland/typescript-vim'
@@ -29,7 +30,6 @@ Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that a
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-dispatch'
 "}}}
 "{{{Git Plugins
@@ -102,7 +102,7 @@ autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 " let base16colorspace=256  " Access colors present in 256 colorspace
 " colorscheme base16-irblack "theme
 " let g:solarized_use16=1
-colorscheme dracula "theme
+colorscheme solarized8 "theme
 hi Comment gui=italic cterm=italic
 hi Normal guibg=NONE ctermbg=NONE
 
@@ -136,7 +136,7 @@ let g:cpp_class_decl_highlight = 1
 let g:typescript_indent_disable = 1
 "}}}
 "{{{Airline
-let g:airline_theme='dracula'
+let g:airline_theme='solarized'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_powerline_fonts = 1

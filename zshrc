@@ -23,3 +23,5 @@ antigen apply
 
 
 bindkey -v
+
+ufetch
