@@ -25,3 +25,5 @@ antigen apply
 bindkey -v
 
 ufetch
+
+alias r=ranger
