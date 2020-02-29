@@ -13,8 +13,6 @@ compinit
 export EDITOR='vim'
 
 source ~/.zsh/antigen.zsh
-antigen use oh-my-zsh
-antigen bundle git
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen theme kolo
@@ -27,3 +25,6 @@ bindkey -v
 ufetch
 
 alias r=ranger
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
