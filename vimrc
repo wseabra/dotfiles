@@ -67,7 +67,7 @@ set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
 set completeopt=menuone,popup,noinsert,noselect "type of completion window
 set pumheight=15 "maximum size of completion window
-set list lcs=tab:\→\ ,eol:\¬,trail:\· "show indent lines when using tab, end of line and trail white spaces
+set list lcs=tab:\ \ ,eol:\¬,trail:\· "show indent lines when using tab, end of line and trail white spaces
 set showcmd "show command been typed
 set wildmenu "activate wild bottom menu
 set path+=** "set recursive search when using :find
@@ -114,10 +114,6 @@ endif
 "{{{GitGutter
 let g:gitgutter_map_keys = 0
 autocmd BufEnter * GitGutter
-"}}}
-"{{{Indentline
-let g:indentLine_char = '→'
-" let g:indentLine_setColors = 0
 "}}}
 "{{{Netrw
 let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
