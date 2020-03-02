@@ -22,6 +22,12 @@ antigen apply
 
 bindkey -v
 
+doom() {
+    emacs $@ &
+    disown
+    exit
+}
+
 ufetch
 
 alias r=ranger
