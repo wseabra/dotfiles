@@ -10,7 +10,6 @@
 "{{{Plugins
 call plug#begin('~/.vim/plugged')
 "{{{Side Windows Plugins
-Plug 'scrooloose/nerdtree' "folder navigator
 Plug 'majutsushi/tagbar' "side window with tags from the code
 "}}}
 "{{{SignColumn Plugins
@@ -18,8 +17,7 @@ Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 Plug 'dense-analysis/ale'
 "}}}
 "{{{Visual Plugins
-Plug 'lifepillar/vim-solarized8'
-Plug 'altercation/vim-colors-solarized'
+Plug 'tomasiser/vim-code-dark'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'leafgarland/typescript-vim'
@@ -103,10 +101,9 @@ autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 " let base16colorspace=256  " Access colors present in 256 colorspace
 " colorscheme base16-irblack "theme
 " let g:solarized_use16=1
-let g:solarized_termcolors=256
-colorscheme solarized8 "theme
+colorscheme codedark "theme
 " hi Comment gui=italic cterm=italic
-hi Normal guibg=NONE ctermbg=NONE
+" hi Normal guibg=NONE ctermbg=NONE
 
 if has('gui_running')
     hi ColorColumn guibg=#121212
@@ -118,13 +115,10 @@ endif
 let g:gitgutter_map_keys = 0
 autocmd BufEnter * GitGutter
 "}}}
-"{{{Indentline
-" let g:indentLine_char = '→'
-" let g:indentLine_setColors = 0
-"}}}
-"{{{NERDTree
-"close tab if only window is NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"{{{Netrw
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
+let g:netrw_banner = 0
 "}}}
 "{{{TagBar
 let g:tagbar_sort = 0
@@ -138,12 +132,10 @@ let g:cpp_class_decl_highlight = 1
 let g:typescript_indent_disable = 1
 "}}}
 "{{{Airline
-let g:airline_theme='solarized'
+let g:airline_theme='codedark'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
-" let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#tmuxline#enabled = 0
 "}}}
 "{{{Ale
 let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
@@ -171,11 +163,6 @@ let g:asyncomplete_popup_delay = 1000
 let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
 let g:lsp_signs_enabled = 0         " enable signs
 let g:lsp_diagnostics_echo_cursor = 0 " enable echo under cursor when in normal mode
-" let g:lsp_signs_error = {'text': '✗'}
-" let g:lsp_signs_warning = {'text': '', 'icon': '/path/to/some/icon'} " icons require GUI
-" let g:lsp_signs_hint = {'icon': '/path/to/some/other/icon'} " icons require GUI
-" hi LspError ctermbg=none ctermfg=red cterm=underline
-" hi LspWarning ctermbg=none ctermfg=yellow cterm=underline
 " Register ccls C++ language server.
 if executable('ccls')
    au User lsp_setup call lsp#register_server({
@@ -250,7 +237,6 @@ command! A call SwitchSourceHeader()
 "}}}
 "{{{F# Keymaps
 noremap <F6> :setlocal spell! spelllang=pt,en<CR>
-noremap <F7> :NERDTreeToggle<CR>
 noremap <F8> :TagbarToggle<CR>
 noremap <F2> :Make<CR>
 " noremap <F3> :Dispatch cd $PWD/build_linux_x64/bin/Debug/ && ./AeroDiagnosticApp /host<CR>
