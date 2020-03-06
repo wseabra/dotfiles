@@ -213,6 +213,8 @@ if !has('gui_running')
 endif
 "}}}
 "{{{Keymaps
+command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+	 	\ | wincmd p | diffthis
 "{{{Miscellaneous
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
 map <leader>n <Esc>:tabnew<CR>
