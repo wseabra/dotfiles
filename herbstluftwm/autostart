@@ -19,12 +19,14 @@ nm-applet &
 blueman-applet &
 kdeconnect-indicator &
 dunst &
+setxkbmap -layout "us,br" -variant "intl,"
 
 # keybindings
 # if you have a super key you will be much happier with Mod set to Mod4
 # Mod=Mod1    # Use alt as the main modifier
 Mod=Mod4   # Use the super key as the main modifier
 DMenuCmd="dmenu_run -sb #345F0C"
+DMenuSessionCmd=$HOME/dotfiles/dmenu_session_menu.sh
 Browser=google-chrome
 MyTerm=konsole
 Scrachpad=~/.config/herbstluftwm/q3terminal.sh
@@ -41,6 +43,7 @@ hc keybind $Mod-d spawn $DMenuCmd
 hc keybind $Mod-b spawn $Browser
 hc keybind $Mod-v spawn $Scrachpad
 hc keybind $Mod-m spawn $ScreenLocker
+hc keybind $Mod-Escape spawn $DMenuSessionCmd
 
 # Multimedia keys
 hc keybind XF86AudioPlay spawn playerctl play-pause
