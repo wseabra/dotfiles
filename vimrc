@@ -10,18 +10,21 @@
 "{{{Plugins
 call plug#begin('~/.vim/plugged')
 "{{{Side Windows Plugins
+Plug 'preservim/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'majutsushi/tagbar' "side window with tags from the code
 "}}}
 "{{{SignColumn Plugins
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 "}}}
 "{{{Visual Plugins
+Plug 'lifepillar/vim-solarized8'
 Plug 'tomasiser/vim-code-dark'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
-Plug 'leafgarland/typescript-vim'
 Plug 'ryanoasis/vim-devicons'
+Plug 'mtdl9/vim-log-highlighting'
 "}}}
 "{{{General Plugins
 Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
@@ -29,6 +32,8 @@ Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-dispatch'
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+Plug 'mhinz/vim-startify'
 "}}}
 "{{{Git Plugins
 Plug 'tpope/vim-fugitive' "git integration
@@ -42,15 +47,15 @@ Plug 'kana/vim-textobj-line' "Text objects for the current line
 Plug 'rhysd/vim-textobj-continuous-line' "line which continues onto multiple lines as text object
 "}}}
 "{{{Completion Related Plugins
-Plug 'SirVer/ultisnips' | Plug 'wseabra/vim-snippets' "UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
+Plug 'SirVer/ultisnips' | Plug 'wseabra/vim-snippets' " UltiSnips is the ultimate solution for snippets in Vim. It has tons of features and is very fast.
+Plug 'jiangmiao/auto-pairs'
 Plug 'thomasfaingnaert/vim-lsp-snippets'
 Plug 'thomasfaingnaert/vim-lsp-ultisnips'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
 "}}}
 packadd termdebug
+packadd cfilter
 call plug#end()
 "}}}
 "{{{Set Commands
@@ -61,149 +66,129 @@ set shell=/bin/zsh "shell
 set cursorline "enable cursorline
 set colorcolumn=80 "color column 80
 set number relativenumber "show line number and relative number
+set scl=yes  " force the signcolumn to appear
 set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
-set completeopt=menuone,popup,noinsert,noselect "type of completion window
-set pumheight=15 "maximum size of completion window
+set completeopt=menu,menuone,popup,preview
 set list lcs=tab:\ \ ,eol:\¬,trail:\· "show indent lines when using tab, end of line and trail white spaces
 set showcmd "show command been typed
 set wildmenu "activate wild bottom menu
-" set path+=** "set recursive search when using :find
-set path+=Dependencies/**,ConsoleApp/**,diag.ui,diag.ui/src/**,Lib/** "set recursive search when using :find
+set path+=** "set recursive search when using :find
 set mouse=a
-if !isdirectory("~/.vim/undodir")
-    call system ("bash -c \"mkdir ~/.vim/undodir\"")
-endif
 set undodir=~/.vim/undodir "place of undo dir
 set timeoutlen=1000 ttimeoutlen=0 "reduce delay in switching mode
 set undofile "undo file
-set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
-set background=dark "set background to dark
-set termguicolors "use gui colors in terminal
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when opening file
 autocmd BufEnter init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=marker
 autocmd BufRead init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf :normal zM
-set makeprg=cd\ \build_linux_x64\ &&\ make\ all
+let &makeprg='scripts/mm.sh -p dev -u 0 -v '
 set hlsearch incsearch "highlight search and incremental search"
 set backspace=indent,eol,start "sane backspace behaviour
 
 set expandtab "expand tab into spaces
 set shiftwidth=4 "size of indentation
 set tabstop=4 "size of tab
-autocmd Filetype json setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
-autocmd Filetype javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
-autocmd Filetype css setlocal tabstop=2 shiftwidth=2 softtabstop=2 expandtab
+set softtabstop=4
+set efm+=%f:%l:%c:%m
 
 "}}}
 "{{{Visual Configuration
-"visual
-" let base16colorspace=256  " Access colors present in 256 colorspace
-" colorscheme base16-irblack "theme
-" let g:solarized_use16=1
-colorscheme codedark "theme
-" hi Comment gui=italic cterm=italic
-" hi Normal guibg=NONE ctermbg=NONE
+" set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
+set background=dark "set background to dark
+set termguicolors "use gui colors in terminal
+colorscheme solarized8_flat "theme
+highlight Normal guibg=#00222B
 
 if has('gui_running')
-    hi ColorColumn guibg=#121212
+    amenu ToolBar.Open :NERDTreeToggle<CR>
+    amenu ToolBar.RunCtags :TagbarToggle<CR>
     set lines=999 columns=999
     set guifont=Hack\ Regular\ 10
 endif
 "}}}
-"{{{GitGutter
-let g:gitgutter_map_keys = 0
-autocmd BufEnter * GitGutter
-"}}}
-"{{{Netrw
-let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
-let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
-let g:netrw_banner = 0
+"{{{NERDTree
+let g:NERDTreeWinSize = 50
+let g:NERDTreeSortOrder=['\.pro','\.pri','\/$','[[extension]]']
 "}}}
 "{{{TagBar
 let g:tagbar_sort = 0
+"}}}
+"{{{Airline
+let g:airline_theme='solarized'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline#extensions#ale#enabled = 1
 "}}}
 "{{{Cpp Enhanced Highlighting
 let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 "}}}
-"{{{typescript-vim
-let g:typescript_indent_disable = 1
+"{{{Leaderf
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_ShortcutF = "<leader>ff"
+let g:Lf_GtagsAutoGenerate = 0
+let g:Lf_Gtagslabel = 'native-pygments'
+let g:Lf_StlColorscheme = 'solarized'
+
+let g:Lf_WildIgnore = {
+            \ 'dir': ['.cache','.ccls-cache'],
+            \ 'file': []
+            \}
 "}}}
-"{{{Airline
-let g:airline_theme='codedark'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#ale#enabled = 1
+"{{{vim-startify
+let g:startify_bookmarks = ['~/Stone/repos/pos-mamba','~/.vimrc','~/.tmux.conf']
+let g:startify_change_to_dir = 1
+let g:startify_change_to_vcs_root = 1
+let g:startify_session_autoload = 1
+let g:startify_session_persistence = 1
+let g:startify_lists = [
+            \ { 'type': 'files',     'header': ['   MRU']            },
+            \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+            \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+            \ { 'type': 'sessions',  'header': ['   Sessions']       },
+            \ { 'type': 'commands',  'header': ['   Commands']       },
+            \ ]
 "}}}
-"{{{Ale
-let g:ale_echo_msg_format = '[%linter% - %severity%] %s'
-let g:ale_linters = {
-            \ 'cpp': ['ccls'],
-            \ 'c': ['ccls'],
-            \ }
-let g:ale_set_highlights = 1
-highlight ALEError ctermbg=none ctermfg=red cterm=underline
-highlight ALEWarning ctermbg=none ctermfg=cyan cterm=underline
-let g:ale_sign_warning = ''
-let g:ale_sign_error = '✗'
-hi ALEErrorSign ctermfg=red ctermbg=NONE
-hi ALEWarningSign ctermfg=cyan ctermbg=NONE
+"{{{GitGutter
+let g:gitgutter_map_keys = 0
+autocmd BufEnter * GitGutter
 "}}}
 "{{{Ultisnips
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 "}}}
-"{{{Asyncomplete
-let g:asyncomplete_popup_delay = 1000
-"}}}
 "{{{Vim-lsp
-let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
-let g:lsp_signs_enabled = 0         " enable signs
-let g:lsp_diagnostics_echo_cursor = 0 " enable echo under cursor when in normal mode
-" Register ccls C++ language server.
-if executable('ccls')
-   au User lsp_setup call lsp#register_server({
-      \ 'name': 'ccls',
-      \ 'cmd': {server_info->['ccls']},
-      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-      \ 'initialization_options': {'cache': {'directory': '/tmp/ccls/cache' }},
-      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-      \ })
-   autocmd FileType c setlocal omnifunc=lsp#complete
-   autocmd FileType cpp setlocal omnifunc=lsp#complete
-   autocmd FileType objc setlocal omnifunc=lsp#complete
-   autocmd FileType objcpp setlocal omnifunc=lsp#complete
-endif
-if executable('typescript-language-server')
+let g:lsp_diagnostics_enabled = 1         " disable diagnostics support
+let g:lsp_diagnostics_float_cursor = 1
+let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+au BufWritePre *.c,*.cpp,*.cc,*.h,*.hpp LspDocumentFormatSync
+
+" autocmd FileType cpp, c setlocal tagfunc=lsp#tagfunc
+if executable('clangd-12')
     au User lsp_setup call lsp#register_server({
-      \ 'name': 'javascript support using typescript-language-server',
-      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-      \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
-      \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact'],
-      \ })
-    autocmd FileType javascript setlocal omnifunc=lsp#complete
-    autocmd FileType typescript setlocal omnifunc=lsp#complete
+        \ 'name': 'clangd',
+        \ 'cmd': {server_info->['clangd-12']},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \ })
 endif
+autocmd FileType c setlocal omnifunc=lsp#complete
+autocmd FileType cpp setlocal omnifunc=lsp#complete
+autocmd FileType objc setlocal omnifunc=lsp#complete
+autocmd FileType objcpp setlocal omnifunc=lsp#complete
 if executable('pyls')
-   " pip install python-language-server
-   au User lsp_setup call lsp#register_server({
-      \ 'name': 'pyls',
-      \ 'cmd': {server_info->['pyls']},
-      \ 'whitelist': ['python'],
-      \ })
-   autocmd FileType python setlocal omnifunc=lsp#complete
-endif
-if executable('lua-lsp')
+    " pip install python-language-server
     au User lsp_setup call lsp#register_server({
-      \ 'name': 'lua-lsp',
-      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'lua-lsp']},
-      \ 'whitelist': ['lua'],
-      \ })
-   autocmd FileType lua setlocal omnifunc=lsp#complete
+                \ 'name': 'pyls',
+                \ 'cmd': {server_info->['pyls']},
+                \ 'whitelist': ['python'],
+                \ })
+    autocmd FileType python setlocal omnifunc=lsp#complete
 endif
+
 "}}}
 "{{{Change Cursor Shape
 if !has('gui_running')
@@ -212,38 +197,71 @@ if !has('gui_running')
     let &t_EI = "\<Esc>[1 q"
 endif
 "}}}
-"{{{Keymaps
+"{{{Grep and Find
+
+function! Grep(...)
+  let grep = 'grep --line-number '
+  let cmd = grep . join(a:000, ' ')
+  execute 'Dispatch ' . cmd
+endfunction
+
+command! -nargs=+ -complete=file_in_path Grep call Grep(<f-args>)
+
+function! Find(...)
+  let find = 'find '
+  let pattern = a:1
+  let path = '.'
+  if len(a:000) > 1
+    let path = a:2
+  endif
+  let iname = ' -iname "' . pattern . '" '
+  let excludepath = ' ! -path "*.git*" ! -path "*node_modules*" '
+  let type = ' -type f '
+  let cmd = find . path . type . iname . excludepath
+  execute 'Dispatch ' . cmd
+endfunction
+
+
+command! -nargs=+ -complete=file_in_path Find call Find(<f-args>)
+"}}}
+let g:dispatch_no_maps = 1
+" {{{Keymaps
 command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-	 	\ | wincmd p | diffthis
+            \ | wincmd p | diffthis
 "{{{Miscellaneous
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
+noremap <leader>h <Esc> :LspHover<CR>
 map <leader>n <Esc>:tabnew<CR>
 noremap <leader>a GVgg
-noremap <leader>i <Esc>gg=G``
+noremap <leader>i <Esc>:LspDocumentFormatSync<CR>
 nnoremap <leader>; A;<Esc>
-nnoremap <leader>p <Esc> :find 
-nnoremap <C-]> :ALEGoToDefinition<CR>
-nnoremap <C-W><C-]> :ALEGoToDefinitionInVSplit<CR>
+nnoremap <leader>p <Esc> :find
+nnoremap <leader>ft <Esc> :LeaderfBufTag<CR>
+nnoremap <leader>fg <Esc> :Leaderf gtags<CR>
+nnoremap <leader>fb <Esc> :LeaderfBuffer<CR>
+nnoremap <leader>fc <Esc> :LeaderfCommand<CR>
+nnoremap <leader>r <Esc> :LspReferences<CR>
+nnoremap <C-]> :LspDefinition<CR>
 command! Q :q
 command! W :w
 function! SwitchSourceHeader()
-  if (expand ("%:e") == "cpp")
-    find %:t:r.h
-  else 
-    if (expand ("%:e") == "h")
-        find %:t:r.cpp
+    if (expand ("%:e") == "cpp")
+        find %:t:r.h
+    else
+        if (expand ("%:e") == "h")
+            find %:t:r.cpp
+        endif
     endif
-  endif
 endfunction
 command! A call SwitchSourceHeader()
 "}}}
 "{{{F# Keymaps
-noremap <F6> :setlocal spell! spelllang=pt,en<CR>
-noremap <F8> :TagbarToggle<CR>
 noremap <F2> :Make<CR>
-" noremap <F3> :Dispatch cd $PWD/build_linux_x64/bin/Debug/ && ./AeroDiagnosticApp /host<CR>
-" noremap <F4> :Dispatch cd $PWD/build_linux_x64/bin/Debug/ && ./ConsoleDiagnosticApp<CR>
-" noremap <F12> :Dispatch g++ % -o %< -g -lm -O2 -std=c++11<CR>
+noremap <F5> :set relativenumber!<CR>
+noremap <F6> :setlocal spell! spelllang=pt,en<CR>
+noremap <F7> :NERDTreeToggle<CR>
+noremap <F8> :TagbarToggle<CR>
+noremap <F4> :lvimgrep TODO %<CR> :lopen<CR>
 "}}}
 "{{{Buffer Movement
 map <leader>bn :bn<CR>
