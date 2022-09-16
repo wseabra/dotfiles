@@ -198,6 +198,8 @@ hc rule floatplacement=smart
 #hc rule focus=off # normally do not focus new clients
 # give focus to most common terminals
 #hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on
+hc rule class~'([Pp]avucontrol)' floating=on floatplacement=center
+hc rule class~'([Gg]nome-calendar)' floating=on floatplacement=center
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
@@ -211,9 +213,9 @@ hc unlock
 MonitorCount=$(xrandr --query | grep " connected" | cut -d" " -f1 | wc -l) 
 OfficeSetupScript=$HOME/.screenlayout/officeLayout.sh
 if [ $MonitorCount -eq 3 ]; then
-        notify-send --icon=gtk-info Monitors "3 monitors found\nChanging to office setup (1 Virtual Monitor)"
+        notify-send --icon=gtk-info Monitors "3 monitors found\nChanging to office setup"
     "$OfficeSetupScript" &
-    hc set_monitors 1920x1080+0+560 2100x1032+1920+560 460x1032+4020+560 1080x1920+4480+0
+    hc set_monitors 1920x1080+0+562 2560x1032+1920+562 1080x1920+4480+0
 else
 # or simply:
     hc detect_monitors
