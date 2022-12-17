@@ -13,7 +13,6 @@ xsetroot -solid '#5A8E3A'
 # remove all existing keybindings
 hc keyunbind --all
 
-nitrogen --restore
 picom &
 nm-applet &
 blueman-applet &
@@ -27,10 +26,10 @@ setxkbmap -layout "us,br" -variant "intl,"
 Mod=Mod4   # Use the super key as the main modifier
 DMenuCmd="dmenu_run -sb #345F0C"
 DMenuSessionCmd=$HOME/dotfiles/dmenu_session_menu.sh
-Browser=google-chrome
+Browser=vivaldi
 MyTerm=konsole
-Scrachpad=~/.config/herbstluftwm/q3terminal.sh
 ScreenLocker=physlock
+Emacs=emacs
 # ToggleKeyboard=setxkbmap 
 
 hc keybind $Mod-Shift-q quit
@@ -41,9 +40,9 @@ hc keybind $Mod-Return spawn "${MyTerm:-xterm}" # use your $TERMINAL with xterm 
 # Applications shortcuts
 hc keybind $Mod-d spawn $DMenuCmd
 hc keybind $Mod-b spawn $Browser
-hc keybind $Mod-v spawn $Scrachpad
 hc keybind $Mod-m spawn $ScreenLocker
 hc keybind $Mod-Escape spawn $DMenuSessionCmd
+hc keybind $Mod-i spawn $Emacs
 
 # Multimedia keys
 hc keybind XF86AudioPlay spawn playerctl play-pause
@@ -120,7 +119,7 @@ hc keybind $Mod-comma  use_index -1 --skip-visible
 hc keybind $Mod-r remove
 hc keybind $Mod-s floating toggle
 hc keybind $Mod-f fullscreen toggle
-hc keybind $Mod-Shift-f set_attr clients.focus.floating toggle
+hc keybind $Mod-Shift-s set_attr clients.focus.floating toggle
 hc keybind $Mod-Shift-m set_attr clients.focus.minimized true
 hc keybind $Mod-Control-m jumpto last-minimized
 hc keybind $Mod-p pseudotile toggle
@@ -158,10 +157,10 @@ hc set frame_bg_transparent on
 hc set frame_transparent_width 5
 hc set frame_gap 4
 
-hc attr theme.title_height 15
+hc attr theme.title_height 0
 hc attr theme.title_font 'TerminessTTF Nerd Font Mono:pixelsize=12'  # example using Xft
 # hc attr theme.title_font '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*'
-hc attr theme.padding_top 2  # space below the title's baseline (i.e. text depth)
+hc attr theme.padding_top 0  # space below the title's baseline (i.e. text depth)
 hc attr theme.active.color '#345F0Cef'
 hc attr theme.title_color '#ffffff'
 hc attr theme.normal.color '#323232dd'
@@ -169,7 +168,7 @@ hc attr theme.urgent.color '#7811A1dd'
 hc attr theme.normal.title_color '#898989'
 hc attr theme.inner_width 1
 hc attr theme.inner_color black
-hc attr theme.border_width 3
+hc attr theme.border_width 5
 hc attr theme.floating.border_width 4
 hc attr theme.floating.outer_width 1
 hc attr theme.floating.outer_color black
@@ -193,6 +192,8 @@ hc set mouse_recenter_gap 0
 # rules
 hc unrule -F
 #hc rule class=XTerm tag=3 # move all xterms to tag 3
+hc rule class~'([Ss]potify)' tag='6:Music' # move all xterms to tag 3
+hc rule class~'([Vv]ivaldi-stable)' tag='1:Web' # move all xterms to tag 3
 hc rule focus=on # normally focus new clients
 hc rule floatplacement=smart
 #hc rule focus=off # normally do not focus new clients
@@ -200,6 +201,7 @@ hc rule floatplacement=smart
 #hc rule class~'(.*[Rr]xvt.*|.*[Tt]erm|Konsole)' focus=on
 hc rule class~'([Pp]avucontrol)' floating=on floatplacement=center
 hc rule class~'([Gg]nome-calendar)' floating=on floatplacement=center
+hc rule title='Picture in picture' floating=on floatplacement=center
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
@@ -211,15 +213,19 @@ hc unlock
 
 # do multi monitor setup here, e.g.:
 MonitorCount=$(xrandr --query | grep " connected" | cut -d" " -f1 | wc -l) 
-OfficeSetupScript=$HOME/.screenlayout/officeLayout.sh
+OfficeSetupScript=$HOME/.screenlayout/office.sh
+DefaultScript=$HOME/.screenlayout/default.sh
 if [ $MonitorCount -eq 3 ]; then
-        notify-send --icon=gtk-info Monitors "3 monitors found\nChanging to office setup"
+    notify-send --icon=gtk-info Monitors "3 monitors found\nChanging to office setup"
     "$OfficeSetupScript" &
-    hc set_monitors 1920x1080+0+562 2560x1032+1920+562 1080x1920+4480+0
+    hc set_monitors 2560x1080+0+562 1080x610+2560+0 1080x1310+2560+610
 else
 # or simply:
+    "$DefaultScript" &
+    sleep 1
     hc detect_monitors
 fi
+nitrogen --restore
 
 # find the panel
 panel=~/.config/herbstluftwm/panel.sh

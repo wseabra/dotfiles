@@ -21,6 +21,7 @@ Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 "{{{Visual Plugins
 Plug 'lifepillar/vim-solarized8'
 Plug 'tomasiser/vim-code-dark'
+Plug 'tomasr/molokai'
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'ryanoasis/vim-devicons'
@@ -97,8 +98,9 @@ set efm+=%f:%l:%c:%m
 " set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
 set background=dark "set background to dark
 set termguicolors "use gui colors in terminal
-colorscheme solarized8_flat "theme
-highlight Normal guibg=#00222B
+colorscheme molokai "theme
+let g:rehash256 = 1
+" highlight Normal guibg=#00222B
 
 if has('gui_running')
     amenu ToolBar.Open :NERDTreeToggle<CR>
@@ -115,7 +117,7 @@ let g:NERDTreeSortOrder=['\.pro','\.pri','\/$','[[extension]]']
 let g:tagbar_sort = 0
 "}}}
 "{{{Airline
-let g:airline_theme='solarized'
+let g:airline_theme='molokai'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#ale#enabled = 1
@@ -145,8 +147,8 @@ let g:startify_change_to_vcs_root = 1
 let g:startify_session_autoload = 1
 let g:startify_session_persistence = 1
 let g:startify_lists = [
-            \ { 'type': 'files',     'header': ['   MRU']            },
             \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+            \ { 'type': 'files',     'header': ['   MRU']            },
             \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
             \ { 'type': 'sessions',  'header': ['   Sessions']       },
             \ { 'type': 'commands',  'header': ['   Commands']       },

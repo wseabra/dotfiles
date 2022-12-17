@@ -36,13 +36,15 @@ alias ls='ls --color'
 
 alias gpush='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 
+alias xcb=~/.postools/xcb
+
 # export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/wseabra/.sdkman"
 [[ -s "/home/wseabra/.sdkman/bin/sdkman-init.sh" ]] && source "/home/wseabra/.sdkman/bin/sdkman-init.sh"
-export PATH=$PATH:/home/wseabra/.postools:/home/wseabra/Android/Sdk/platform-tools:/home/wseabra/Android/Sdk/emulator:/home/wseabra/.local/bin
+export PATH=$PATH:/home/wseabra/.postools:/home/wseabra/Android/Sdk/platform-tools:/home/wseabra/Android/Sdk/emulator:/home/wseabra/.local/bin:$HOME/.emacs.d/bin/
 alias possh="ssh -oStrictHostKeyChecking=no MAINAPP@127.0.0.1 -p 51000"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

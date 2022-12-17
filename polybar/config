@@ -53,7 +53,7 @@ font-0 = "TerminessTTF Nerd Font Mono:size=14;2"
 
 modules-left = xworkspaces spotify
 modules-center = xxxwindow
-modules-right = switchMonitorLayout battery pulseaudio xkeyboard memory cpu wlan eth clickdate
+modules-right = switchBluetoothProfile battery pulseaudio xkeyboard memory cpu wlan eth clickdate
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -82,11 +82,10 @@ click-left = playerctl --player=spotify play-pause
 click-right = playerctl --player=spotify next 
 click-middle = playerctl --player=spotify previous 
 
-[module/switchMonitorLayout]
+[module/switchBluetoothProfile]
 type = custom/script
-label = "Toggle Monitor Layout"
-exec = echo "Toggle Monitor Layout"
-click-left = $HOME/dotfiles/switch_monitor_layout.sh
+exec = /home/wseabra/dotfiles/show_current_bt_profile.sh
+click-left = $HOME/dotfiles/switch_blt_prfl.sh
 
 [module/xworkspaces]
 type = internal/xworkspaces
