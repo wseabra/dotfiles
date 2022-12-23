@@ -69,7 +69,10 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '
+   (
+    (fzf :location (recipe :fetcher github :repo "bling/fzf.el"))
+    )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -84,7 +87,11 @@ This function should only modify configuration layer settings."
    ;; installs only the used packages but won't delete unused ones. `all'
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
-   dotspacemacs-install-packages 'used-only))
+   dotspacemacs-install-packages 'used-only)
+
+;;;; aditional
+
+  )
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -556,7 +563,7 @@ See the header of this file for more information."
 This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
-If you are unsure, try setting them in `dotspacemacs/user-config' first."
+If you are unsure, try setting them in `dotspacemacs/user-configuser-config' first."
 )
 
 
@@ -574,11 +581,34 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (
-   setq
-   helm-mode-fuzzy-match t
-   ;; helm-completion-in-region-fuzzy-match t
-   )
+  (setq helm-mode-fuzzy-match t)
+  (setq projectile-enable-caching nil)
+  (use-package fzf
+    :bind
+    ;; Don't forget to set keybinds!
+    :config
+    (setq fzf/args "-x --color bw --print-query --margin=1,0 --no-hscroll"
+          fzf/executable "fzf"
+          fzf/git-grep-args "-i --line-number %s"
+          ;; command used for `fzf-grep-*` functions
+          ;; example usage for ripgrep:
+          fzf/grep-command "rg --no-heading -nH"
+          ;; fzf/grep-command "grep -nrH"
+          ;; If nil, the fzf buffer will appear at the top of the window
+          fzf/position-bottom t
+          fzf/window-height 15))
+
+  ;;Keybindings
+
+  (spacemacs/set-leader-keys
+    "of" 'fzf-find-file
+    "og" 'fzf-grep
+    "opf" 'fzf-git-files
+    "opg" 'fzf-git-grep
+    "od" 'fzf-directory
+    "or" 'fzf-recentf
+    "ob" 'fzf-switch-buffer
+    )
 )
 
 

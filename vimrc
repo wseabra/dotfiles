@@ -16,12 +16,12 @@ Plug 'majutsushi/tagbar' "side window with tags from the code
 "}}}
 "{{{SignColumn Plugins
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
-" Plug 'dense-analysis/ale'
 "}}}
 "{{{Visual Plugins
 Plug 'lifepillar/vim-solarized8'
 Plug 'tomasiser/vim-code-dark'
 Plug 'tomasr/molokai'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'ryanoasis/vim-devicons'
@@ -33,7 +33,9 @@ Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-dispatch'
-Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+Plug 'junegunn/fzf.vim' "Search engine
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'jesseleite/vim-agriculture' " Better ripgrep/Ag for FZF
 Plug 'mhinz/vim-startify'
 "}}}
 "{{{Git Plugins
@@ -52,7 +54,6 @@ Plug 'SirVer/ultisnips' | Plug 'wseabra/vim-snippets' " UltiSnips is the ultimat
 Plug 'jiangmiao/auto-pairs'
 Plug 'thomasfaingnaert/vim-lsp-snippets'
 Plug 'thomasfaingnaert/vim-lsp-ultisnips'
-Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 "}}}
 packadd termdebug
@@ -70,15 +71,19 @@ set number relativenumber "show line number and relative number
 set scl=yes  " force the signcolumn to appear
 set autoread "autoread buffer when edited outside of vim
 set noshowmode "don't show default status line
-set completeopt=menu,menuone,popup,preview
+set completeopt=menu,menuone,preview
 set list lcs=tab:\ \ ,eol:\¬,trail:\· "show indent lines when using tab, end of line and trail white spaces
 set showcmd "show command been typed
 set wildmenu "activate wild bottom menu
 set path+=** "set recursive search when using :find
 set mouse=a
-set undodir=~/.vim/undodir "place of undo dir
-set timeoutlen=1000 ttimeoutlen=0 "reduce delay in switching mode
+if has('nvim')
+    set undodir=~/.config/nvim/undodir "place of undo dir
+else
+    set undodir=~/.vim/undodir
+endif
 set undofile "undo file
+set timeoutlen=1000 ttimeoutlen=0 "reduce delay in switching mode
 set foldmethod=syntax "fold following the language syntax
 set foldlevelstart=99 "prevent folding when opening file
 autocmd BufEnter init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=marker
@@ -86,20 +91,22 @@ autocmd BufRead init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf :normal zM
 let &makeprg='scripts/mm.sh -p dev -u 0 -v '
 set hlsearch incsearch "highlight search and incremental search"
 set backspace=indent,eol,start "sane backspace behaviour
-
 set expandtab "expand tab into spaces
 set shiftwidth=4 "size of indentation
 set tabstop=4 "size of tab
 set softtabstop=4
 set efm+=%f:%l:%c:%m
-
+if executable("rg")
+    set grepprg=rg\ --vimgrep\ --no-heading
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
 "}}}
 "{{{Visual Configuration
 " set t_Co=256  " Note: Neovim ignores t_Co and other terminal codes. (for vim)
 set background=dark "set background to dark
 set termguicolors "use gui colors in terminal
 colorscheme molokai "theme
-let g:rehash256 = 1
+" let g:rehash256 = 1
 " highlight Normal guibg=#00222B
 
 if has('gui_running')
@@ -127,19 +134,17 @@ let g:cpp_class_scope_highlight = 1
 let g:cpp_member_variable_highlight = 1
 let g:cpp_class_decl_highlight = 1
 "}}}
-"{{{Leaderf
-let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
-let g:Lf_ShortcutF = "<leader>ff"
-let g:Lf_GtagsAutoGenerate = 0
-let g:Lf_Gtagslabel = 'native-pygments'
-let g:Lf_StlColorscheme = 'solarized'
+"{{{FZF
+let g:fzf_tags_command = 'ctags -R'
+let g:fzf_preview_window = []
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit',
+  \ 'ctrl-q': 'fill_quickfix'}
+let g:fzf_command_prefix = 'Fzf'
 
-let g:Lf_WildIgnore = {
-            \ 'dir': ['.cache','.ccls-cache'],
-            \ 'file': []
-            \}
-"}}}
+" "}}}
 "{{{vim-startify
 let g:startify_bookmarks = ['~/Stone/repos/pos-mamba','~/.vimrc','~/.tmux.conf']
 let g:startify_change_to_dir = 1
@@ -199,53 +204,22 @@ if !has('gui_running')
     let &t_EI = "\<Esc>[1 q"
 endif
 "}}}
-"{{{Grep and Find
-
-function! Grep(...)
-  let grep = 'grep --line-number '
-  let cmd = grep . join(a:000, ' ')
-  execute 'Dispatch ' . cmd
-endfunction
-
-command! -nargs=+ -complete=file_in_path Grep call Grep(<f-args>)
-
-function! Find(...)
-  let find = 'find '
-  let pattern = a:1
-  let path = '.'
-  if len(a:000) > 1
-    let path = a:2
-  endif
-  let iname = ' -iname "' . pattern . '" '
-  let excludepath = ' ! -path "*.git*" ! -path "*node_modules*" '
-  let type = ' -type f '
-  let cmd = find . path . type . iname . excludepath
-  execute 'Dispatch ' . cmd
-endfunction
-
-
-command! -nargs=+ -complete=file_in_path Find call Find(<f-args>)
-"}}}
 let g:dispatch_no_maps = 1
 " {{{Keymaps
 command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
             \ | wincmd p | diffthis
 "{{{Miscellaneous
 nnoremap <silent> <Space> :nohlsearch<Bar>:echo<CR>
-noremap <leader>h <Esc> :LspHover<CR>
-map <leader>n <Esc>:tabnew<CR>
 noremap <leader>a GVgg
 noremap <leader>i <Esc>:LspDocumentFormatSync<CR>
-nnoremap <leader>; A;<Esc>
-nnoremap <leader>p <Esc> :find
-nnoremap <leader>ft <Esc> :LeaderfBufTag<CR>
-nnoremap <leader>fg <Esc> :Leaderf gtags<CR>
-nnoremap <leader>fb <Esc> :LeaderfBuffer<CR>
-nnoremap <leader>fc <Esc> :LeaderfCommand<CR>
-nnoremap <leader>r <Esc> :LspReferences<CR>
-nnoremap <C-]> :LspDefinition<CR>
+nnoremap <Space>; A;<Esc>
+nnoremap <Space>r <Esc> :LspReferences<CR>
+nnoremap <Space>h <Esc> :LspHover<CR>
+nnoremap <Space>] :LspDefinition<CR>
 command! Q :q
-command! W :w
+command! Qa :qa
+command! Wq :wq
+command! Wqa :wqa
 function! SwitchSourceHeader()
     if (expand ("%:e") == "cpp")
         find %:t:r.h
@@ -257,6 +231,19 @@ function! SwitchSourceHeader()
 endfunction
 command! A call SwitchSourceHeader()
 "}}}
+"{{{FZF
+nnoremap <Space>ff <Esc> :FzfFiles<CR>
+nnoremap <Space>ft <Esc> :FzfBTags<CR>
+nnoremap <Space>fg <Esc> :FzfTags<CR>
+nnoremap <Space>fb <Esc> :FzfBuffers<CR>
+nnoremap <Space>fc <Esc> :FzfCommands<CR>
+nnoremap <Space>fp <Esc> :FzfGFiles<CR>
+nnoremap <Space>fr <Esc> :FzfHistory<CR>
+"}}}
+"{{{QuickFix
+nnoremap <Space>n :cn<CR>
+nnoremap <Space>p :cp<CR>
+"}}}
 "{{{F# Keymaps
 noremap <F2> :Make<CR>
 noremap <F5> :set relativenumber!<CR>
@@ -266,9 +253,9 @@ noremap <F8> :TagbarToggle<CR>
 noremap <F4> :lvimgrep TODO %<CR> :lopen<CR>
 "}}}
 "{{{Buffer Movement
-map <leader>bn :bn<CR>
-map <leader>bp :bp<CR>
-map <leader>bd :bd<CR>
+map <Space>bn :bn<CR>
+map <Space>bp :bp<CR>
+map <Space>bd :bd<CR>
 "}}}
 "{{{Window Movement maps
 nnoremap <C-h> <C-w>h
