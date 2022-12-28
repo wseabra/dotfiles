@@ -41,9 +41,21 @@ require('packer').startup(function(use)
 
     -- Statusline/tabline
     use {
-            'nvim-lualine/lualine.nvim',
-            requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+        'nvim-lualine/lualine.nvim',
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
+
+    -- Fuzzy Finder (files, lsp, etc)
+    use { 'nvim-telescope/telescope.nvim',
+        branch = '0.1.x',
+        requires = { 'nvim-lua/plenary.nvim' }
+    }
+
+    -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
+    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
+
+
+    use 'neovim/nvim-lspconfig'
 
     -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
     local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -180,6 +192,36 @@ require('Comment').setup()
 require('gitsigns').setup()
 --}}}
 
+--{{{Telescope
+-- [[ Configure Telescope ]]
+-- See `:help telescope` and `:help telescope.setup()`
+require('telescope').setup {
+  defaults = {
+    mappings = {
+      i = {
+        ['<C-u>'] = false,
+        ['<C-d>'] = false,
+      },
+    },
+  },
+}
+
+-- Enable telescope fzf native, if installed
+pcall(require('telescope').load_extension, 'fzf')
+
+--}}}
+local on_attach = function(client, bufnr)
+    local bufopts = { noremap=true, silent=true, buffer=bufnr }
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    vim.keymap.set('n', '<Space>r', vim.lsp.buf.references,{desc = "[R]eferences of the symbol under the cursor", noremap=true, silent=true, buffer=bufnr})
+end
+
+require('lspconfig').clangd.setup{
+    cmd = {"clangd-12"},
+    on_attach = on_attach,
+}
+
 --{{{Local functions for keymaps
 local SpellToggle = function()
     if vim.opt.spell:get() then
@@ -211,7 +253,7 @@ vim.keymap.set('n','<C-l>','<C-w>l', {desc = "Move to the panel right", remap = 
 vim.keymap.set('n','<down>','gj', {desc = "Move down", remap = false})
 vim.keymap.set('n','<up>','gk', {desc = "Move up", remap = false})
 
---Mnemonics
+-- Mnemonics
 
 -- [B]uffer
 vim.keymap.set('n','<Space>bn',':bn<CR>', {desc = "Move to next buffer ([B]uffer [N]ext)", remap = false})
@@ -225,15 +267,39 @@ vim.keymap.set('n','<Space>cp',':cp<CR>', {desc = "Previous item in quickfix lis
 -- [G]it
 vim.keymap.set('n','<Space>gdt', require('gitsigns').diffthis, {desc = "[G]it [D]iff [T]his", remap = false})
 vim.keymap.set('n','<Space>gdh', function() require('gitsigns').diffthis('~') end, {desc = "[G]it [D]iff [H]EAD", remap = false})
+
 vim.keymap.set('n','<Space>gb', ':Git blame<CR>', {desc = "[G]it [B]lame", remap = false})
+
 vim.keymap.set('n','<Space>ghp', require('gitsigns').preview_hunk, {desc = "[G]it [H]unk [P]review", remap = false})
 vim.keymap.set('n','<Space>ghs', require('gitsigns').stage_hunk, {desc = "[G]it [H]unk [S]tage", remap = false})
 vim.keymap.set('n','<Space>ghu', require('gitsigns').undo_stage_hunk, {desc = "[G]it [H]unk [U]nstage", remap = false})
+
 vim.keymap.set('n','<Space>gfs', require('gitsigns').stage_buffer, {desc = "[G]it [F]ile [S]tage", remap = false})
 vim.keymap.set('n','<Space>gfu', ':Git restore --staged %<CR>', {desc = "[G]it [F]ile [U]nstage", remap = false})
+
 vim.keymap.set('n','<Space>gct', ':Git commit<CR>', {desc = "[G]it [C]ommit [T]his", remap = false})
 vim.keymap.set('n','<Space>gca', ':Git commit --amend<CR>', {desc = "[G]it [C]ommit [A]mend", remap = false})
+
 vim.keymap.set('n','<Space>gp', ':Git push<CR>', {desc = "[G]it [P]ush", remap = false})
+
+-- [F]ind (Telescope)
+vim.keymap.set('n', '<Space>fr', require('telescope.builtin').oldfiles, { desc = '[F]ind [R]ecently opened files' })
+vim.keymap.set('n', '<Space>fb', require('telescope.builtin').buffers, { desc = '[F]ind existing [B]uffers' })
+vim.keymap.set('n', '<Space>fk', require('telescope.builtin').keymaps, { desc = '[F]ind [K]eymaps' })
+-- vim.keymap.set('n', '<Space>/', function()
+--   -- You can pass additional configuration to telescope to change theme, layout, etc.
+--   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+--     winblend = 10,
+--     previewer = false,
+--   })
+-- end, { desc = '[/] Fuzzily search in current buffer]' })
+
+vim.keymap.set('n', '<Space>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles' })
+vim.keymap.set('n', '<Space>fp', require('telescope.builtin').git_files, { desc = '[F]ind [P]roject Files' })
+vim.keymap.set('n', '<Space>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
+vim.keymap.set('n', '<Space>fw', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
+vim.keymap.set('n', '<Space>fg', require('telescope.builtin').live_grep, { desc = '[F]ind by [G]rep' })
+vim.keymap.set('n', '<Space>fd', require('telescope.builtin').diagnostics, { desc = '[F]ind [D]iagnostics' })
 
 vim.api.nvim_create_user_command('Q',':q', {bang = true})
 vim.api.nvim_create_user_command('Qa',':qa', {bang = true})
