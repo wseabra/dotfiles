@@ -45,6 +45,9 @@ require('packer').startup(function(use)
         requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
 
+
+    use 'tpope/vim-dispatch'
+
     -- Fuzzy Finder (files, lsp, etc)
     use { 'nvim-telescope/telescope.nvim',
         branch = '0.1.x',
@@ -95,6 +98,8 @@ vim.opt.relativenumber=true -- show relativenumber
 vim.opt.signcolumn = "yes" -- force show signcolumn
 vim.opt.autoread=true -- autoread buffer when edited outside vim
 vim.opt.completeopt="menuone,preview"
+vim.opt.grepprg="rg --vimgrep --hidden"
+vim.opt.grepformat="%f:%l:%c:%m"
 vim.opt.showcmd=true -- show cmd beeing typed
 vim.opt.mouse='a' -- activate mouse
 vim.opt.undofile = true -- activate undofaile
@@ -210,6 +215,8 @@ require('telescope').setup {
 pcall(require('telescope').load_extension, 'fzf')
 
 --}}}
+
+--{{{LSP
 local on_attach = function(client, bufnr)
     local bufopts = { noremap=true, silent=true, buffer=bufnr }
     -- Enable completion triggered by <c-x><c-o>
@@ -221,6 +228,7 @@ require('lspconfig').clangd.setup{
     cmd = {"clangd-12"},
     on_attach = on_attach,
 }
+--}}}
 
 --{{{Local functions for keymaps
 local SpellToggle = function()
@@ -239,6 +247,8 @@ local RltvNrToggle = function()
     end
 end
 --}}}
+
+vim.g.dispatch_no_maps = 1
 
 --{{{Keymaps
 vim.keymap.set('n','<Space>', ':nohlsearch<CR>', {remap = false})
