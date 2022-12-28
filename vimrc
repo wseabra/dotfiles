@@ -11,17 +11,13 @@
 call plug#begin('~/.vim/plugged')
 "{{{Side Windows Plugins
 Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'majutsushi/tagbar' "side window with tags from the code
 "}}}
 "{{{SignColumn Plugins
 Plug 'kshenoy/vim-signature' "Plugin to toggle, display and navigate marks
 "}}}
 "{{{Visual Plugins
-Plug 'lifepillar/vim-solarized8'
-Plug 'tomasiser/vim-code-dark'
 Plug 'tomasr/molokai'
-Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes' "Lean & mean status/tabline for vim that's light as air.
 Plug 'octol/vim-cpp-enhanced-highlight' "Additional Vim syntax highlighting for C++ (including C++11/14)
 Plug 'ryanoasis/vim-devicons'
@@ -31,7 +27,6 @@ Plug 'mtdl9/vim-log-highlighting'
 Plug 'tomtom/tcomment_vim' " An extensible & universal comment vim-plugin that also handles embedded filetypes Prefix: gc
 Plug 'tpope/vim-surround' "surround.vim: quoting/parenthesizing made simple
 Plug 'tpope/vim-repeat' "repeat.vim: enable repeating supported plugin maps with .
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-dispatch'
 Plug 'junegunn/fzf.vim' "Search engine
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -90,6 +85,7 @@ autocmd BufEnter init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf setlocal foldmethod=
 autocmd BufRead init.vim,.vimrc,vimrc,tmux.conf,.tmux.conf :normal zM
 let &makeprg='scripts/mm.sh -p dev -u 0 -v '
 set hlsearch incsearch "highlight search and incremental search"
+set ignorecase
 set backspace=indent,eol,start "sane backspace behaviour
 set expandtab "expand tab into spaces
 set shiftwidth=4 "size of indentation
@@ -127,7 +123,6 @@ let g:tagbar_sort = 0
 let g:airline_theme='molokai'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#ale#enabled = 1
 "}}}
 "{{{Cpp Enhanced Highlighting
 let g:cpp_class_scope_highlight = 1
@@ -216,8 +211,11 @@ nnoremap <Space>; A;<Esc>
 nnoremap <Space>r <Esc> :LspReferences<CR>
 nnoremap <Space>h <Esc> :LspHover<CR>
 nnoremap <Space>] :LspDefinition<CR>
+vmap <Space>y "+y
+nmap <Space>p "+p
 command! Q :q
 command! Qa :qa
+command! W :w
 command! Wq :wq
 command! Wqa :wqa
 function! SwitchSourceHeader()
