@@ -199,6 +199,7 @@ end
 --}}}
 
 --{{{Keymaps
+vim.keymap.set('n','<Space>', ':nohlsearch<CR>', {remap = false})
 vim.keymap.set('n','<F5>',RltvNrToggle, {desc = "Enable/Disable relativenumber", remap = false})
 vim.keymap.set('n','<F6>',SpellToggle, {desc = "Enable/Disable spell check (pt,en)", remap = false})
 
@@ -210,13 +211,29 @@ vim.keymap.set('n','<C-l>','<C-w>l', {desc = "Move to the panel right", remap = 
 vim.keymap.set('n','<down>','gj', {desc = "Move down", remap = false})
 vim.keymap.set('n','<up>','gk', {desc = "Move up", remap = false})
 
-vim.keymap.set('n','<Space>bn',':bn<CR>', {desc = "Move to next buffer", remap = false})
-vim.keymap.set('n','<Space>bp',':bp<CR>', {desc = "Move to previous buffer", remap = false})
-vim.keymap.set('n','<Space>bd',':bd<CR>', {desc = "Delete buffer", remap = false})
+--Mnemonics
 
-vim.keymap.set('n','<Space>n',':cn<CR>', {desc = "Next item in quickfix list", remap = false})
-vim.keymap.set('n','<Space>p',':cp<CR>', {desc = "Previous item in quickfix list", remap = false})
-vim.keymap.set('n','<Space>', ':nohlsearch<CR>', {remap = false})
+-- [B]uffer
+vim.keymap.set('n','<Space>bn',':bn<CR>', {desc = "Move to next buffer ([B]uffer [N]ext)", remap = false})
+vim.keymap.set('n','<Space>bp',':bp<CR>', {desc = "Move to previous buffer ([B]uffer [P]revious)", remap = false})
+vim.keymap.set('n','<Space>bd',':bd<CR>', {desc = "Delete buffer ([Buffer [D]elete", remap = false})
+
+-- Quickfix (I don't have a good mnemonic for this, using the default [C])
+vim.keymap.set('n','<Space>cn',':cn<CR>', {desc = "Next item in quickfix list", remap = false})
+vim.keymap.set('n','<Space>cp',':cp<CR>', {desc = "Previous item in quickfix list", remap = false})
+
+-- [G]it
+vim.keymap.set('n','<Space>gdt', require('gitsigns').diffthis, {desc = "[G]it [D]iff [T]his", remap = false})
+vim.keymap.set('n','<Space>gdh', function() require('gitsigns').diffthis('~') end, {desc = "[G]it [D]iff [H]EAD", remap = false})
+vim.keymap.set('n','<Space>gb', ':Git blame<CR>', {desc = "[G]it [B]lame", remap = false})
+vim.keymap.set('n','<Space>ghp', require('gitsigns').preview_hunk, {desc = "[G]it [H]unk [P]review", remap = false})
+vim.keymap.set('n','<Space>ghs', require('gitsigns').stage_hunk, {desc = "[G]it [H]unk [S]tage", remap = false})
+vim.keymap.set('n','<Space>ghu', require('gitsigns').undo_stage_hunk, {desc = "[G]it [H]unk [U]nstage", remap = false})
+vim.keymap.set('n','<Space>gfs', require('gitsigns').stage_buffer, {desc = "[G]it [F]ile [S]tage", remap = false})
+vim.keymap.set('n','<Space>gfu', ':Git restore --staged %<CR>', {desc = "[G]it [F]ile [U]nstage", remap = false})
+vim.keymap.set('n','<Space>gct', ':Git commit<CR>', {desc = "[G]it [C]ommit [T]his", remap = false})
+vim.keymap.set('n','<Space>gca', ':Git commit --amend<CR>', {desc = "[G]it [C]ommit [A]mend", remap = false})
+vim.keymap.set('n','<Space>gp', ':Git push<CR>', {desc = "[G]it [P]ush", remap = false})
 
 vim.api.nvim_create_user_command('Q',':q', {bang = true})
 vim.api.nvim_create_user_command('Qa',':qa', {bang = true})
