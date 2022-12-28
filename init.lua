@@ -216,7 +216,7 @@ vim.keymap.set('n','<up>','gk', {desc = "Move up", remap = false})
 -- [B]uffer
 vim.keymap.set('n','<Space>bn',':bn<CR>', {desc = "Move to next buffer ([B]uffer [N]ext)", remap = false})
 vim.keymap.set('n','<Space>bp',':bp<CR>', {desc = "Move to previous buffer ([B]uffer [P]revious)", remap = false})
-vim.keymap.set('n','<Space>bd',':bd<CR>', {desc = "Delete buffer ([Buffer [D]elete", remap = false})
+vim.keymap.set('n','<Space>bd',':bd<CR>', {desc = "Delete buffer ([B]uffer [D]elete)", remap = false})
 
 -- Quickfix (I don't have a good mnemonic for this, using the default [C])
 vim.keymap.set('n','<Space>cn',':cn<CR>', {desc = "Next item in quickfix list", remap = false})
