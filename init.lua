@@ -281,10 +281,22 @@ require("luasnip.loaders.from_vscode").lazy_load()
 --}}}
 
 --{{{LSP
+
+--servers
+local servers = { "clangd", "rust_analyzer" }
+
 require('fidget').setup()
-require("mason").setup()
+require("mason").setup({
+    ui = {
+        icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
+        }
+    }
+})
 require("mason-lspconfig").setup {
-    ensure_installed = { "sumneko_lua" },
+    ensure_installed = table.insert(servers, "sumneko_lua"),
 }
 
 
@@ -371,21 +383,23 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<space>sf', function() vim.lsp.buf.format { async = true } end,
         { desc = "[S]uper [F]ormat", noremap = true, silent = true, buffer = bufnr })
 
+    -- FIXME breaking code during saving
     vim.api.nvim_create_autocmd('BufWritePre',
         {
             pattern = '*.c,*.cpp,*.cc,*.h,*.hpp',
-            callback = function() vim.lsp.buf.format { async = true } end
+            callback = function() vim.lsp.buf.format { async = false } end
         })
 end
 
-require('lspconfig').clangd.setup {
-    cmd = { "clangd-12" },
+for _,serverName in ipairs(servers)
+    do
+    require('lspconfig')[serverName].setup {
     on_attach = on_attach,
     capabilities = capabilities
-}
+    }
+end
 
 require('lspconfig').sumneko_lua.setup {
-    -- cmd = {"clangd-12"},
     settings = {
         Lua = {
             runtime = {
