@@ -8,6 +8,7 @@
 -- Waldomiro Seabra
 
 --{{{Packer
+-- Install Packer if not installed
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -26,14 +27,18 @@ require('packer').startup(function(use)
 
     use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
 
-    use 'tpope/vim-sleuth'
+    use 'tpope/vim-sleuth' -- auto config tabs
 
-    use 'nvim-tree/nvim-tree.lua'
+    use 'nvim-tree/nvim-tree.lua' -- file manager
+
+    use 'matze/vim-move' -- move text with <A-j> and <A-k>
+
+    use 'inside/vim-search-pulse' -- pulse current line after search
 
     -- Git
-    use 'tpope/vim-fugitive'
+    use 'tpope/vim-fugitive' -- :Git command
 
-    use 'lewis6991/gitsigns.nvim'
+    use 'lewis6991/gitsigns.nvim' -- diff and hunk preview
 
     -- Themes
     use 'tomasr/molokai'
@@ -44,9 +49,9 @@ require('packer').startup(function(use)
 
     use { 'dracula/vim', as = 'dracula' }
 
-    use 'mhinz/vim-startify'
+    use 'mhinz/vim-startify' -- home for vim
 
-    use 'mtdl9/vim-log-highlighting'
+    use 'mtdl9/vim-log-highlighting' -- highlight log files
 
     -- Statusline/tabline
     use {
@@ -55,7 +60,7 @@ require('packer').startup(function(use)
     }
 
 
-    use 'tpope/vim-dispatch'
+    use 'tpope/vim-dispatch' -- run async commands
 
     -- Fuzzy Finder (files, lsp, etc)
     use { 'nvim-telescope/telescope.nvim',
@@ -66,23 +71,25 @@ require('packer').startup(function(use)
     -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
 
+    use 'RRethy/vim-illuminate' -- illuminate other instances of the current word
 
-    use 'neovim/nvim-lspconfig'
+    use 'nvim-lua/lsp-status.nvim'
+    use 'neovim/nvim-lspconfig' -- lsp defaults for nvim
 
-    use { "williamboman/mason.nvim" }
+    use { "williamboman/mason.nvim" } -- auto install lsp servers
 
-    use 'williamboman/mason-lspconfig.nvim'
+    use 'williamboman/mason-lspconfig.nvim' -- integration between installer and defaults
 
-    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-nvim-lsp' -- auto complete integration
 
-    use 'hrsh7th/nvim-cmp'
+    use 'hrsh7th/nvim-cmp' -- auto complete
 
+    use 'j-hui/fidget.nvim' -- lsp status at the bottom right
+
+    -- Snipets
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
-
-    -- " For ultisnips users.
-    -- use 'SirVer/ultisnips'
-    -- use 'quangnguyen30192/cmp-nvim-ultisnips'
+    use 'rafamadriz/friendly-snippets'
 
     -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
     local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -111,6 +118,14 @@ if is_bootstrap then
     print '=================================='
     return
 end
+
+-- Automatically source and install packages after saving this init.lua
+local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
+vim.api.nvim_create_autocmd('BufWritePost', {
+    command = 'source % | silent! LspStop | silent! LspStart | PackerInstall | source %',
+    group = packer_group,
+    pattern = 'init.lua',
+})
 --}}}
 
 --{{{Set options
@@ -120,16 +135,17 @@ vim.opt.colorcolumn = "80" -- color column 80
 vim.opt.number = true -- show  (current)line number
 vim.opt.relativenumber = true -- show relativenumber
 vim.opt.signcolumn = "yes" -- force show signcolumn
-vim.opt.autoread = true -- autoread buffer when edited outside vim
-vim.opt.completeopt = "menuone,preview"
-vim.opt.grepprg = "rg --vimgrep"
+vim.opt.autoread = true -- auto read buffer when edited outside vim
+vim.opt.completeopt = "menuone,noselect" -- complete menu
+vim.opt.pumheight = 10 -- complete menu itens to show before scrolling
+vim.opt.grepprg = "rg --vimgrep" -- grep command
 vim.opt.grepformat:append("%f:%l:%c:%m")
 vim.opt.errorformat:append("%f:%l:%c:%m")
 vim.opt.showcmd = true -- show cmd beeing typed
 vim.opt.mouse = 'a' -- activate mouse
 vim.opt.undofile = true -- activate undofaile
 vim.opt.ignorecase = true -- ignorecase when searching
-vim.opt.smartcase = true -- dont ignore case when capital case in search
+vim.opt.smartcase = true -- don't ignore case when capital case in search
 vim.opt.hlsearch = true -- highlight during search
 vim.opt.incsearch = true -- incremental search
 vim.opt.updatetime = 250 --- decrease update time
@@ -152,14 +168,15 @@ vim.api.nvim_create_autocmd('BufRead',
 
 -- May remove with tpope/vim-sleuth
 vim.opt.expandtab = true -- expand tab into spaces
-vim.opt.shiftwidth = 4 -- size of identation
+vim.opt.shiftwidth = 4 -- size of indentation
 vim.opt.tabstop = 4 -- size of tab
 
 vim.opt.list = true
-vim.opt.listchars = { eol = '¬', trail = '·' } --show end of line and trailing whitespaces/tabs
+vim.opt.listchars = { eol = '¬', trail = '·', tab = '▸ ' } --show end of line and trailing whitespaces/tabs
 
 vim.opt.spelllang = "pt,en" -- spellcheck languages
 
+-- disable default file manager
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
@@ -181,6 +198,8 @@ vim.g.startify_change_to_vcs_root = 1
 --}}}
 
 --{{{Lualine
+-- local lsp_status = require('lsp-status')
+-- lsp_status.register_progress()
 require('lualine').setup {
     sections = {
         lualine_a = { 'mode' },
@@ -222,7 +241,7 @@ require('lualine').setup {
         lualine_z = { 'tabs' }
     },
     options = {
-        component_separators = '|',
+        component_separators = '',
         section_separators = '',
     },
 }
@@ -257,13 +276,26 @@ pcall(require("telescope").load_extension("live_grep_args"))
 
 --}}}
 
+--{{{LuaSnip
+require("luasnip.loaders.from_vscode").lazy_load()
+--}}}
+
 --{{{LSP
+require('fidget').setup()
 require("mason").setup()
 require("mason-lspconfig").setup {
     ensure_installed = { "sumneko_lua" },
 }
 
+
+local has_words_before = function()
+    unpack = unpack
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 local cmp = require 'cmp'
+local luasnip = require("luasnip")
 
 cmp.setup({
     snippet = {
@@ -282,13 +314,37 @@ cmp.setup({
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            elseif luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            elseif has_words_before() then
+                cmp.complete()
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
     }),
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'luasnip' }, -- For luasnip users.
     }, {
         { name = 'buffer' },
-    })
+    }),
+    completion = {
+        autocomplete = false,
+    },
 })
 
 
@@ -389,7 +445,7 @@ local CallTelescope = function(method)
 end
 --}}}
 
---{{{Keymaps
+--{{{Keymap
 vim.keymap.set('n', '<Space><Space>', ':nohlsearch<CR>', { remap = false })
 vim.keymap.set('n', '<F5>', RltvNrToggle, { desc = "Enable/Disable relativenumber", remap = false })
 vim.keymap.set('n', '<F6>', SpellToggle, { desc = "Enable/Disable spell check (pt,en)", remap = false })
