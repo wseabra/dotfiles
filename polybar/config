@@ -51,7 +51,8 @@ separator-foreground = ${colors.disabled}
 
 font-0 = "TerminessTTF Nerd Font Mono:size=14;2"
 
-modules-left = xworkspaces spotify
+modules-left = xworkspaces
+; spotify
 modules-center = xxxwindow
 modules-right = switchBluetoothProfile battery pulseaudio xkeyboard memory cpu wlan eth clickdate
 

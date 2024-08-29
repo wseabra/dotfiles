@@ -27,13 +27,15 @@ require('packer').startup(function(use)
 
     use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
 
-    use 'tpope/vim-sleuth' -- auto config tabs
-
-    use 'nvim-tree/nvim-tree.lua' -- file manager
+    use 'preservim/nerdtree'
 
     use 'matze/vim-move' -- move text with <A-j> and <A-k>
 
     use 'inside/vim-search-pulse' -- pulse current line after search
+
+    use 'tpope/vim-surround'
+
+    use 'tpope/vim-sleuth'
 
     -- Git
     use 'tpope/vim-fugitive' -- :Git command
@@ -41,24 +43,20 @@ require('packer').startup(function(use)
     use 'lewis6991/gitsigns.nvim' -- diff and hunk preview
 
     -- Themes
-    use 'tomasr/molokai'
-
-    use 'ayu-theme/ayu-vim'
 
     use 'lifepillar/vim-solarized8'
-
-    use { 'dracula/vim', as = 'dracula' }
 
     use 'mhinz/vim-startify' -- home for vim
 
     use 'mtdl9/vim-log-highlighting' -- highlight log files
 
     -- Statusline/tabline
+    use 'nvim-tree/nvim-web-devicons'
+
     use {
         'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     }
-
 
     use 'tpope/vim-dispatch' -- run async commands
 
@@ -90,6 +88,23 @@ require('packer').startup(function(use)
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
     use 'rafamadriz/friendly-snippets'
+    use {
+        'github/copilot.vim',
+         tag = 'v1.27.0'
+    }
+
+
+    use 'liuchengxu/vista.vim' -- show functions and variables in a file
+
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    }
+
+    use {
+        requires = { "nvim-treesitter/nvim-treesitter" },
+        "Badhi/nvim-treesitter-cpp-tools",
+    }
 
     -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
     local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -167,14 +182,16 @@ vim.api.nvim_create_autocmd('BufRead',
     })
 
 -- May remove with tpope/vim-sleuth
-vim.opt.expandtab = true -- expand tab into spaces
-vim.opt.shiftwidth = 4 -- size of indentation
-vim.opt.tabstop = 4 -- size of tab
+-- vim.opt.expandtab = true -- expand tab into spaces
+-- vim.opt.shiftwidth = 4 -- size of indentation
+-- vim.opt.tabstop = 4 -- size of tab
 
 vim.opt.list = true
 vim.opt.listchars = { eol = '¬', trail = '·', tab = '▸ ' } --show end of line and trailing whitespaces/tabs
 
-vim.opt.spelllang = "pt,en" -- spellcheck languages
+vim.cmd('let loaded_spellfile_plugin = 0')
+
+vim.opt.spelllang = "pt,en,es" -- spellcheck languages
 
 -- disable default file manager
 vim.g.loaded_netrw = 1
@@ -183,13 +200,11 @@ vim.g.loaded_netrwPlugin = 1
 -- Theme options
 vim.opt.termguicolors = true
 vim.opt.background = "dark"
-vim.cmd [[colorscheme ayu]]
+vim.cmd [[colorscheme solarized8_high]]
 --}}}
 
 --{{{NvimTree
-require("nvim-tree").setup({ view = {
-    adaptive_size = true,
-} })
+--require("nvim-tree").setup()
 --}}}
 
 --{{{vim-startify
@@ -203,7 +218,12 @@ vim.g.startify_change_to_vcs_root = 1
 require('lualine').setup {
     sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_b = { 
+		{
+		'diagnostics',
+		symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'}
+	}
+	},
         lualine_c = {
             {
                 'filename',
@@ -229,6 +249,8 @@ require('lualine').setup {
     },
     tabline = {
         lualine_a = {
+        'branch',
+        'diff',
             {
                 'buffers',
                 mode = 4,
@@ -238,7 +260,7 @@ require('lualine').setup {
         lualine_c = {},
         lualine_x = {},
         lualine_y = {},
-        lualine_z = { 'tabs' }
+        lualine_z = { {'tabs', use_mode_colors = false} }
     },
     options = {
         component_separators = '',
@@ -280,12 +302,16 @@ pcall(require("telescope").load_extension("live_grep_args"))
 require("luasnip.loaders.from_vscode").lazy_load()
 --}}}
 
+--{{{Vista
+vim.g.vista_default_executive = 'nvim_lsp'
+--}}}
+
 --{{{LSP
 
 --servers
-local servers = { "clangd", "rust_analyzer" }
+local servers = {}
 
-require('fidget').setup()
+-- require('fidget').setup({})
 require("mason").setup({
     ui = {
         icons = {
@@ -317,8 +343,8 @@ cmp.setup({
         end,
     },
     window = {
-        -- completion = cmp.config.window.bordered(),
-        -- documentation = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -379,11 +405,12 @@ local on_attach = function(client, bufnr)
         { desc = "[H]over", noremap = true, silent = true, buffer = bufnr })
     vim.keymap.set('n', '<Space>srn', vim.lsp.buf.rename,
         { desc = "[S]ymbol [R]e[N]ame", noremap = true, silent = true, buffer = bufnr })
+    vim.keymap.set('n', '<Space>sa', vim.lsp.buf.code_action,
+        { desc = "[S]ymbol [A]ction", noremap = true, silent = true, buffer = bufnr })
 
     vim.keymap.set('n', '<space>sf', function() vim.lsp.buf.format { async = true } end,
         { desc = "[S]uper [F]ormat", noremap = true, silent = true, buffer = bufnr })
 
-    -- FIXME breaking code during saving
     vim.api.nvim_create_autocmd('BufWritePre',
         {
             pattern = '*.c,*.cpp,*.cc,*.h,*.hpp',
@@ -391,15 +418,20 @@ local on_attach = function(client, bufnr)
         })
 end
 
-for _,serverName in ipairs(servers)
-    do
-    require('lspconfig')[serverName].setup {
+-- for _, serverName in ipairs(servers) do
+--     require('lspconfig')[serverName].setup {
+--         on_attach = on_attach,
+--         capabilities = capabilities
+--     }
+-- end
+
+require('lspconfig').clangd.setup {
+    cmd = {'clangd-15', "--completion-style=detailed" },
     on_attach = on_attach,
     capabilities = capabilities
-    }
-end
+}
 
-require('lspconfig').sumneko_lua.setup {
+require('lspconfig').lua_ls.setup {
     settings = {
         Lua = {
             runtime = {
@@ -429,7 +461,79 @@ require('lspconfig').sumneko_lua.setup {
 vim.g.dispatch_no_maps = 1
 --}}}
 
---{{{Local functions for keymaps
+--{{{Copilot
+vim.g.copilot_node_command="~/.nvm/versions/node/v16.19.0/bin/node"
+vim.g.copilot_no_tab_map = true
+vim.g.copilot_assume_mapped = true
+--}}}
+--{{{Treesitter
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the five listed parsers should always be installed)
+  ensure_installed = { "cpp", "c", "lua", "vim", "vimdoc", "query" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
+  -- List of parsers to ignore installing (for "all")
+  -- ignore_install = { "javascript" },
+
+  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+  highlight = {
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    -- disable = { "c", "rust" },
+    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+    -- disable = function(lang, buf)
+    --     local max_filesize = 100 * 1024 -- 100 KB
+    --     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+    --     if ok and stats and stats.size > max_filesize then
+    --         return true
+    --     end
+    -- end,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+--}}}
+--{{{ Cpp Implement Methods Utils
+require 'nt-cpp-tools'.setup({
+    preview = {
+        quit = 'q', -- optional keymapping for quit preview
+        accept = '<tab>' -- optional keymapping for accept preview
+    },
+    header_extension = 'h', -- optional
+    source_extension = 'cxx', -- optional
+    custom_define_class_function_commands = { -- optional
+        TSCppImplWrite = {
+            output_handle = require'nt-cpp-tools.output_handlers'.get_add_to_cpp()
+        }
+        --[[
+        <your impl function custom command name> = {
+            output_handle = function (str, context) 
+                -- string contains the class implementation
+                -- do whatever you want to do with it
+            end
+        }
+        ]]
+    }
+})
+--}}}
+
+--{{{Local misc. functions and for keymaps
 local SpellToggle = function()
     if vim.opt.spell:get() then
         vim.opt.spell = false
@@ -451,29 +555,69 @@ local BuildMamba = function(input)
     vim.cmd(cmd)
 end
 
-local CallTelescope = function(method)
+local CallTelescope = function(method, opts)
     local theme = require('telescope.themes').get_ivy({ layout_config = {
         height = 10,
     }, })
+    if opts then
+        for k,v in pairs(theme) do opts[k] = v end
+        method(opts)
+        return
+    end
     method(theme)
 end
+local notify = vim.notify
+
+vim.notify = function(msg, ...)
+    if msg:match("warning: multiple different client offset_encodings detected for buffer, this is not supported yet") then
+        return
+    end
+
+    notify(msg, ...)
+end
+
+local findNotes = function()
+    local opts = {
+        prompt_title = 'Notes',
+        shorten_path = false,
+        cwd = '~/notes',
+        initial_mode = 'insert',
+        selection_strategy = 'reset',
+        previewer = false,
+    }
+    CallTelescope(require('telescope.builtin').find_files,opts)
+end
+
 --}}}
 
 --{{{Keymap
 vim.keymap.set('n', '<Space><Space>', ':nohlsearch<CR>', { remap = false })
 vim.keymap.set('n', '<F5>', RltvNrToggle, { desc = "Enable/Disable relativenumber", remap = false })
 vim.keymap.set('n', '<F6>', SpellToggle, { desc = "Enable/Disable spell check (pt,en)", remap = false })
-vim.keymap.set('n', '<F7>', ':NvimTreeToggle<CR>', { desc = "Open File Manager", remap = false })
+vim.keymap.set('n', '<F7>', ':NERDTreeToggle<CR>', { desc = "Open File Manager", remap = false })
+vim.keymap.set('n', '<F8>', ':Vista!!<CR>', { desc = "Open Vista", remap = false })
 
 vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = "Move to the panel above", remap = false })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = "Move to the panel bellow", remap = false })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = "Move to the panel left", remap = false })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = "Move to the panel right", remap = false })
+vim.keymap.set('t', '<C-h>', '<C-\\><C-n><C-w>h', { desc = "Move to the panel above", remap = false })
+vim.keymap.set('t', '<C-j>', '<C-\\><C-n><C-w>j', { desc = "Move to the panel bellow", remap = false })
+vim.keymap.set('t', '<C-k>', '<C-\\><C-n><C-w>k', { desc = "Move to the panel left", remap = false })
+vim.keymap.set('t', '<C-l>', '<C-\\><C-n><C-w>l', { desc = "Move to the panel right", remap = false })
 
 vim.keymap.set('n', '<down>', 'gj', { desc = "Move down", remap = false })
 vim.keymap.set('n', '<up>', 'gk', { desc = "Move up", remap = false })
 
+-- Copilot wrote it's own map lol
+vim.keymap.set('i', '<C-S>', '<C-R>=copilot#Accept("")<CR>', { desc = "Use copilot", remap = false })
+
 -- Mnemonics
+
+-- [T]ree[S]itter
+-- shortcur for TSCppDefineClassFunc
+vim.keymap.set('n', '<Space>tsd', ':TSCppDefineClassFunc<CR>', { desc = "Define class function ([T]ree[S]itter [D]efine)", remap = false })
+vim.keymap.set('v', '<Space>tsd', ':TSCppDefineClassFunc<CR>', { desc = "Define class function ([T]ree[S]itter [D]efine)", remap = false })
 
 -- [B]uffer
 vim.keymap.set('n', '<Space>bn', ':bn<CR>', { desc = "Move to next buffer ([B]uffer [N]ext)", remap = false })
@@ -503,9 +647,10 @@ vim.keymap.set('n', '<Space>gca', ':Git commit --amend<CR>', { desc = "[G]it [C]
 
 vim.keymap.set('n', '<Space>gp', ':Git push<CR>', { desc = "[G]it [P]ush", remap = false })
 
+
 -- [F]ind (Telescope)
 vim.keymap.set('n', '<Space>fr', function() CallTelescope(require('telescope.builtin').oldfiles) end,
-    { desc = '[F]ind [R]ecently opened files' })
+    { desc = '[F]in [R]ecently opened files' })
 vim.keymap.set('n', '<Space>fb', function() CallTelescope(require('telescope.builtin').buffers) end,
     { desc = '[F]ind existing [B]uffers' })
 vim.keymap.set('n', '<Space>fk', function() CallTelescope(require('telescope.builtin').keymaps) end,
@@ -533,10 +678,13 @@ vim.keymap.set('n', '<Space>fd', function() CallTelescope(require('telescope.bui
     { desc = '[F]ind [D]iagnostics' })
 vim.keymap.set('n', '<Space>ft', function() CallTelescope(require('telescope.builtin').lsp_document_symbols) end,
     { desc = '[F]ind [T]ags' })
+    -- Find notes with fn
+vim.keymap.set('n', '<Space>fn', function() findNotes() end, { desc = '[F]ind [N]otes' })
 
 vim.api.nvim_create_user_command('Q', ':q', { bang = true })
 vim.api.nvim_create_user_command('Qa', ':qa', { bang = true })
 vim.api.nvim_create_user_command('W', ':w', { bang = true })
+vim.api.nvim_create_user_command('Wa', ':wa', { bang = true })
 vim.api.nvim_create_user_command('Wq', ':wq', { bang = true })
 vim.api.nvim_create_user_command('Wqa', ':wqa', { bang = true })
 

@@ -11,12 +11,13 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 export EDITOR='nvim'
+export BROWSER='google-chrome'
 
 source ~/.zsh/antigen.zsh
 antigen use oh-my-zsh
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen theme bira
+antigen theme jonathan
 
 antigen apply
 
@@ -50,8 +51,11 @@ alias gpush='git push -u origin $(git rev-parse --abbrev-ref HEAD)'
 
 alias xcb=~/.postools/xcb
 
+alias nvim='~/neovim/bin/nvim'
 alias vim='nvim'
 alias vimdiff='nvim -d'
+
+alias cdmamba='cd ~/Stone/repos/pos-mamba'
 
 # export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
