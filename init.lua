@@ -218,7 +218,7 @@ vim.g.startify_change_to_vcs_root = 1
 require('lualine').setup {
     sections = {
         lualine_a = { 'mode' },
-        lualine_b = { 
+        lualine_b = {
 		{
 		'diagnostics',
 		symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'}
@@ -550,11 +550,6 @@ local RltvNrToggle = function()
     end
 end
 
-local BuildMamba = function(input)
-    local cmd = "Dispatch -compiler=gcc ./scripts/mm.sh -j 4 " .. input.args
-    vim.cmd(cmd)
-end
-
 local CallTelescope = function(method, opts)
     local theme = require('telescope.themes').get_ivy({ layout_config = {
         height = 10,
@@ -689,5 +684,4 @@ vim.api.nvim_create_user_command('Wq', ':wq', { bang = true })
 vim.api.nvim_create_user_command('Wqa', ':wqa', { bang = true })
 
 vim.api.nvim_create_user_command('A', ':ClangdSwitchSourceHeader', { bang = true })
-vim.api.nvim_create_user_command('Mamba', BuildMamba, { bang = true, nargs = '+' })
 --}}}
