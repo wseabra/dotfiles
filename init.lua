@@ -88,10 +88,10 @@ require('packer').startup(function(use)
     use 'L3MON4D3/LuaSnip'
     use 'saadparwaiz1/cmp_luasnip'
     use 'rafamadriz/friendly-snippets'
-    use {
-        'github/copilot.vim',
-         tag = 'v1.27.0'
-    }
+--    use {
+--        'github/copilot.vim',
+--         tag = 'v1.27.0'
+--    }
 
 
     use 'liuchengxu/vista.vim' -- show functions and variables in a file
@@ -462,9 +462,9 @@ vim.g.dispatch_no_maps = 1
 --}}}
 
 --{{{Copilot
-vim.g.copilot_node_command="~/.nvm/versions/node/v16.19.0/bin/node"
-vim.g.copilot_no_tab_map = true
-vim.g.copilot_assume_mapped = true
+--vim.g.copilot_node_command="~/.nvm/versions/node/v16.19.0/bin/node"
+--vim.g.copilot_no_tab_map = true
+--vim.g.copilot_assume_mapped = true
 --}}}
 --{{{Treesitter
 require'nvim-treesitter.configs'.setup {

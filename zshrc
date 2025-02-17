@@ -72,3 +72,7 @@ export CLANGD_FLAGS="-j 1"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export CURL_CA_BUNDLE=/opt/netskope/stagent/data/netskope-cert-bundle.pem
+export SSL_CERT_FILE=/opt/netskope/stagent/data/netskope-cert-bundle.pem
+export GIT_SSL_CAPATH=/opt/netskope/stagent/data/netskope-cert-bundle.pem
+export REQUESTS_CA_BUNDLE=/opt/netskope/stagent/data/netskope-cert-bundle.pem
