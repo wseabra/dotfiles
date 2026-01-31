@@ -35,7 +35,7 @@ require('packer').startup(function(use)
 
     use 'tpope/vim-surround'
 
-    use 'tpope/vim-sleuth'
+    -- use 'tpope/vim-sleuth'
 
     -- Git
     use 'tpope/vim-fugitive' -- :Git command
@@ -96,15 +96,17 @@ require('packer').startup(function(use)
 
     use 'liuchengxu/vista.vim' -- show functions and variables in a file
 
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
-    }
+    use 'wseabra/openrouter-complete-nvim'
+    -- use {
+    --     'nvim-treesitter/nvim-treesitter',
+    --     run = ':TSUpdate'
+    -- }
 
-    use {
-        requires = { "nvim-treesitter/nvim-treesitter" },
-        "Badhi/nvim-treesitter-cpp-tools",
-    }
+    -- use {
+    --     requires = { "nvim-treesitter/nvim-treesitter" },
+    --     "Badhi/nvim-treesitter-cpp-tools",
+    -- }
+
 
     -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
     local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -144,7 +146,7 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 --}}}
 
 --{{{Set options
-vim.opt.shell = "/bin/zsh" -- shell
+vim.opt.shell = "/usr/bin/bash" -- shell
 vim.opt.cursorline = true -- show cursor line
 vim.opt.colorcolumn = "80" -- color column 80
 vim.opt.number = true -- show  (current)line number
@@ -182,9 +184,9 @@ vim.api.nvim_create_autocmd('BufRead',
     })
 
 -- May remove with tpope/vim-sleuth
--- vim.opt.expandtab = true -- expand tab into spaces
--- vim.opt.shiftwidth = 4 -- size of indentation
--- vim.opt.tabstop = 4 -- size of tab
+vim.opt.expandtab = true -- expand tab into spaces
+vim.opt.shiftwidth = 4 -- size of indentation
+vim.opt.tabstop = 4 -- size of tab
 
 vim.opt.list = true
 vim.opt.listchars = { eol = '¬', trail = '·', tab = '▸ ' } --show end of line and trailing whitespaces/tabs
@@ -202,6 +204,16 @@ vim.opt.termguicolors = true
 vim.opt.background = "dark"
 vim.cmd [[colorscheme solarized8_high]]
 --}}}
+
+require("openrouter-complete").setup({
+  model = "google/gemma-3n-e4b-it",
+  enable_on_startup = true,    -- plugin enabled when Neovim starts
+  auto_trigger = true,       -- request suggestions on TextChangedI (debounced)
+  log_file = "~/log.txt",              -- path to log file (empty = no logging)
+  log_level = "debug"
+  -- api_key = "your-key",  -- or use OPENROUTER_API_KEY env
+})
+
 
 --{{{NvimTree
 --require("nvim-tree").setup()
@@ -411,11 +423,11 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', '<space>sf', function() vim.lsp.buf.format { async = true } end,
         { desc = "[S]uper [F]ormat", noremap = true, silent = true, buffer = bufnr })
 
-    vim.api.nvim_create_autocmd('BufWritePre',
-        {
-            pattern = '*.c,*.cpp,*.cc,*.h,*.hpp',
-            callback = function() vim.lsp.buf.format { async = false } end
-        })
+    -- vim.api.nvim_create_autocmd('BufWritePre',
+    --     {
+    --         pattern = '*.c,*.cpp,*.cc,*.h,*.hpp',
+    --         callback = function() vim.lsp.buf.format { async = false } end
+    --     })
 end
 
 -- for _, serverName in ipairs(servers) do
@@ -426,7 +438,7 @@ end
 -- end
 
 require('lspconfig').clangd.setup {
-    cmd = {'clangd-15', "--completion-style=detailed" },
+    cmd = {'clangd', "--completion-style=detailed" },
     on_attach = on_attach,
     capabilities = capabilities
 }
@@ -466,73 +478,73 @@ vim.g.dispatch_no_maps = 1
 --vim.g.copilot_no_tab_map = true
 --vim.g.copilot_assume_mapped = true
 --}}}
---{{{Treesitter
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all" (the five listed parsers should always be installed)
-  ensure_installed = { "cpp", "c", "lua", "vim", "vimdoc", "query" },
-
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-  auto_install = true,
-
-  -- List of parsers to ignore installing (for "all")
-  -- ignore_install = { "javascript" },
-
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-  highlight = {
-    enable = true,
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    -- disable = { "c", "rust" },
-    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-    -- disable = function(lang, buf)
-    --     local max_filesize = 100 * 1024 -- 100 KB
-    --     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-    --     if ok and stats and stats.size > max_filesize then
-    --         return true
-    --     end
-    -- end,
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
+-- --{{{Treesitter
+-- require'nvim-treesitter.configs'.setup {
+--   -- A list of parser names, or "all" (the five listed parsers should always be installed)
+--   ensure_installed = { "cpp", "c", "lua", "vim", "vimdoc", "query" },
+--
+--   -- Install parsers synchronously (only applied to `ensure_installed`)
+--   sync_install = false,
+--
+--   -- Automatically install missing parsers when entering buffer
+--   -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+--   auto_install = true,
+--
+--   -- List of parsers to ignore installing (for "all")
+--   -- ignore_install = { "javascript" },
+--
+--   ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+--   -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+--
+--   highlight = {
+--     enable = true,
+--
+--     -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+--     -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+--     -- the name of the parser)
+--     -- list of language that will be disabled
+--     -- disable = { "c", "rust" },
+--     -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+--     -- disable = function(lang, buf)
+--     --     local max_filesize = 100 * 1024 -- 100 KB
+--     --     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+--     --     if ok and stats and stats.size > max_filesize then
+--     --         return true
+--     --     end
+--     -- end,
+--
+--     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+--     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+--     -- Using this option may slow down your editor, and you may see some duplicate highlights.
+--     -- Instead of true it can also be a list of languages
+--     additional_vim_regex_highlighting = false,
+--   },
+-- }
 --}}}
 --{{{ Cpp Implement Methods Utils
-require 'nt-cpp-tools'.setup({
-    preview = {
-        quit = 'q', -- optional keymapping for quit preview
-        accept = '<tab>' -- optional keymapping for accept preview
-    },
-    header_extension = 'h', -- optional
-    source_extension = 'cxx', -- optional
-    custom_define_class_function_commands = { -- optional
-        TSCppImplWrite = {
-            output_handle = require'nt-cpp-tools.output_handlers'.get_add_to_cpp()
-        }
-        --[[
-        <your impl function custom command name> = {
-            output_handle = function (str, context) 
-                -- string contains the class implementation
-                -- do whatever you want to do with it
-            end
-        }
-        ]]
-    }
-})
---}}}
-
+-- require 'nt-cpp-tools'.setup({
+--     preview = {
+--         quit = 'q', -- optional keymapping for quit preview
+--         accept = '<tab>' -- optional keymapping for accept preview
+--     },
+--     header_extension = 'h', -- optional
+--     source_extension = 'cxx', -- optional
+--     custom_define_class_function_commands = { -- optional
+--         TSCppImplWrite = {
+--             output_handle = require'nt-cpp-tools.output_handlers'.get_add_to_cpp()
+--         }
+--         --[[
+--         <your impl function custom command name> = {
+--             output_handle = function (str, context) 
+--                 -- string contains the class implementation
+--                 -- do whatever you want to do with it
+--             end
+--         }
+--         ]]
+--     }
+-- })
+-- --}}}
+--
 --{{{Local misc. functions and for keymaps
 local SpellToggle = function()
     if vim.opt.spell:get() then
@@ -685,3 +697,4 @@ vim.api.nvim_create_user_command('Wqa', ':wqa', { bang = true })
 
 vim.api.nvim_create_user_command('A', ':ClangdSwitchSourceHeader', { bang = true })
 --}}}
+
